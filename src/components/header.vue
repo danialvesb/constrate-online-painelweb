@@ -1,13 +1,13 @@
 <template>
     <div class="header-container">
         <div>
-            <b-navbar variant="light" class="navbar-custon">
+            <b-navbar variant="info" class="navbar-custom">
                 <b-collapse id="nav-collapse" is-nav>
                     <b-navbar-nav>
                         <div class="navbar-logo-item">
                             <b-nav-item href="/dashboard" class="nav-item-logo"><h5 class="text-white">Contrate Online</h5></b-nav-item>
                         </div>
-                        <b-nav-item-dropdown text="Serviços" left>
+                        <b-nav-item-dropdown text="Serviços" left variant="info" class="dropdown-custom">
                             <b-dropdown-item href="/servicos">Listar Serviços</b-dropdown-item>
                             <b-dropdown-item href="/servicos/cadastrar">Cadastrar Serviços</b-dropdown-item>
                             <b-dropdown-item href="/servicos/categorias">Categorias de Serviços</b-dropdown-item>
@@ -70,6 +70,11 @@
                 border-radius: 5px;
                 margin-right: 20px;
 
+            }
+            .dropdown-custom {
+                &:hover {
+                    background-color: $info;
+                }
             }
 
         }

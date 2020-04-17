@@ -14,6 +14,7 @@ $black: #000 !default;
 // Base colors definitions
 $blue: rgb(0, 123, 255) !default;
 $indigo: #6610f2 !default;
+$indigo: #6610f2 !default;
 $purple: #6f42c1 !default;
 $pink: #e83e8c !default;
 $red: #dc3545 !default;
@@ -21,7 +22,17 @@ $orange: #fd7e14 !default;
 $yellow: #ffc107 !default;
 $green: #28a745 !default;
 $teal: #20c997 !default;
-$cyan: rgb(23, 162, 184) !default;
+$cyan: #303C54 !default;
+
+$dropdown-bg: #303C54;
+$dropdown-link-hover-color: $white;
+$dropdown-link-hover-bg: rgba(71, 83, 117, 0.98);
+$dropdown-link-color: $white;
+
+$navbar-light-color: $white;
+$navbar-light-hover-color: $white;
+$navbar-light-disabled-color: $white;
+$navbar-light-active-color: $white;
 
 // Theme color default definitions
 $primary: $blue !default;
@@ -44,7 +55,7 @@ $theme-colors: map-merge(
                         'warning': $warning,
                         'danger': $danger,
                         'light': $light,
-                        'dark': $dark
+                        'dark': $dark,
                 ),
                 $theme-colors
 );
