@@ -1,10 +1,15 @@
 <template>
-    <router-view></router-view>
+    <div>
+        <router-view></router-view>
+    </div>
 </template>
 
 <script>
 
+
+
 export default {
+
     name: "App",
     components: {
 
@@ -13,7 +18,10 @@ export default {
 
 </script>
 
-<style lang="sass">
-    @import 'assets/scss/style';
+<style lang="scss">
+    @import 'src/assets/scss/style';
+    body {
+        margin: 0;
+    }
 
 </style>

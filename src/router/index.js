@@ -1,15 +1,18 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-// Containers
-
 // Views
-const Dashboard = () => import('@/views/Dashboard')
+const Dashboard = () => import('../views/Dashboard')
+const Works = () => import('../views/Works')
+const NewWork = () => import('../views/StoreWork')
+const StoreCategory = () => import('../views/StoreCategory')
+
+const App = () => import('../App')
 
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history', // https://router.vuejs.org/api/#mode
+  mode: 'history',
   linkActiveClass: 'active',
   scrollBehavior: () => ({ y: 0 }),
   routes: configRoutes()
@@ -20,10 +23,39 @@ function configRoutes () {
     {
       path: '/',
       redirect: '/dashboard',
-      name: 'Home',
-      component: Dashboard,
+      name: 'App',
+      component: App,
+      children: [
+        {
+          path: '/dashboard',
+          name: 'Dashboard',
+          component: Dashboard
+        },
+        {
+          path: '/servicos',
+          name: 'Works',
+          component: Works
+        },
+        {
+          path: '/servicos/cadastrar',
+          name: 'CreateWork',
+          component: NewWork
+        },
+        {
+          path: '/servicos/categorias',
+          name: 'CreateWork',
+          component: StoreCategory
+        },
+      ]
     },
+
 
   ]
 }
 
+// { path: '/servicos/listar', component: Works},
+// { path: '/servicos/cadastrar', component: WorkCreate},
+// { path: '/servicos/editar/:id', component: WorkCreate},
+// { path: '/servicos/visualizar/:id', component: ViewWorks},
+//
+// { path: '/servicos/categorias', component: Category }
