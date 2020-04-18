@@ -1,11 +1,11 @@
 <template>
     <div>
         <header-nav></header-nav>
+        <div class="buttons m-1">
+            <b-button variant="success">Cadastrar categoria</b-button>
+        </div>
 
-        <div class="container-a">
-            <div class="buttons m-1">
-                <b-button variant="success">Cadastrar categoria</b-button>
-            </div>
+        <div class="container-a mt-2 pt-3">
             <div class="sub-container-a">
 
                 <div class="table-users">
@@ -81,13 +81,13 @@
         flex-direction: column;
         width: 100%;
         min-height: 800px;
-        margin: auto;
+        align-items: center;
         .sub-container-a {
             background-color: $white;
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 80%;
+            width: 90%;
             min-height: 600px;
             -webkit-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);
             -moz-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);

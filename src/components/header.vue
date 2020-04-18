@@ -29,8 +29,6 @@
                             <b-dropdown-item href="#">Projetos</b-dropdown-item>
                             <b-dropdown-divider></b-dropdown-divider>
                             <b-dropdown-item href="#" >Sair</b-dropdown-item>
-
-
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
                 </b-collapse>
@@ -44,9 +42,8 @@
                 </b-breadcrumb-item>
                 <b-breadcrumb-item href="/servicos" >Serviços</b-breadcrumb-item>
                 <b-breadcrumb-item href="/servicos/cadastrar" >Cadastrar</b-breadcrumb-item>
-
                 <b-breadcrumb-item href="/servicos/categorias" >Categorias</b-breadcrumb-item>
-
+                <b-breadcrumb-item href="/entrar" >Login</b-breadcrumb-item>
             </b-breadcrumb>
         </div>
 

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Login from "../views/Login";
 
 // Views
 const Dashboard = () => import('../views/Dashboard')
@@ -46,6 +47,12 @@ function configRoutes () {
           name: 'CreateWork',
           component: StoreCategory
         },
+        {
+          path: '/entrar',
+          name: 'Login',
+          component: Login
+        },
+
       ]
     },
 

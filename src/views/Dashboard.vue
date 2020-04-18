@@ -92,7 +92,7 @@ export default {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 80%;
+            width: 90%;
             min-height: 600px;
             -webkit-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);
             -moz-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);
