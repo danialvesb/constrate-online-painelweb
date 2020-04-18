@@ -40,10 +40,10 @@
                     <b-icon icon="house-fill" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon>
                     Início
                 </b-breadcrumb-item>
-                <b-breadcrumb-item href="/servicos" >Serviços</b-breadcrumb-item>
-                <b-breadcrumb-item href="/servicos/cadastrar" >Cadastrar</b-breadcrumb-item>
-                <b-breadcrumb-item href="/servicos/categorias" >Categorias</b-breadcrumb-item>
-                <b-breadcrumb-item href="/entrar" >Login</b-breadcrumb-item>
+<!--                <b-breadcrumb-item href="/servicos" >Serviços</b-breadcrumb-item>-->
+<!--                <b-breadcrumb-item href="/servicos/cadastrar" >Cadastrar</b-breadcrumb-item>-->
+<!--                <b-breadcrumb-item href="/servicos/categorias" >Categorias</b-breadcrumb-item>-->
+<!--                <b-breadcrumb-item href="/entrar" >Login</b-breadcrumb-item>-->
             </b-breadcrumb>
         </div>
 
