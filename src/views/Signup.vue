@@ -9,6 +9,7 @@
                         <b-form @submit="onSubmit" @reset="onReset" v-if="show">
                             <b-form-group>
                                 <b-form-input
+
                                         id="input-2"
                                         v-model="form.name"
                                         required
