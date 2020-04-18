@@ -26,7 +26,7 @@
 <style lang="scss" scoped>
     @import "src/assets/scss/variables";
     .container-a {
-        background-color: $secondary;
+
         display: flex;
         flex-direction: column;
         width: 95%;
