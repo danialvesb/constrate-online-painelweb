@@ -5,9 +5,9 @@
                 <b-collapse id="nav-collapse" is-nav>
                     <b-navbar-nav>
                         <div class="navbar-logo-item">
-                            <b-nav-item href="/dashboard" class="nav-item-logo"><h5 class="text-white">Contrate Online</h5></b-nav-item>
+                            <b-nav-item href="/dashboard"><h5 class="nav-item-logo-text">Contrate Online</h5></b-nav-item>
                         </div>
-                        <b-nav-item-dropdown text="Serviços" left variant="info" class="dropdown-custom">
+                        <b-nav-item-dropdown text="Serviços" left variant="info">
                             <b-dropdown-item href="/servicos">Listar Serviços</b-dropdown-item>
                             <b-dropdown-item href="/servicos/cadastrar">Cadastrar Serviços</b-dropdown-item>
                             <b-dropdown-item href="/servicos/categorias">Categorias de Serviços</b-dropdown-item>
@@ -17,66 +17,97 @@
 
                     <!-- Right aligned nav items -->
                     <b-navbar-nav class="ml-auto">
-                        <b-nav-form>
-                            <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-                            <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-                        </b-nav-form>
-
-                        <b-nav-item-dropdown text="Lang" right>
-                            <b-dropdown-item href="#">EN</b-dropdown-item>
-                            <b-dropdown-item href="#">ES</b-dropdown-item>
-                            <b-dropdown-item href="#">RU</b-dropdown-item>
-                            <b-dropdown-item href="#">FA</b-dropdown-item>
-                        </b-nav-item-dropdown>
 
                         <b-nav-item-dropdown right>
-                            <!-- Using 'button-content' slot -->
                             <template v-slot:button-content>
-                                <em>User</em>
+                                <b-avatar variant="info" class="m-0 p-0" src="https://placekitten.com/300/300"></b-avatar>
                             </template>
-                            <b-dropdown-item href="#">Profile</b-dropdown-item>
-                            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+                            <b-dropdown-item href="#" >Perfil</b-dropdown-item>
+                            <b-dropdown-divider></b-dropdown-divider>
+                            <b-dropdown-item href="#">Configurações</b-dropdown-item>
+                            <b-dropdown-item href="#" >Pagamentos</b-dropdown-item>
+                            <b-dropdown-item href="#">Projetos</b-dropdown-item>
+                            <b-dropdown-divider></b-dropdown-divider>
+                            <b-dropdown-item href="#" >Sair</b-dropdown-item>
+
+
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
                 </b-collapse>
             </b-navbar>
         </div>
         <div>
-            <b-nav class="bg-light nav-custom">
-                <b-nav-item active>Active</b-nav-item>
-                <b-nav-item>Link</b-nav-item>
-                <b-nav-item>Another Link</b-nav-item>
-                <b-nav-item disabled>Disabled</b-nav-item>
-            </b-nav>
+            <b-breadcrumb>
+                <b-breadcrumb-item href="/dashboard">
+                    <b-icon icon="house-fill" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon>
+                    Início
+                </b-breadcrumb-item>
+                <b-breadcrumb-item href="/servicos" >Serviços</b-breadcrumb-item>
+                <b-breadcrumb-item href="/servicos/cadastrar" >Cadastrar</b-breadcrumb-item>
+
+                <b-breadcrumb-item href="/servicos/categorias" >Categorias</b-breadcrumb-item>
+
+            </b-breadcrumb>
         </div>
+
     </div>
 </template>
 
 <script>
     export default {
         name: "header",
+        data() {
+            return {
+                items: [
+                    {
+                        text: 'Início',
+                        href: '/dashboard',
+                    },
+                    {
+                        text: 'Serviços',
+                        href: '/servicos',
+                    },
+                    {
+                        text: 'Cadastrar',
+                        href: '/servicos/cadastrar',
+                    },
+                    {
+                        text: 'Categorias',
+                        href: '/servicos/categorias',
+                    },
+                    {
+                        text: 'Início',
+                    },
+
+                ]
+            }
+        }
     }
 </script>
 
 <style lang="scss" scoped>
-    @import "src/assets/scss/variables";
+    @import "src/assets/scss/style";
+
+
+    .hidden {
+        display: none;
+    }
+
 
     div {
         div {
             box-shadow: 0px 1px rgba(107, 73, 202, 0.16);
 
             .navbar-logo-item {
-                background-color: $cyan;
+                background-color: $info;
                 border-radius: 5px;
                 margin-right: 20px;
-
-            }
-            .dropdown-custom {
-                &:hover {
-                    background-color: $info;
+                .nav-item-logo-text {
+                    font-size: 15px;
+                    border-bottom: solid 1px $white;
                 }
-            }
 
+            }
         }
 
     }

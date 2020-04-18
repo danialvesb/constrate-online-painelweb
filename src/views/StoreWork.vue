@@ -110,7 +110,7 @@
         margin: auto;
         .form-container {
             width: 60%;
-            padding: 3px;
+            padding: 5px;
             margin: 5px;
             background-color: $light;
         }

@@ -6,7 +6,7 @@
             <b-card-text class="text-white">
                 <strong>9.823
                     <br>
-                    Members online
+                    Members online Members online Members
                 </strong>
             </b-card-text>
         </b-card>
@@ -26,11 +26,9 @@
 
 <style scoped lang="scss">
     .card-traffic {
-        margin: 10px;
-        max-width: 40rem;
-        min-width: 30rem;
-        min-height: 8rem;
         outline: none;
+        border: solid 1px;
+        word-wrap: break-word;
     }
 
 </style>

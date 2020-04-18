@@ -1,6 +1,6 @@
 // Base grayscale colors definitions
 $white: #fff !default;
-$gray-100: #f8f9fa !default;
+$gray-100: rgba(48, 60, 84, 0.57) !default;
 $gray-200: #e9ecef !default;
 $gray-300: #dee2e6 !default;
 $gray-400: #ced4da !default;
@@ -24,18 +24,9 @@ $green: #28a745 !default;
 $teal: #20c997 !default;
 $cyan: #303C54 !default;
 
-$dropdown-bg: #303C54;
-$dropdown-link-hover-color: $white;
-$dropdown-link-hover-bg: rgba(71, 83, 117, 0.98);
-$dropdown-link-color: $white;
-
-$navbar-light-color: $white;
-$navbar-light-hover-color: $white;
-$navbar-light-disabled-color: $white;
-$navbar-light-active-color: $white;
 
 // Theme color default definitions
-$primary: $blue !default;
+$primary: #3399FF !default;
 $secondary: $gray-600 !default;
 $success: $green !default;
 $info: $cyan !default;

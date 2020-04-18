@@ -28,7 +28,7 @@ function configRoutes () {
       children: [
         {
           path: '/dashboard',
-          name: 'Dashboard',
+          name: 'Home',
           component: Dashboard
         },
         {
