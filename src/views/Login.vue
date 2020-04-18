@@ -2,43 +2,70 @@
     <div class="container-a">
         <div class="sub-container-a">
             <div class="form-container">
+                <h4>Login</h4>
                 <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-                    <b-form-group
-                            id="input-group-1"
-                            label="Email address:"
-                            label-for="input-1"
-                            description="We'll never share your email with anyone else.">
+                    <b-form-group>
                         <b-form-input
                                 id="input-1"
                                 v-model="form.email"
                                 type="email"
                                 required
                                 placeholder="Enter email"
+                                class="mb-1"
                         ></b-form-input>
-                    </b-form-group>
+                    <b-form-input
+                            id="input-2"
+                            v-model="form.name"
+                            required
+                            placeholder="Enter name"
+                    ></b-form-input>
 
-                    <b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
-                        <b-form-input
-                                id="input-2"
-                                v-model="form.name"
-                                required
-                                placeholder="Enter name"
-                        ></b-form-input>
                     </b-form-group>
-                    <b-button type="submit" variant="primary">Submit</b-button>
-                    <b-button type="reset" variant="danger">Reset</b-button>
+                    <div class="footer">
+                        <b-button type="submit" variant="primary">Entrar</b-button>
+                        <b-button type="submit" href="/signup" variant="primary">Não tem conta?</b-button>
+                    </div>
                 </b-form>
             </div>
-            <div class="options-container">
 
-            </div>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: "Login"
+        name: "Login",
+        data() {
+            return {
+                form: {
+                    email: '',
+                    name: '',
+                    food: null,
+                    checked: []
+                },
+                foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
+                show: true
+            }
+        },
+        methods: {
+            onSubmit(evt) {
+                evt.preventDefault()
+                alert(JSON.stringify(this.form))
+            },
+            onReset(evt) {
+                evt.preventDefault()
+                // Reset our form values
+                this.form.email = ''
+                this.form.name = ''
+                this.form.food = null
+                this.form.checked = []
+                // Trick to reset/clear native browser form validation state
+                this.show = false
+                this.$nextTick(() => {
+                    this.show = true
+                })
+            }
+        }
     }
 </script>
 
@@ -56,16 +83,19 @@
             flex-direction: row;
             flex-wrap: wrap;
             width: 90%;
-            min-height: 100px;
+            min-height: 150px;
             background-color: $white;
             border: solid 1px $gray-900;
             .form-container {
-                width: 50%;
+                width: 100%;
+                padding: 20px;
+                .footer {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                }
             }
-            .options-container {
-                width: 50%;
-                background-color: $primary;
-            }
+
         }
     }
 

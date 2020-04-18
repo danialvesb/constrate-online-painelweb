@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from "../views/Login";
+import Signup from "../views/Signup";
 
 // Views
 const Dashboard = () => import('../views/Dashboard')
@@ -52,6 +53,13 @@ function configRoutes () {
           name: 'Login',
           component: Login
         },
+        {
+          path: '/signup',
+          name: 'Signup',
+          component: Signup
+        },
+
+
 
       ]
     },
