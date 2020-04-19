@@ -18,7 +18,7 @@
                     <b-table
                             hover
                             id="table-users"
-                            :items="items"
+                            :items="categories"
                             :per-page="perPage"
                             :current-page="currentPage">
                     </b-table>
@@ -39,6 +39,7 @@
 
 <script>
     import header from "../components/headerNav";
+    import {mapActions, mapGetters} from "vuex";
     export default {
         name: "StoreCategory",
         data() {
@@ -64,10 +65,21 @@
             'header-nav': header,
             // 'chart': chart
         },
-        computed: {
-            rows() {
-                return this.items.length
+        methods: {
+            ...mapActions(['loadCategories']),
+            loadCategoriesDataLocal() {
+                this.loadCategories()
             }
+        },
+        computed: {
+            ...mapGetters({categories:'categoriesList'}),
+            rows() {
+                return this.categories.length
+            }
+
+        },
+        mounted() {
+            this.loadCategoriesDataLocal()
         }
     }
 </script>

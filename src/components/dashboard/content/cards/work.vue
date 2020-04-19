@@ -3,9 +3,9 @@
 
         <b-card class="m-1 p-1 card-container">
             <b-img src="https://placekitten.com/1000/300" class="img-fluid" width="500"></b-img>
-            <strong>Título</strong>
+            <strong>{{ work.title }}</strong>
             <b-card-text>
-                Some quick example text to build on the card and make up the bulk of the card's content.
+                {{ work.description }}
             </b-card-text>
             <b-button-group>
                 <b-button variant="danger">Excluir</b-button>
@@ -18,7 +18,13 @@
 
 <script>
     export default {
-        name: "work"
+        name: "work",
+        props: {
+            work: {
+                type: Object,
+                required: true
+            }
+        },
     }
 </script>
 

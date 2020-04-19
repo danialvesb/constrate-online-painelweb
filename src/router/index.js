@@ -45,7 +45,7 @@ function configRoutes () {
         },
         {
           path: '/servicos/categorias',
-          name: 'CreateWork',
+          name: 'CategoriesWorks',
           component: StoreCategory
         },
         {
