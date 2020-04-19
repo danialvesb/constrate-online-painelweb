@@ -13,8 +13,8 @@
                     <div>
                         <h3>Usuários</h3>
                     </div>
-                    <b-form>
-                        <b-form-input size="sm" class="mr-sm-2 mb-1" placeholder="Pesquisar"></b-form-input>
+                    <b-form class="mr-4">
+                        <b-form-input size="sm" class="mr-sm-1 mb-1" placeholder="Pesquisar"></b-form-input>
                     </b-form>
                     <b-table
                         hover
@@ -22,7 +22,16 @@
                         :items="users"
                         :per-page="perPage"
                         :current-page="currentPage"
-                        small></b-table>
+                        :fields="fields"
+                        responsive
+                        small
+                        :busy="isBusy">
+                        <template v-slot:table-busy>
+                            <div class="text-center text-danger my-2">
+                                <b-spinner class="align-middle"></b-spinner>
+                            </div>
+                        </template>
+                    </b-table>
 
                 </div>
                 <b-pagination
@@ -51,6 +60,34 @@ export default {
         return {
             perPage: 9,
             currentPage: 1,
+            fields: [
+                {
+                    key: 'id',
+                    label: 'Id'
+                },
+                {
+                    key: 'name',
+                    label: 'Nome'
+                },
+                {
+                    key: 'email',
+                    label: 'E-mail'
+                },
+
+                {
+                    key: 'city',
+                    label: 'Cidade'
+                },
+                {
+                    key: 'uf',
+                    label: 'UF'
+                },
+                {
+                    key: 'district',
+                    label: 'Bairro'
+                }
+
+            ],
             cards: {
                 cardUsers: {
                     qtd: 20,
@@ -69,7 +106,8 @@ export default {
                     text: 'Quantidae de clientes:'
                 },
 
-            }
+            },
+            isBusy: true,
 
         }
     },
@@ -77,6 +115,11 @@ export default {
         ...mapActions(['loadUsersData']),
         loadUsersLocal() {
             this.loadUsersData()
+        },
+        toggleBusy() {
+            if (this.users.length > 0 && this.isBusy == true) {
+                this.isBusy = !this.isBusy
+            }
         }
     },
     components: {
@@ -95,6 +138,9 @@ export default {
     },
     mounted() {
         this.loadUsersLocal()
+    },
+    updated() {
+        this.toggleBusy()
     }
 }
 </script>
@@ -114,14 +160,14 @@ export default {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 90%;
+            width: 95%;
             min-height: 600px;
-            -webkit-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);
+            -webkit-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.93);
             -moz-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);
             box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);
             margin-bottom: 20px;
             .cards {
-                width: 95%;
+                width: 98%;
                 margin: 5px;
                 display: flex;
                 flex-direction: row;
@@ -129,11 +175,12 @@ export default {
                 justify-content: space-between;
             }
             .table-users {
-                width: 95%;
+                width: 98%;
                 min-height: 450px;
                 margin: 5px;
                 display: flex;
                 flex-direction: column;
+                flex-wrap: wrap;
                 border-radius: 10px;
                 border: solid 1px rgba(48, 60, 84, 0.38);
                 div {

@@ -4,7 +4,6 @@
         <div class="buttons m-1">
             <b-button variant="success">Cadastrar categoria</b-button>
         </div>
-
         <div class="container-a mt-2 pt-3">
             <div class="sub-container-a">
 
@@ -20,7 +19,15 @@
                             id="table-users"
                             :items="categories"
                             :per-page="perPage"
-                            :current-page="currentPage">
+                            :current-page="currentPage"
+                            :fields="fields"
+                            responsive
+                            :busy="isBusy">
+                        <template v-slot:table-busy>
+                            <div class="text-center text-danger my-2">
+                                <b-spinner class="align-middle"></b-spinner>
+                            </div>
+                        </template>
                     </b-table>
                 </div>
                 <b-pagination
@@ -46,19 +53,18 @@
             return {
                 perPage: 9,
                 currentPage: 1,
-                items: [
-                    { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-                    { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-                    { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-                    { age: 40, first_name: 'Thor', last_name: 'MacDonald' },
-                    { age: 29, first_name: 'Dick', last_name: 'Dunlap' },
-                    { age: 29, first_name: 'Dick', last_name: 'Dunlap' },
-                    { age: 29, first_name: 'Dick', last_name: 'Dunlap' },
-                    { age: 29, first_name: 'Dick', last_name: 'Dunlap' },
-                    { age: 29, first_name: 'Dick', last_name: 'Dunlap' },
-                    { age: 29, first_name: 'Dick', last_name: 'Dunlap' },
+                fields: [
+                    {
+                        key: 'id',
+                        label: 'Id'
+                    },
+                    {
+                        key: 'title',
+                        label: 'Título'
+                    },
 
-                ]
+                ],
+                isBusy: true,
             }
         },
         components: {
@@ -69,6 +75,11 @@
             ...mapActions(['loadCategories']),
             loadCategoriesDataLocal() {
                 this.loadCategories()
+            },
+            toggleBusy() {
+                if (this.categories.length > 0 && this.isBusy == true) {
+                    this.isBusy = !this.isBusy
+                }
             }
         },
         computed: {
@@ -80,7 +91,12 @@
         },
         mounted() {
             this.loadCategoriesDataLocal()
+
+        },
+        updated() {
+            this.toggleBusy()
         }
+
     }
 </script>
 
