@@ -17,7 +17,7 @@
                     <b-table
                             hover
                             id="table-users"
-                            :items="categories"
+                            :items="categoriesMap()"
                             :per-page="perPage"
                             :current-page="currentPage"
                             :fields="fields"
@@ -27,6 +27,17 @@
                             <div class="text-center text-danger my-2">
                                 <b-spinner class="align-middle"></b-spinner>
                             </div>
+                        </template>
+                        <template v-slot:cell(_showOptions)="row">
+                            <b-button-group>
+                                <b-button size="sm" @click="row.toggleDetails" class="mr-2" variant="primary">
+                                    Editar
+                                </b-button>
+                                <b-button size="sm" @click="row.toggleDetails" class="mr-2" variant="danger">
+                                    Apagar
+                                </b-button>
+
+                            </b-button-group>
                         </template>
                     </b-table>
                 </div>
@@ -62,6 +73,11 @@
                         key: 'title',
                         label: 'Título'
                     },
+                    {
+                        key: '_showOptions',
+                        label: 'Opções'
+                    },
+
 
                 ],
                 isBusy: true,
@@ -80,6 +96,12 @@
                 if (this.categories.length > 0 && this.isBusy == true) {
                     this.isBusy = !this.isBusy
                 }
+            },
+            categoriesMap(){
+                let categoriesMap = this.categories.map( category => {
+                    return { id:category.id, title: category.title, _showOptions: true }
+                } )
+                return categoriesMap
             }
         },
         computed: {
