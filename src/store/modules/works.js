@@ -32,7 +32,7 @@ export default {
 
             const workJson  = JSON.stringify(work)
 
-            Vue.prototype.$http.post('api/services', workJson).then( res => {
+            Vue.prototype.$http.post('/services', workJson).then( res => {
                 const data = res.data
 
                 if( data ) {

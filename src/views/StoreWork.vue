@@ -8,7 +8,7 @@
                     <h4><strong>Cadastro de serviço</strong></h4>
                 </div>
                 <div class="form-container">
-                    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+                    <b-form v-if="show">
                         <b-form-group
                                 id="input-group-1"
                                 label="Serviço:"
@@ -18,14 +18,14 @@
                         >
                             <b-form-input
                                     id="input-2"
-                                    v-model="form.name"
+                                    v-model="data.title"
                                     required
                                     placeholder="Título do serviço"
                                     class="mb-1"
                             ></b-form-input>
                             <b-form-textarea
                                     id="textarea"
-                                    v-model="form.description"
+                                    v-model="data.description"
                                     placeholder="Descrição do serviço..."
                                     rows="3"
                                     max-rows="6"
@@ -36,7 +36,7 @@
                         <b-form-group id="input-group-3" label="Categoria e imagem:" label-for="input-3">
                             <b-form-select
                                     id="input-3"
-                                    v-model="form.food"
+                                    v-model="data.categorySelected"
                                     :options="dataSelect"
                                     required
                             ></b-form-select>
@@ -54,19 +54,15 @@
                         </div>
                         </b-form-group>
                         <b-button-group>
-                            <b-button type="submit" variant="primary">Salvar</b-button>
-                            <b-button type="reset" variant="danger">Redefinir</b-button>
+                            <b-button variant="primary" @click="addWorkLocal(data)">Salvar</b-button>
+                            <b-button variant="danger" @click="onReset">Redefinir</b-button>
                         </b-button-group>
                     </b-form>
-
-
+                    {{data}}
                 </div>
             </div>
-
-
         </div>
     </div>
-
 
 </template>
 
@@ -78,11 +74,12 @@
         name: "StoreWork",
         data() {
             return {
-                form: {
-                    email: '',
-                    name: '',
-                    food: null,
-                    checked: []
+                data: {
+                    title: '',
+                    categorySelected: null,
+                    description: '',
+                    image_path: "/",
+
                 },
                 dataSelect: [{ text: 'Selecione uma categoria', value: null }],
                 show: true
@@ -96,35 +93,24 @@
         },
         methods: {
             ...mapActions(['addWork', 'loadCategories']),
-            onSubmit(evt) {
-                evt.preventDefault()
-                alert(JSON.stringify(this.form))
-            },
-            onReset(evt) {
-                evt.preventDefault()
-                // Reset our form values
-                this.form.email = ''
-                this.form.name = ''
-                this.form.food = null
-                this.form.checked = []
-                // Trick to reset/clear native browser form validation state
-                this.show = false
-                this.$nextTick(() => {
-                    this.show = true
-                })
+            onReset() {
+                this.data.title = ''
+                this.data.description = ''
+                this.data.categorySelected = null
             },
             loadCategoruesListLocal() {
                 this.loadCategories()
             },
-            concatCategoriesSelect() {
-                this.dataSelect.concat(this.categoriesSelect)
+            addWorkLocal(data){
+                this.addWork(data)
+                this.onReset()
             }
         },
         mounted() {
             this.loadCategoruesListLocal()
             setTimeout(() =>{
                     this.dataSelect = this.dataSelect.concat(this.categoriesSelect)
-            }, 2000)
+            }, 1000)
         },
     }
 </script>
