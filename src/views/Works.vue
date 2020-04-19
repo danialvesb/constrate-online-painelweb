@@ -9,7 +9,7 @@
 
 <script>
     import header from "../components/headerNav";
-    import work from "../components/dashboard/content/cards/work";
+    import work from "../components/work/work";
     import { mapActions } from 'vuex'
     import { mapGetters } from 'vuex'
 

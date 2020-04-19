@@ -7,7 +7,6 @@ import store from './store/store';
 import './axios/axios'
 
 Vue.config.productionTip = false
-
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(VueRouter)

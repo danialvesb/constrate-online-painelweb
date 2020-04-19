@@ -58,7 +58,6 @@
                             <b-button variant="danger" @click="onReset">Redefinir</b-button>
                         </b-button-group>
                     </b-form>
-                    {{data}}
                 </div>
             </div>
         </div>

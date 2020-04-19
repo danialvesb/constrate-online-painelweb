@@ -1,6 +1,5 @@
 import Vue from 'vue'
 
-
 export default {
     state: {
         users: [],
@@ -29,7 +28,6 @@ export default {
     },
     actions: {
         addUser({ commit }, user) {
-
             const userJson  = JSON.stringify(user)
 
             Vue.prototype.$http.post('api/services', userJson).then( res => {
@@ -43,7 +41,6 @@ export default {
             }).catch(err => {
                 alert(err)
             })
-
         },
         loadUsersData({ commit }) {
             Vue.prototype.$http.get('/users').then( resp => {
@@ -51,11 +48,9 @@ export default {
 
                 if(data) {
                     commit('setUsers', data)
-
                 }
             } ).catch(err => {
                 alert(err);
-
             });
         },
         // removeWork({ commit }, id) {
@@ -81,5 +76,4 @@ export default {
         //     })
         // },
     }
-
 }

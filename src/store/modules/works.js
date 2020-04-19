@@ -1,6 +1,5 @@
 import Vue from 'vue'
 
-
 export default {
     state: {
         works: [],
@@ -12,11 +11,10 @@ export default {
         addWork(state, data) {
             state.works.push(data);
         },
-        //
-        // removeWork(state, id) {
-        //     const record = state.works.findIndex(element => element.id == id)
-        //     state.works.splice(record, 1)
-        // },
+        removeWork(state, id) {
+            const record = state.works.findIndex(element => element.id == id)
+            state.works.splice(record, 1)
+        },
         // updateWork(state, work) {
         //     const record = state.works.findIndex(element => element.id == work.id)
         //     state.works[record] = work
@@ -29,7 +27,6 @@ export default {
     },
     actions: {
         addWork({ commit }, work) {
-
             const workJson  = JSON.stringify(work)
 
             Vue.prototype.$http.post('/services', workJson).then( res => {
@@ -43,7 +40,6 @@ export default {
             }).catch(err => {
                 alert(err)
             })
-
         },
         loadWorksData({ commit }) {
             Vue.prototype.$http.get('services/').then( resp => {
@@ -51,24 +47,22 @@ export default {
 
                 if(data) {
                     commit('setWorks', data)
-
                 }
             } ).catch(err => {
                 alert(err);
             });
         },
-        // removeWork({ commit }, id) {
-        //     Vue.prototype.$http.delete(`api/services/${id}`).then(resp => {
-        //         const data = resp.data
-        //
-        //         if(data) {
-        //             commit('removeWork', id)
-        //         }
-        //     }).catch(err => {
-        //         alert(JSON.stringify(err))
-        //     } )
-        //
-        // },
+        removeWork({ commit }, id) {
+            Vue.prototype.$http.delete(`/services/${id}`).then(resp => {
+                const data = resp.data
+
+                if(data) {
+                    commit('removeWork', id)
+                }
+            }).catch(err => {
+                alert(JSON.stringify(err))
+            } )
+        },
         // updateWork({ commit }, work) {
         //     Vue.prototype.$http.put(`api/services/${work.id}`, work).then( resp => {
         //         const data = resp.data;
@@ -80,5 +74,4 @@ export default {
         //     })
         // },
     }
-
 }

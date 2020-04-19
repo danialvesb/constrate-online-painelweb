@@ -8,11 +8,9 @@ export default {
         setCategories(state, data) {
             state.categories = data
         },
-
         addCategory(state, data) {
             state.categories.push(data);
         },
-
         // removeCategory(state, id) {
         //     const record = state.categories.findIndex(element => element.id == id)
         //     state.categories.splice(record, 1)
@@ -22,8 +20,6 @@ export default {
             const record = state.categories.findIndex(element => element.id == category.id)
             state.categories[record] = category
         }
-
-
     },
     getters: {
         categoriesList(state) {
@@ -79,6 +75,5 @@ export default {
                 alert(err)
             })
         },
-
     }
 }
