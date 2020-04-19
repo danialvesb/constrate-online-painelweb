@@ -43,6 +43,8 @@
     import header from "../components/header";
     import traffic from "../components/dashboard/content/cards/traffic";
     // import chart from "../components/dashboard/content/charts/chart";
+    import { mapGetters } from 'vuex'
+    import { mapActions } from 'vuex'
 export default {
     name: "Dashboard",
     data() {
@@ -64,15 +66,28 @@ export default {
             ]
         }
     },
+    methods: {
+        ...mapActions(['loadUsersData']),
+        loadUsersLocal() {
+            this.loadUsersData()
+        }
+    },
     components: {
         'card-traffic': traffic,
         'header-nav': header,
         // 'chart': chart
     },
     computed: {
+        ...mapGetters({
+            users: 'usersList'
+        }),
         rows() {
             return this.items.length
-        }
+        },
+
+    },
+    mounted() {
+        this.loadUsersLocal()
     }
 }
 </script>
