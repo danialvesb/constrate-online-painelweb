@@ -9,9 +9,9 @@ export default {
         setWorks(state, data) {
             state.works = data
         },
-        // addWork(state, data) {
-        //     state.works.push(data);
-        // },
+        addWork(state, data) {
+            state.works.push(data);
+        },
         //
         // removeWork(state, id) {
         //     const record = state.works.findIndex(element => element.id == id)
@@ -28,23 +28,23 @@ export default {
         },
     },
     actions: {
-        // addWork({ commit }, work) {
-        //
-        //     const workJson  = JSON.stringify(work)
-        //
-        //     Vue.prototype.$http.post('api/services', workJson).then( res => {
-        //         const data = res.data
-        //
-        //         if( data ) {
-        //             commit('addWork', work)
-        //         }else {
-        //             alert('Não foi possível gravar serviço')
-        //         }
-        //     }).catch(err => {
-        //         alert(err)
-        //     })
-        //
-        // },
+        addWork({ commit }, work) {
+
+            const workJson  = JSON.stringify(work)
+
+            Vue.prototype.$http.post('api/services', workJson).then( res => {
+                const data = res.data
+
+                if( data ) {
+                    commit('addWork', work)
+                }else {
+                    alert('Não foi possível gravar serviço')
+                }
+            }).catch(err => {
+                alert(err)
+            })
+
+        },
         loadWorksData({ commit }) {
             Vue.prototype.$http.get('services/').then( resp => {
                 const data =  resp.data;

@@ -37,7 +37,7 @@
                             <b-form-select
                                     id="input-3"
                                     v-model="form.food"
-                                    :options="foods"
+                                    :options="dataSelect"
                                     required
                             ></b-form-select>
                         <div class="form-container-photo">
@@ -72,6 +72,8 @@
 
 <script>
     import header from "../components/headerNav";
+    import { mapActions, mapGetters } from 'vuex'
+
     export default {
         name: "StoreWork",
         data() {
@@ -82,14 +84,18 @@
                     food: null,
                     checked: []
                 },
-                foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
+                dataSelect: [{ text: 'Selecione uma categoria', value: null }],
                 show: true
             }
         },
         components: {
             'header-nav': header,
         },
+        computed: {
+            ...mapGetters({ categoriesSelect: 'categoriesSelected'})
+        },
         methods: {
+            ...mapActions(['addWork', 'loadCategories']),
             onSubmit(evt) {
                 evt.preventDefault()
                 alert(JSON.stringify(this.form))
@@ -106,9 +112,20 @@
                 this.$nextTick(() => {
                     this.show = true
                 })
+            },
+            loadCategoruesListLocal() {
+                this.loadCategories()
+            },
+            concatCategoriesSelect() {
+                this.dataSelect.concat(this.categoriesSelect)
             }
-        }
-
+        },
+        mounted() {
+            this.loadCategoruesListLocal()
+            setTimeout(() =>{
+                    this.dataSelect = this.dataSelect.concat(this.categoriesSelect)
+            }, 2000)
+        },
     }
 </script>
 

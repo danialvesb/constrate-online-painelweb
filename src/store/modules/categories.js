@@ -29,15 +29,14 @@ export default {
         categoriesList(state) {
             return state.categories;
         },
-        // categoriesListSelectedOptions(state) {
-        //
-        //     return  state.categories.map( category => {
-        //         return {
-        //             value: category.id.toString(10),
-        //             text: category.title
-        //         }
-        //     })
-        // }
+        categoriesSelected(state) {
+            return  state.categories.map( category => {
+                return {
+                    value: category.id.toString(10),
+                    text: category.title
+                }
+            })
+        }
     },
     actions: {
         loadCategories({ commit }) {
