@@ -1,6 +1,6 @@
 <template>
     <div>
-        <header-nav></header-nav>
+        <h-nav></h-nav>
         <div class="container-a">
             <div class="sub-container-infors">
                 <div class="cards">
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-    import header from "../components/header";
+    import headerNav from "../components/headerNav";
     import traffic from "../components/dashboard/content/cards/traffic";
     // import chart from "../components/dashboard/content/charts/chart";
     import { mapGetters } from 'vuex'
@@ -74,7 +74,7 @@ export default {
     },
     components: {
         'card-traffic': traffic,
-        'header-nav': header,
+        'h-nav': headerNav,
         // 'chart': chart
     },
     computed: {

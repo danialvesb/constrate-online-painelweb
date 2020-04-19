@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import header from "../components/header";
+    import header from "../components/headerNav";
     import work from "../components/dashboard/content/cards/work";
     export default {
         name: "Works",

@@ -71,7 +71,7 @@
 </template>
 
 <script>
-    import header from "../components/header";
+    import header from "../components/headerNav";
     export default {
         name: "StoreWork",
         data() {

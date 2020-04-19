@@ -2,7 +2,7 @@
     <div>
 
         <b-card class="m-1 p-1 card-container">
-            <b-img src="https://placekitten.com/1000/300" class="img-fluid"></b-img>
+            <b-img src="https://placekitten.com/1000/300" class="img-fluid" width="500"></b-img>
             <strong>Título</strong>
             <b-card-text>
                 Some quick example text to build on the card and make up the bulk of the card's content.

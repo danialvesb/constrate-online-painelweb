@@ -52,7 +52,7 @@
 
 <script>
     export default {
-        name: "header",
+        name: "h-nav",
         data() {
             return {
                 items: [
