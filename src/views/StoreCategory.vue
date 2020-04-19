@@ -2,11 +2,10 @@
     <div>
         <header-nav></header-nav>
         <div class="buttons m-1">
-            <b-button variant="success">Cadastrar categoria</b-button>
+            <b-button variant="success" @click="toggleModal()">Cadastrar categoria</b-button>
         </div>
         <div class="container-a mt-2 pt-3">
             <div class="sub-container-a">
-
                 <div class="table-users">
                     <div>
                         <h3>Categorias</h3>
@@ -30,10 +29,10 @@
                         </template>
                         <template v-slot:cell(_showOptions)="row">
                             <b-button-group>
-                                <b-button size="sm" @click="row.toggleDetails" class="mr-2" variant="primary">
+                                <b-button size="sm" @click="toggleModalUpdate(row.item)" class="mr-2" variant="primary">
                                     Editar
                                 </b-button>
-                                <b-button size="sm" @click="row.toggleDetails" class="mr-2" variant="danger">
+                                <b-button size="sm" @click="toggleModalDelete(row.item)" class="mr-2" variant="danger">
                                     Apagar
                                 </b-button>
 
@@ -47,6 +46,33 @@
                         :per-page="perPage"
                         aria-controls="table-users">
                 </b-pagination>
+                <div>
+                    <b-modal id="modal-new" ref="modal-category" hide-footer>
+                        <div class="d-block text-center">
+                            <h3>Nova Categoria</h3>
+                            <b-form-input v-model="category.title"></b-form-input>
+                        </div>
+                        <b-button class="mt-3" variant="success" block @click="onClickSaveCategory()">Salvar</b-button>
+                        <b-button class="mt-2" variant="warning" block @click="hideModal">Cancelar</b-button>
+                    </b-modal>
+                    <b-modal id="modal-delete" ref="modal-category-delete" hide-footer>
+                        <div class="d-block text-center">
+                            <h3>Confirmar apagar categoria?</h3>
+                        </div>
+                        <b-button class="mt-3" variant="danger" block @click="onClickDeleteCategory()">Apagar</b-button>
+                        <b-button class="mt-2" variant="warning" block @click="hideModal">Cancelar</b-button>
+                    </b-modal>
+                    <b-modal id="modal-delete" ref="modal-category-update" hide-footer>
+                        <div class="d-block text-center">
+                            <h3>Editar categoria</h3>
+                            <b-form-input v-model="category.title"></b-form-input>
+                        </div>
+                        <b-button class="mt-3" variant="success" block @click="onClickUpdateCategory()">Salvar edição</b-button>
+                        <b-button class="mt-2" variant="warning" block @click="hideModal">Cancelar</b-button>
+                    </b-modal>
+
+
+                </div>
             </div>
         </div>
 
@@ -81,6 +107,10 @@
 
                 ],
                 isBusy: true,
+                category: {
+                    id: 0,
+                    title: ''
+                }
             }
         },
         components: {
@@ -88,7 +118,7 @@
             // 'chart': chart
         },
         methods: {
-            ...mapActions(['loadCategories']),
+            ...mapActions(['loadCategories', 'addCategory', 'removeCategory', 'updateCategory']),
             loadCategoriesDataLocal() {
                 this.loadCategories()
             },
@@ -102,7 +132,49 @@
                     return { id:category.id, title: category.title, _showOptions: true }
                 } )
                 return categoriesMap
+            },
+            hideModal() {
+                this.category.title = ''
+                this.$refs['modal-category'].hide()
+                this.$refs['modal-category-delete'].hide()
+                this.$refs['modal-category-update'].hide()
+            },
+            onClickSaveCategory() {
+                this.addCategory(this.category)
+                this.loadCategoriesDataLocal()
+                this.category.title = ''
+                this.hideModal();
+
+            },
+            onClickDeleteCategory() {
+                this.removeCategory(this.category.id)
+                this.category = { id: 0, title: '' }
+                this.loadCategoriesDataLocal()
+                this.hideModal();
+
+            },
+            onClickUpdateCategory() {
+                this.updateCategory(this.category)
+                this.category = { id: 0, title: '' }
+                this.loadCategoriesDataLocal()
+                this.hideModal();
+
+            },
+
+            toggleModal() {
+                this.$refs['modal-category'].toggle('#toggle-btn')
+            },
+            toggleModalDelete(item) {
+                this.category.id = item.id
+                this.category.title = item.title
+                this.$refs['modal-category-delete'].toggle('#toggle-btn')
+            },
+            toggleModalUpdate(item) {
+                this.category.id = item.id
+                this.category.title = item.title
+                this.$refs['modal-category-update'].toggle('#toggle-btn')
             }
+
         },
         computed: {
             ...mapGetters({categories:'categoriesList'}),

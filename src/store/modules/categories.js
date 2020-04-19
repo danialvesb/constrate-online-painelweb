@@ -8,20 +8,20 @@ export default {
         setCategories(state, data) {
             state.categories = data
         },
-        //
-        // addCategory(state, data) {
-        //     state.categories.push(data);
-        // },
-        //
+
+        addCategory(state, data) {
+            state.categories.push(data);
+        },
+
         // removeCategory(state, id) {
         //     const record = state.categories.findIndex(element => element.id == id)
         //     state.categories.splice(record, 1)
         // },
         //
-        // updateCategory(state, category) {
-        //     const record = state.categories.findIndex(element => element.id == category.id)
-        //     state.categories[record] = category
-        // }
+        updateCategory(state, category) {
+            const record = state.categories.findIndex(element => element.id == category.id)
+            state.categories[record] = category
+        }
 
 
     },
@@ -48,40 +48,38 @@ export default {
                 alert(err)
             })
         },
-        // addCategory({ commit }, category) {
-        //
-        //     Vue.prototype.$http.post('api/services/categories', JSON.stringify(category)).then( resp => {
-        //         const dataResp = resp.data
-        //
-        //         if(dataResp)
-        //             commit('addCategory', category)
-        //
-        //     }).catch(err => {
-        //         console.log(err)
-        //     })
-        // },
-        // removeCategory({ commit }, id) {
-        //     Vue.prototype.$http.delete(`api/services/categories/${id}`).then(resp => {
-        //         const data = resp.data
-        //
-        //         if(data) {
-        //             commit('removeCategory', id)
-        //         }
-        //     }).catch(err => {
-        //         alert(JSON.stringify(err))
-        //     } )
-        //
-        // },
-        // updateCategory({ commit }, category) {
-        //     Vue.prototype.$http.put(`api/services/categories/${category.id}`, category).then( resp => {
-        //         const data = resp.data;
-        //
-        //         if(data)
-        //             commit('updateCategory', category)
-        //     }).catch( err => {
-        //         alert(err)
-        //     })
-        // },
+        addCategory({ commit }, category) {
+            Vue.prototype.$http.post('/services/categories', JSON.stringify(category)).then( resp => {
+                const dataResp = resp.data
+
+                if(dataResp)
+                    commit('addCategory', category)
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        removeCategory({ commit }, id) {
+            Vue.prototype.$http.delete(`/services/categories/${id}`).then(resp => {
+                const data = resp.data
+
+                if(data) {
+                    commit('removeCategory', id)
+                }
+            }).catch(err => {
+                alert(JSON.stringify(err))
+            } )
+
+        },
+        updateCategory({ commit }, category) {
+            Vue.prototype.$http.put(`/services/categories/${category.id}`, category).then( resp => {
+                const data = resp.data;
+
+                if(data)
+                    commit('updateCategory', category)
+            }).catch( err => {
+                alert(err)
+            })
+        },
 
     }
 }
