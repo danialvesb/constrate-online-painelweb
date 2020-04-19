@@ -57,6 +57,7 @@
                     </b-modal>
                     <b-modal id="modal-delete" ref="modal-category-delete" hide-footer>
                         <div class="d-block text-center">
+                            <small>Lembre-se não é possível excluir categorias que tenha serviços vínculados</small>
                             <h3>Confirmar apagar categoria?</h3>
                         </div>
                         <b-button class="mt-3" variant="danger" block @click="onClickDeleteCategory()">Apagar</b-button>

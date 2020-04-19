@@ -7,13 +7,24 @@
             <b-card-text>
                 {{ work.description }}
             </b-card-text>
-            <b-button-group>
+            <b-card-body class="p-2 m-2 details-card">
+                <div>
+                    <div>
+                        Categoria: 15
+                    </div>
+                    <div>
+                        Ofertas ativas: 20
+                    </div>
+                </div>
+            </b-card-body>
+            <b-button-group class="container-fluid">
                 <b-button variant="primary">Editar</b-button>
                 <b-button variant="danger" @click="toggleModalDelete()">Excluir</b-button>
             </b-button-group>
         </b-card>
         <b-modal id="modal-delete" ref="modal-work-delete" hide-footer>
             <div class="d-block text-center">
+                <small>Lembre-se, não é possível excluir seviços que tenha ofertas</small>
                 <h3>Confirmar apagar serviço?</h3>
             </div>
             <b-button class="mt-3" variant="danger" block @click="onClickDeleteWorkLocal()">Apagar</b-button>
@@ -58,6 +69,11 @@
             outline: none;
             cursor: pointer;
         }
-
+    }
+    .details-card {
+        border-radius: 5px;
+        -webkit-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.6);
+        -moz-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.47);
+        box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.45);
     }
 </style>
