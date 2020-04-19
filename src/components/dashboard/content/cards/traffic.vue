@@ -4,10 +4,11 @@
                 class="mb-2 card-traffic bg-primary"
         >
             <b-card-text class="text-white">
-                <strong>9.823
-                    <br>
-                    Members online
+                <strong>
+                    {{ data.text }}
                 </strong>
+                <br>
+                {{ data.qtd }}
             </b-card-text>
         </b-card>
     </div>
@@ -19,18 +20,21 @@
         props: {
             color: {
                 require: true
-            }
+            },
+            data: {
+                require: true
+            },
+
         }
     }
 </script>
 
 <style scoped lang="scss">
     .card-traffic {
-        margin: 10px;
-        max-width: 40rem;
-        min-width: 30rem;
-        min-height: 8rem;
         outline: none;
+        cursor: pointer;
+        border: solid 1px;
+        word-wrap: break-word;
     }
 
 </style>

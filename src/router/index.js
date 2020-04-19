@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Login from "../views/Login";
+import Signup from "../views/Signup";
 
 // Views
 const Dashboard = () => import('../views/Dashboard')
@@ -28,7 +30,7 @@ function configRoutes () {
       children: [
         {
           path: '/dashboard',
-          name: 'Dashboard',
+          name: 'Home',
           component: Dashboard
         },
         {
@@ -43,9 +45,22 @@ function configRoutes () {
         },
         {
           path: '/servicos/categorias',
-          name: 'CreateWork',
+          name: 'CategoriesWorks',
           component: StoreCategory
         },
+        {
+          path: '/entrar',
+          name: 'Login',
+          component: Login
+        },
+        {
+          path: '/signup',
+          name: 'Signup',
+          component: Signup
+        },
+
+
+
       ]
     },
 

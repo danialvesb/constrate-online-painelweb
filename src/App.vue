@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="app">
         <router-view></router-view>
     </div>
 </template>
@@ -20,8 +20,16 @@ export default {
 
 <style lang="scss">
     @import 'src/assets/scss/style';
-    body {
+    html, body {
+        height: 100%;
+        min-height: 100%;
         margin: 0;
     }
+    .app {
+        height: 100%;
+        min-height: 100%;
+        margin: 0;
+    }
+
 
 </style>

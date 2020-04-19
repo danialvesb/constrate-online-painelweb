@@ -1,47 +1,197 @@
 <template>
     <div>
-        <header-nav></header-nav>
-        <div class="cards">
-            <card-traffic></card-traffic>
-            <card-traffic></card-traffic>
-            <card-traffic></card-traffic>
+        <h-nav></h-nav>
+        <div class="container-a">
+            <div class="sub-container-infors">
+                <div class="cards">
+                    <card-traffic :data="cards.cardUsers"></card-traffic>
+                    <card-traffic :data="cards.cardServices"></card-traffic>
+                    <card-traffic :data="cards.cardOffers"></card-traffic>
+                    <card-traffic :data="cards.cardClients"></card-traffic>
+                </div>
+                <div class="table-users">
+                    <div>
+                        <h3>Usuários</h3>
+                    </div>
+                    <b-form class="mr-4">
+                        <b-form-input size="sm" class="mr-sm-1 mb-1" placeholder="Pesquisar"></b-form-input>
+                    </b-form>
+                    <b-table
+                        hover
+                        id="table-users"
+                        :items="users"
+                        :per-page="perPage"
+                        :current-page="currentPage"
+                        :fields="fields"
+                        responsive
+                        small
+                        :busy="isBusy">
+                        <template v-slot:table-busy>
+                            <div class="text-center text-danger my-2">
+                                <b-spinner class="align-middle"></b-spinner>
+                            </div>
+                        </template>
+                    </b-table>
+
+                </div>
+                <b-pagination
+                        v-model="currentPage"
+                        :total-rows="rows"
+                        :per-page="perPage"
+                        aria-controls="table-users"
+                ></b-pagination>
+            </div>
+
+
         </div>
 
     </div>
 </template>
 
 <script>
-    import header from "../components/header";
+    import headerNav from "../components/headerNav";
     import traffic from "../components/dashboard/content/cards/traffic";
     // import chart from "../components/dashboard/content/charts/chart";
+    import { mapGetters } from 'vuex'
+    import { mapActions } from 'vuex'
 export default {
     name: "Dashboard",
+    data() {
+        return {
+            perPage: 9,
+            currentPage: 1,
+            fields: [
+                {
+                    key: 'id',
+                    label: 'Id'
+                },
+                {
+                    key: 'name',
+                    label: 'Nome'
+                },
+                {
+                    key: 'email',
+                    label: 'E-mail'
+                },
+
+                {
+                    key: 'city',
+                    label: 'Cidade'
+                },
+                {
+                    key: 'uf',
+                    label: 'UF'
+                },
+                {
+                    key: 'district',
+                    label: 'Bairro'
+                }
+
+            ],
+            cards: {
+                cardUsers: {
+                    qtd: 20,
+                    text: 'Usuários online:'
+                },
+                cardServices: {
+                    qtd: 20,
+                    text: 'Total de serviços:'
+                },
+                cardOffers: {
+                    qtd: 20,
+                    text: 'Quantidade de ofertas de serviços:'
+                },
+                cardClients: {
+                    qtd: 20,
+                    text: 'Quantidae de clientes:'
+                },
+
+            },
+            isBusy: true,
+
+        }
+    },
+    methods: {
+        ...mapActions(['loadUsersData']),
+        loadUsersLocal() {
+            this.loadUsersData()
+        },
+        toggleBusy() {
+            if (this.users.length > 0 && this.isBusy == true) {
+                this.isBusy = !this.isBusy
+            }
+        }
+    },
     components: {
         'card-traffic': traffic,
-        'header-nav': header,
+        'h-nav': headerNav,
         // 'chart': chart
+    },
+    computed: {
+        ...mapGetters({
+            users: 'usersList'
+        }),
+        rows() {
+            return this.users.length
+        },
+
+    },
+    mounted() {
+        this.loadUsersLocal()
+    },
+    updated() {
+        this.toggleBusy()
     }
 }
 </script>
 
 <style lang="scss" scoped>
-    div {
+    @import "src/assets/scss/style";
+    .container-a {
         display: flex;
         flex-direction: column;
-
-        .cards {
+        align-items: center;
+        flex-wrap: wrap;
+        width: 100%;
+        min-height: 1000px;
+        margin: auto;
+        .sub-container-infors {
+            background-color: $white;
             display: flex;
-            flex-direction: row;
-            margin: auto;
-
-        }
-        .image-dashboard {
-            display: flex;
-            margin: auto;
+            flex-direction: column;
+            align-items: center;
             width: 95%;
-            border-radius: 10px;
-            max-height: 300px;
+            min-height: 600px;
+            -webkit-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.93);
+            -moz-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);
+            box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);
+            margin-bottom: 20px;
+            .cards {
+                width: 98%;
+                margin: 5px;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            .table-users {
+                width: 98%;
+                min-height: 450px;
+                margin: 5px;
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                border-radius: 10px;
+                border: solid 1px rgba(48, 60, 84, 0.38);
+                div {
+                    margin: 4px;
+                    h3 {
+                        color: $black
+                    }
+                }
+            }
         }
+
     }
 
 
