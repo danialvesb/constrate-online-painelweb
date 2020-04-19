@@ -4,10 +4,10 @@
         <div class="container-a">
             <div class="sub-container-infors">
                 <div class="cards">
-                    <card-traffic></card-traffic>
-                    <card-traffic></card-traffic>
-                    <card-traffic></card-traffic>
-                    <card-traffic></card-traffic>
+                    <card-traffic :data="cards.cardUsers"></card-traffic>
+                    <card-traffic :data="cards.cardServices"></card-traffic>
+                    <card-traffic :data="cards.cardOffers"></card-traffic>
+                    <card-traffic :data="cards.cardClients"></card-traffic>
                 </div>
                 <div class="table-users">
                     <div>
@@ -19,7 +19,7 @@
                     <b-table
                         hover
                         id="table-users"
-                        :items="items"
+                        :items="users"
                         :per-page="perPage"
                         :current-page="currentPage"
                         small></b-table>
@@ -51,19 +51,26 @@ export default {
         return {
             perPage: 9,
             currentPage: 1,
-            items: [
-                { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-                { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-                { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-                { age: 40, first_name: 'Thor', last_name: 'MacDonald' },
-                { age: 29, first_name: 'Dick', last_name: 'Dunlap' },
-                { age: 29, first_name: 'Dick', last_name: 'Dunlap' },
-                { age: 29, first_name: 'Dick', last_name: 'Dunlap' },
-                { age: 29, first_name: 'Dick', last_name: 'Dunlap' },
-                { age: 29, first_name: 'Dick', last_name: 'Dunlap' },
-                { age: 29, first_name: 'Dick', last_name: 'Dunlap' },
+            cards: {
+                cardUsers: {
+                    qtd: 20,
+                    text: 'Usuários online:'
+                },
+                cardServices: {
+                    qtd: 20,
+                    text: 'Total de serviços:'
+                },
+                cardOffers: {
+                    qtd: 20,
+                    text: 'Quantidade de ofertas de serviços:'
+                },
+                cardClients: {
+                    qtd: 20,
+                    text: 'Quantidae de clientes:'
+                },
 
-            ]
+            }
+
         }
     },
     methods: {
@@ -82,7 +89,7 @@ export default {
             users: 'usersList'
         }),
         rows() {
-            return this.items.length
+            return this.users.length
         },
 
     },
