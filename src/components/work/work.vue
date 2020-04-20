@@ -10,7 +10,7 @@
             <b-card-body class="p-2 m-2 details-card">
                 <div>
                     <div>
-                        Categoria: 15
+                        Categorias: ww
                     </div>
                     <div>
                         Ofertas ativas: 20
