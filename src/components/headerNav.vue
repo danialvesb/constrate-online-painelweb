@@ -11,7 +11,6 @@
                         <b-dropdown-item href="/servicos/cadastrar">Cadastrar Serviços</b-dropdown-item>
                         <b-dropdown-item href="/servicos/categorias">Categorias de Serviços</b-dropdown-item>
                     </b-nav-item-dropdown>
-
                 </b-navbar-nav>
 
                 <b-navbar-nav class="ml-auto">
@@ -43,7 +42,6 @@
                 <b-breadcrumb-item href="/signup" >Criar conta</b-breadcrumb-item>
             </b-breadcrumb>
         </div>
-
     </div>
 </template>
 
@@ -72,7 +70,6 @@
                     {
                         text: 'Início',
                     },
-
                 ]
             }
         }
@@ -82,12 +79,9 @@
 <style lang="scss" scoped>
     @import "src/assets/scss/style";
 
-
     .hidden {
         display: none;
     }
-
-
     div {
         div {
             .navbar-logo-item {
@@ -97,10 +91,8 @@
                     font-size: 15px;
                     border-bottom: solid 1px $white;
                 }
-
             }
         }
-
     }
     .header-container {
         margin-bottom: 3px;
