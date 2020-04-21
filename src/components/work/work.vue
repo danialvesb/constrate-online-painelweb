@@ -10,10 +10,10 @@
             <b-card-body class="p-2 m-2 details-card">
                 <div>
                     <div>
-                        Categorias: ww
+                        <small>Categorias: ww</small>
                     </div>
                     <div>
-                        Ofertas ativas: 20
+                        <small>Ofertas ativas nesse serviço: 20</small>
                     </div>
                 </div>
             </b-card-body>
@@ -36,6 +36,7 @@
 <script>
     import { mapActions } from 'vuex'
 
+
     export default {
         name: "work",
         props: {
@@ -54,7 +55,7 @@
             },
             onClickDeleteWorkLocal() {
                 this.removeWork(this.work.id)
-            }
+            },
         }
     }
 </script>
@@ -72,8 +73,8 @@
     }
     .details-card {
         border-radius: 5px;
-        -webkit-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.6);
-        -moz-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.47);
-        box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.45);
+        -webkit-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.29);
+        -moz-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.16);
+        box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.18);
     }
 </style>

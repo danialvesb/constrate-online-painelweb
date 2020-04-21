@@ -71,15 +71,10 @@
                         <b-button class="mt-3" variant="success" block @click="onClickUpdateCategory()">Salvar edição</b-button>
                         <b-button class="mt-2" variant="warning" block @click="hideModal">Cancelar</b-button>
                     </b-modal>
-
-
                 </div>
             </div>
         </div>
-
     </div>
-
-
 </template>
 
 <script>
@@ -104,8 +99,6 @@
                         key: '_showOptions',
                         label: 'Opções'
                     },
-
-
                 ],
                 isBusy: true,
                 category: {
@@ -159,9 +152,7 @@
                 this.category = { id: 0, title: '' }
                 this.loadCategoriesDataLocal()
                 this.hideModal();
-
             },
-
             toggleModal() {
                 this.$refs['modal-category'].toggle('#toggle-btn')
             },
@@ -175,23 +166,19 @@
                 this.category.title = item.title
                 this.$refs['modal-category-update'].toggle('#toggle-btn')
             }
-
         },
         computed: {
             ...mapGetters({categories:'categoriesList'}),
             rows() {
                 return this.categories.length
             }
-
         },
         mounted() {
             this.loadCategoriesDataLocal()
-
         },
         updated() {
             this.toggleBusy()
         }
-
     }
 </script>
 
