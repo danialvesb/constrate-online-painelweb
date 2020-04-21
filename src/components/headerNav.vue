@@ -24,7 +24,7 @@
                         <b-dropdown-item href="#" >Pagamentos</b-dropdown-item>
                         <b-dropdown-item href="#">Projetos</b-dropdown-item>
                         <b-dropdown-divider></b-dropdown-divider>
-                        <b-dropdown-item href="#" >Sair</b-dropdown-item>
+                        <b-dropdown-item href="./entrar" >Sair</b-dropdown-item>
                     </b-nav-item-dropdown>
                 </b-navbar-nav>
             </b-navbar>

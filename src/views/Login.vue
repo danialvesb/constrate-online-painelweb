@@ -1,9 +1,11 @@
 <template>
     <div class="container-a">
-        <div class="sub-container-a">
-            <div class="form-container">
-                <h4>Login</h4>
-                <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+        <b-card class="container-fluid">
+            <b-card-header>
+                <strong>Login</strong>
+            </b-card-header>
+            <b-card-body>
+                <b-form v-if="show">
                     <b-form-group>
                         <b-form-input
                                 id="input-1"
@@ -13,22 +15,25 @@
                                 placeholder="Enter email"
                                 class="mb-1"
                         ></b-form-input>
-                    <b-form-input
-                            id="input-2"
-                            v-model="form.name"
-                            required
-                            placeholder="Enter name"
-                    ></b-form-input>
+                        <b-form-input
+                                id="input-2"
+                                v-model="form.name"
+                                required
+                                placeholder="Enter name"
+                        ></b-form-input>
 
                     </b-form-group>
-                    <div class="footer">
-                        <b-button type="submit" variant="primary">Entrar</b-button>
-                        <b-button type="submit" href="/signup" variant="primary">Não tem conta?</b-button>
-                    </div>
-                </b-form>
-            </div>
 
-        </div>
+                </b-form>
+            </b-card-body>
+            <b-card-footer>
+                <div style="display: flex; flex-direction: row; justify-content: space-between">
+                    <b-button variant="primary">Entrar</b-button>
+                    <b-button href="/signup" variant="primary">Não tem conta?</b-button>
+                </div>
+            </b-card-footer>
+        </b-card>
+
     </div>
 </template>
 
@@ -71,31 +76,21 @@
 
 <style lang="scss" scoped>
     @import "src/assets/scss/style";
+    @media only screen and (min-device-width: 900px) {
+         .container-a {
+             width:45%;
+         }
+    }
+
     .container-a {
-        background-color: $gray-300;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         min-height: 100%;
-        .sub-container-a {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            width: 90%;
-            min-height: 150px;
-            background-color: $white;
-            border: solid 1px $gray-900;
-            .form-container {
-                width: 100%;
-                padding: 20px;
-                .footer {
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: space-between;
-                }
-            }
-
+        margin: auto;
+        .form-container {
+            padding: 20px;
         }
     }
 
