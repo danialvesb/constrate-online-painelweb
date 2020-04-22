@@ -3,10 +3,14 @@ import Vue from 'vue'
 export default {
     state: {
         users: [],
+        groups: []
     },
     mutations: {
         setUsers(state, data) {
             state.users = data
+        },
+        setGroupsUsers(state, data) {
+            state.groups = data;
         },
         addUser(state, data) {
             state.users.push(data);
@@ -23,8 +27,11 @@ export default {
     },
     getters: {
         usersList(state) {
-            return state.users;
+            return state.users
         },
+        groupsList(state) {
+            return state.groups
+        }
     },
     actions: {
         addUser({ commit }, user) {
@@ -53,6 +60,17 @@ export default {
                 alert(err);
             });
         },
+        loadGroupsUsers({ commit }) {
+            Vue.prototype.$http.get('/users/groups').then( resp => {
+                const data = resp.data;
+
+                if (data) {
+                    commit('setGroupsUsers', data)
+                }
+            } ).catch( err => {
+                alert(err)
+            })
+        }
         // removeWork({ commit }, id) {
         //     Vue.prototype.$http.delete(`api/services/${id}`).then(resp => {
         //         const data = resp.data

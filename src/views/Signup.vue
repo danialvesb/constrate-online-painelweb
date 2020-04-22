@@ -6,38 +6,52 @@
                 class="card-container-a">
                 <b-card-body>
                     <div>
-                        <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+                        <b-form>
                             <b-form-group>
-                                <b-form-input
-                                    id="input-2"
-                                    v-model="form.name"
-                                    required
-                                    placeholder="Nome de usuário"
-                                    class="mb-1"
-                                ></b-form-input>
-                                <b-form-input
-                                    id="input-1"
-                                    v-model="form.email"
-                                    type="email"
-                                    required
-                                    placeholder="Insira seu e-mail"
-                                    class="mb-1"
-                                ></b-form-input>
-                                <b-form-input
-                                    id="input-1"
-                                    v-model="form.email"
-                                    type="password"
-                                    required
-                                    placeholder="Insira sua senha"
-                                    class="mb-1"
-                                ></b-form-input>
-                                <b-form-input
-                                    id="input-1"
-                                    v-model="form.email"
-                                    type="password"
-                                    required
-                                    placeholder="Confirme sua senha"
-                                ></b-form-input>
+                                <b-form-group label="Nome de usuário">
+                                    <b-form-input
+                                            id="input-2"
+                                            v-model="form.name"
+                                            required
+                                            placeholder="Nome de usuário"
+                                            class="mb-1"
+                                    ></b-form-input>
+                                </b-form-group>
+                                <b-form-group label="E-mail">
+                                    <b-form-input
+                                            id="input-1"
+                                            v-model="form.email"
+                                            type="email"
+                                            required
+                                            placeholder="Insira seu e-mail"
+                                            class="mb-1"
+                                    ></b-form-input>
+                                </b-form-group>
+                                <b-form-group label="Senha">
+                                    <b-form-input
+                                            id="input-1"
+                                            v-model="form.email"
+                                            type="password"
+                                            required
+                                            placeholder="Insira sua senha"
+                                            class="mb-1"
+                                    ></b-form-input>
+                                    <b-form-input
+                                            id="input-1"
+                                            v-model="form.email"
+                                            type="password"
+                                            required
+                                            placeholder="Confirme sua senha"
+                                    ></b-form-input>
+                                </b-form-group>
+                                <b-form-group label="Selecione o grupo de usuário">
+                                    <b-form-select
+                                        id="input-groups"
+                                        v-model="form.group"
+                                        :options="options"
+                                        required>
+                                    </b-form-select>
+                                </b-form-group>
                             </b-form-group>
                         </b-form>
                     </div>
@@ -58,6 +72,8 @@
 </template>
 
 <script>
+    import { mapActions, mapGetters } from 'vuex'
+
     export default {
         name: "Signup",
         data() {
@@ -65,29 +81,31 @@
                 form: {
                     email: '',
                     name: '',
-                    food: null,
-                    checked: []
+                    group: null
                 },
-                foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
-                show: true
+                options: [{ text: 'Selecione um grupo', value: null }],
             }
         },
         methods: {
-            onSubmit(evt) {
-                evt.preventDefault()
-                alert(JSON.stringify(this.form))
-            },
-            onReset(evt) {
-                evt.preventDefault()
-                this.form.email = ''
-                this.form.name = ''
-                this.form.food = null
-                this.form.checked = []
-                this.show = false
-                this.$nextTick(() => {
-                    this.show = true
+            ...mapActions(['loadGroupsUsers']),
+            mapOptionsGroups() {
+                let optionsLocal = this.groupsList.map( item => {
+                    return {
+                        value: item.id,
+                        text: item.name,
+                    }
                 })
+                this.options = this.options.concat(optionsLocal)
             }
+        },
+        computed: {
+            ...mapGetters({ groupsList : 'groupsList'})
+        },
+        mounted() {
+            this.loadGroupsUsers()
+            setTimeout(() => {
+                this.mapOptionsGroups()
+            }, 500)
         }
     }
 </script>
