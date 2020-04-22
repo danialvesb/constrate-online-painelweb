@@ -37,16 +37,16 @@ export default {
         addUser({ commit }, user) {
             const userJson  = JSON.stringify(user)
 
-            Vue.prototype.$http.post('api/services', userJson).then( res => {
+            Vue.prototype.$http.post('/signup', userJson).then( res => {
                 const data = res.data
 
                 if( data ) {
                     commit('addUser', user)
                 }else {
-                    alert('Não foi possível gravar usuário')
+                    console.log('Não foi possível gravar usuário')
                 }
             }).catch(err => {
-                alert(err)
+                console.log(err)
             })
         },
         loadUsersData({ commit }) {
@@ -57,7 +57,7 @@ export default {
                     commit('setUsers', data)
                 }
             } ).catch(err => {
-                alert(err);
+                console.log(err);
             });
         },
         loadGroupsUsers({ commit }) {
@@ -68,7 +68,7 @@ export default {
                     commit('setGroupsUsers', data)
                 }
             } ).catch( err => {
-                alert(err)
+                console.log(err)
             })
         }
         // removeWork({ commit }, id) {

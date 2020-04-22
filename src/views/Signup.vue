@@ -10,7 +10,7 @@
                             <b-form-group>
                                 <b-form-group label="Nome de usuário">
                                     <b-form-input
-                                            id="input-2"
+                                            id="input-1"
                                             v-model="form.name"
                                             required
                                             placeholder="Nome de usuário"
@@ -19,7 +19,7 @@
                                 </b-form-group>
                                 <b-form-group label="E-mail">
                                     <b-form-input
-                                            id="input-1"
+                                            id="input-2"
                                             v-model="form.email"
                                             type="email"
                                             required
@@ -29,16 +29,16 @@
                                 </b-form-group>
                                 <b-form-group label="Senha">
                                     <b-form-input
-                                            id="input-1"
-                                            v-model="form.email"
+                                            id="input-3"
+                                            v-model="form.password"
                                             type="password"
                                             required
                                             placeholder="Insira sua senha"
                                             class="mb-1"
                                     ></b-form-input>
                                     <b-form-input
-                                            id="input-1"
-                                            v-model="form.email"
+                                            id="input-4"
+                                            v-model="form.password"
                                             type="password"
                                             required
                                             placeholder="Confirme sua senha"
@@ -46,8 +46,8 @@
                                 </b-form-group>
                                 <b-form-group label="Selecione o grupo de usuário">
                                     <b-form-select
-                                        id="input-groups"
-                                        v-model="form.group"
+                                            id="input-5"
+                                        v-model="form.groups_id"
                                         :options="options"
                                         required>
                                     </b-form-select>
@@ -58,7 +58,7 @@
                 </b-card-body>
                 <b-card-footer>
                     <b-button-group style="width: 100%">
-                        <b-button type="submit" variant="success">Criar conta</b-button>
+                        <b-button type="submit" variant="success" @click="addUser(form)">Criar conta</b-button>
                     </b-button-group>
                 </b-card-footer>
                 <b-card-footer>
@@ -79,15 +79,15 @@
         data() {
             return {
                 form: {
-                    email: '',
                     name: '',
-                    group: null
+                    email: '',
+                    groups_id: null
                 },
                 options: [{ text: 'Selecione um grupo', value: null }],
             }
         },
         methods: {
-            ...mapActions(['loadGroupsUsers']),
+            ...mapActions(['loadGroupsUsers', 'addUser']),
             mapOptionsGroups() {
                 let optionsLocal = this.groupsList.map( item => {
                     return {

@@ -6,24 +6,25 @@
             </b-card-header>
             <b-card-body>
                 <b-form v-if="show">
-                    <b-form-group>
+                    <b-form-group label="E-mail">
                         <b-form-input
                                 id="input-1"
                                 v-model="form.email"
                                 type="email"
                                 required
-                                placeholder="Enter email"
+                                placeholder="Insira o e-mail"
                                 class="mb-1"
                         ></b-form-input>
+                    </b-form-group>
+                    <b-form-group label="Senha">
                         <b-form-input
                                 id="input-2"
-                                v-model="form.name"
+                                v-model="form.password"
+                                type="password"
                                 required
-                                placeholder="Enter name"
+                                placeholder="Insira a senha"
                         ></b-form-input>
-
                     </b-form-group>
-
                 </b-form>
             </b-card-body>
             <b-card-footer>
@@ -44,11 +45,8 @@
             return {
                 form: {
                     email: '',
-                    name: '',
-                    food: null,
-                    checked: []
+                    password: '',
                 },
-                foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
                 show: true
             }
         },
@@ -88,6 +86,8 @@
         align-items: center;
         justify-content: center;
         min-height: 100%;
+        width:80%;
+
         margin: auto;
         .form-container {
             padding: 20px;

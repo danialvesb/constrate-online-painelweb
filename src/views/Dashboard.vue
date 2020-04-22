@@ -3,12 +3,17 @@
         <h-nav></h-nav>
         <div class="container-a">
             <div class="sub-container-infors">
-                <div class="cards">
+            <div class="cards">
+                <b-card-group deck class="container-fluid">
                     <card-traffic :data="cards.cardUsers"></card-traffic>
                     <card-traffic :data="cards.cardServices"></card-traffic>
                     <card-traffic :data="cards.cardOffers"></card-traffic>
                     <card-traffic :data="cards.cardClients"></card-traffic>
-                </div>
+
+                </b-card-group>
+            </div>
+            </div>
+            <div class="sub-container-infors">
                 <div class="table-users">
                     <div>
                         <h3>Usuários</h3>
@@ -91,19 +96,23 @@ export default {
             cards: {
                 cardUsers: {
                     qtd: 20,
-                    text: 'Usuários online:'
+                    text: 'Usuários online:',
+                    id: 1
                 },
                 cardServices: {
                     qtd: 20,
-                    text: 'Total de serviços:'
+                    text: 'Total de serviços:',
+                    id: 2
                 },
                 cardOffers: {
                     qtd: 20,
-                    text: 'Quantidade de ofertas de serviços:'
+                    text: 'Quantidade de ofertas de serviços:',
+                    id: 3
                 },
                 cardClients: {
                     qtd: 20,
-                    text: 'Quantidae de clientes:'
+                    text: 'Quantidae de clientes:',
+                    id: 4
                 },
 
             },
@@ -161,18 +170,19 @@ export default {
             flex-direction: column;
             align-items: center;
             width: 95%;
-            min-height: 600px;
-            -webkit-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.93);
-            -moz-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);
-            box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);
+            min-height: 400px;
+            -webkit-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.21);
+            -moz-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.34);
+            box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.24);
             margin-bottom: 20px;
             .cards {
-                width: 98%;
+                width: 80%;
                 margin: 5px;
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
-                justify-content: space-between;
+                justify-content: center;
+                align-items: center;
             }
             .table-users {
                 width: 98%;
