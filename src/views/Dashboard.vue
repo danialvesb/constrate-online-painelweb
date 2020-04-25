@@ -3,18 +3,16 @@
         <h-nav></h-nav>
         <div class="container-a">
             <div class="sub-container-infors-cards">
-            <div class="box-1">
-                <b-card-group  class="container-fluid">
-                    <card-traffic :data="cards.cardUsers"></card-traffic>
-                    <card-traffic :data="cards.cardServices"></card-traffic>
-                    <card-traffic :data="cards.cardOffers"></card-traffic>
-                    <card-traffic :data="cards.cardClients"></card-traffic>
-                </b-card-group>
-            </div>
-            <div class="box-2">
-
-            </div>
-
+                <div class="box-1">
+                    <b-card-group class="container-fluid">
+                        <card-traffic :data="cards.cardUsers"></card-traffic>
+                        <card-traffic :data="cards.cardServices"></card-traffic>
+                        <card-traffic :data="cards.cardOffers"></card-traffic>
+                        <card-traffic :data="cards.cardClients"></card-traffic>
+                    </b-card-group>
+                </div>
+                <div class="box-2">
+                </div>
             </div>
             <div class="sub-container-infors-users">
                 <div class="table-users">
@@ -25,15 +23,15 @@
                         <b-form-input size="sm" class="mr-sm-1 mb-1" placeholder="Pesquisar"></b-form-input>
                     </b-form>
                     <b-table
-                        hover
-                        id="table-users"
-                        :items="users"
-                        :per-page="perPage"
-                        :current-page="currentPage"
-                        :fields="fields"
-                        responsive
-                        small
-                        :busy="isBusy">
+                            hover
+                            id="table-users"
+                            :items="users"
+                            :per-page="perPage"
+                            :current-page="currentPage"
+                            :fields="fields"
+                            responsive
+                            small
+                            :busy="isBusy">
                         <template v-slot:table-busy>
                             <div class="text-center text-danger my-2">
                                 <b-spinner class="align-middle"></b-spinner>
@@ -49,10 +47,7 @@
                         aria-controls="table-users"
                 ></b-pagination>
             </div>
-
-
         </div>
-
     </div>
 </template>
 
@@ -60,105 +55,106 @@
     import headerNav from "../components/headerNav";
     import traffic from "../components/dashboard/content/cards/traffic";
     // import chart from "../components/dashboard/content/charts/chart";
-    import { mapGetters } from 'vuex'
-    import { mapActions } from 'vuex'
-export default {
-    name: "Dashboard",
-    data() {
-        return {
-            perPage: 9,
-            currentPage: 1,
-            fields: [
-                {
-                    key: 'id',
-                    label: 'Id'
-                },
-                {
-                    key: 'name',
-                    label: 'Nome'
-                },
-                {
-                    key: 'email',
-                    label: 'E-mail'
-                },
+    import {mapGetters} from 'vuex'
+    import {mapActions} from 'vuex'
 
-                {
-                    key: 'city',
-                    label: 'Cidade'
-                },
-                {
-                    key: 'uf',
-                    label: 'UF'
-                },
-                {
-                    key: 'district',
-                    label: 'Bairro'
-                }
+    export default {
+        name: "Dashboard",
+        data() {
+            return {
+                perPage: 9,
+                currentPage: 1,
+                fields: [
+                    {
+                        key: 'id',
+                        label: 'Id'
+                    },
+                    {
+                        key: 'name',
+                        label: 'Nome'
+                    },
+                    {
+                        key: 'email',
+                        label: 'E-mail'
+                    },
 
-            ],
-            cards: {
-                cardUsers: {
-                    qtd: 20,
-                    text: 'Usuários online:',
-                    id: 1
-                },
-                cardServices: {
-                    qtd: 20,
-                    text: 'Total de serviços:',
-                    id: 2
-                },
-                cardOffers: {
-                    qtd: 20,
-                    text: 'Ofertas de serviços:',
-                    id: 3
-                },
-                cardClients: {
-                    qtd: 20,
-                    text: 'Clientes:',
-                    id: 4
-                },
+                    {
+                        key: 'city',
+                        label: 'Cidade'
+                    },
+                    {
+                        key: 'uf',
+                        label: 'UF'
+                    },
+                    {
+                        key: 'district',
+                        label: 'Bairro'
+                    }
 
-            },
-            isBusy: true,
+                ],
+                cards: {
+                    cardUsers: {
+                        qtd: 20,
+                        text: 'Usuários online:',
+                        id: 1
+                    },
+                    cardServices: {
+                        qtd: 20,
+                        text: 'Total de serviços:',
+                        id: 2
+                    },
+                    cardOffers: {
+                        qtd: 20,
+                        text: 'Ofertas de serviços:',
+                        id: 3
+                    },
+                    cardClients: {
+                        qtd: 20,
+                        text: 'Clientes:',
+                        id: 4
+                    },
 
-        }
-    },
-    methods: {
-        ...mapActions(['loadUsersData']),
-        loadUsersLocal() {
-            this.loadUsersData()
-        },
-        toggleBusy() {
-            if (this.users.length > 0 && this.isBusy == true) {
-                this.isBusy = !this.isBusy
+                },
+                isBusy: true,
             }
-        }
-    },
-    components: {
-        'card-traffic': traffic,
-        'h-nav': headerNav,
-        // 'chart': chart
-    },
-    computed: {
-        ...mapGetters({
-            users: 'usersList'
-        }),
-        rows() {
-            return this.users.length
         },
+        methods: {
+            ...mapActions(['loadUsersData']),
+            loadUsersLocal() {
+                this.loadUsersData()
+            },
+            toggleBusy() {
+                if (this.users.length > 0 && this.isBusy == true) {
+                    this.isBusy = !this.isBusy
+                }
+            }
+        },
+        components: {
+            'card-traffic': traffic,
+            'h-nav': headerNav,
+            // 'chart': chart
+        },
+        computed: {
+            ...mapGetters({
+                users: 'usersList'
+            }),
+            rows() {
+                return this.users.length
+            },
 
-    },
-    mounted() {
-        this.loadUsersLocal()
-    },
-    updated() {
-        this.toggleBusy()
+        },
+        mounted() {
+            this.loadUsersLocal()
+        },
+        updated() {
+            this.toggleBusy()
+        }
     }
-}
 </script>
 
 <style lang="scss" scoped>
     @import "src/assets/scss/style";
+
     .container-a {
         display: flex;
         flex-direction: column;
@@ -167,6 +163,7 @@ export default {
         width: 100%;
         min-height: 1000px;
         margin: auto;
+
         .sub-container-infors-users {
             background-color: $white;
             display: flex;
@@ -178,6 +175,7 @@ export default {
             -moz-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.34);
             box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.24);
             margin-bottom: 20px;
+
             .table-users {
                 width: 98%;
                 min-height: 450px;
@@ -187,14 +185,17 @@ export default {
                 flex-wrap: wrap;
                 border-radius: 10px;
                 border: solid 1px rgba(48, 60, 84, 0.38);
+
                 div {
                     margin: 4px;
+
                     h3 {
                         color: $black
                     }
                 }
             }
         }
+
         .sub-container-infors-cards {
             display: flex;
             flex-direction: row;
@@ -204,6 +205,7 @@ export default {
             -moz-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.34);
             box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.24);
             margin-bottom: 20px;
+
             .box-1 {
                 min-width: 50%;
                 margin: 5px;
@@ -214,6 +216,7 @@ export default {
                 flex-wrap: wrap;
                 background-color: $white;
             }
+
             .box-2 {
                 min-width: 50%;
                 margin: 5px;

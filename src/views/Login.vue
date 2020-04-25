@@ -39,8 +39,8 @@
                     </b-form-group>
                     <b-form-group>
                         <b-button-group class="container-fluid button-group">
-                            <b-button type="submit" variant="primary" @click="onSubmit()">Entrar</b-button>
-                            <b-button type="submit" href="/signup" variant="info">Não tem conta?</b-button>
+                            <b-button variant="primary" @click="onClickAuth(form)">Entrar</b-button>
+                            <b-button href="/signup" variant="info">Não tem conta?</b-button>
                         </b-button-group>
                     </b-form-group>
                 </b-form>
@@ -50,24 +50,73 @@
 </template>
 
 <script>
+    import Vue from "vue";
+
     export default {
         name: "Login",
         data() {
             return {
                 form: {
-                    email: '',
-                    password: '',
+                    email: 'daniel@gmail.com',
+                    password: '12345678',
                 },
                 show: true
             }
         },
         methods: {
-            onSubmit() {
-                console.log(this.form)
+            onClickAuth(user) {
+                const userJson  = JSON.stringify(user)
+                let axiosConfig = {
+                    headers: {
+                        'Content-Type': 'application/json;charset=UTF-8',
+                    }
+                };
+
+                Vue.prototype.$http.post('/auth/login', userJson, axiosConfig).then(async res => {
+                    if( res.status == 200 ) {
+                        this.setCookie('access_token', res.data.access_token, 1)
+
+                        console.log(res.data)
+
+                        const  accessToken  =  this.getCookie('access_token')
+
+                        if (accessToken) {
+                            Vue.prototype.$http.defaults.headers.common['Authorization'] =  `bearer ${this.getCookie('access_token')}`
+                        }
+                        this.$router.push('/dashboard')
+                    }else {
+                        console.log(res.status)
+                    }
+                }).catch(err => {
+                    console.log(err)
+                    this.showAlert()
+                })
+            },
+            setCookie(cookieName, cookieValue, expireDays) {
+                let d = new Date()
+                d.setTime(d.getTime() + (expireDays*24*60*60*1000))
+                let expires = `expires = ${d.toUTCString()}`
+
+                document.cookie = `${cookieName} = ${cookieValue}; ${expires} ;path=/`
+            },
+            getCookie(cookieName) {
+                let name = cookieName + "=";
+                let decodedCookie = decodeURIComponent(document.cookie);
+                let ca = decodedCookie.split(';');
+                for(let i = 0; i <ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+            return "";
             },
             onReset() {
                 this.form.email = ''
-                this.form.name = ''
+                this.form.password = ''
             }
         }
     }
@@ -115,7 +164,6 @@
             width:30%;
             .form-container {
                 .input-group-sty {
-                    /*height: 50px;*/
                     .form-input {
                         background-color: rgba(51, 153, 255, 0.4) !important;
                         color: white;
