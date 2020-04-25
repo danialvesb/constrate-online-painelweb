@@ -1,12 +1,10 @@
 <template>
-    <div class="container-a">
-        <b-card class="container-fluid">
-            <b-card-header>
-                <strong>Login</strong>
-            </b-card-header>
-            <b-card-body>
-                <b-form v-if="show">
-                    <b-form-group label="E-mail">
+<!--    <b-img :img-src="require('../assets/images/login.jpg')" fluid >-->
+        <div class="container-a">
+            <div class="sub-container-a">
+                <b-form v-if="show" class="form-container">
+                    <h5 class="form-title">Contrate online</h5>
+                    <b-form-group>
                         <b-form-input
                                 id="input-1"
                                 v-model="form.email"
@@ -16,7 +14,7 @@
                                 class="mb-1"
                         ></b-form-input>
                     </b-form-group>
-                    <b-form-group label="Senha">
+                    <b-form-group>
                         <b-form-input
                                 id="input-2"
                                 v-model="form.password"
@@ -25,17 +23,16 @@
                                 placeholder="Insira a senha"
                         ></b-form-input>
                     </b-form-group>
+                    <b-form-group>
+                        <b-button-group class="container-fluid button-group">
+                            <b-button type="submit" variant="primary">Entrar</b-button>
+                            <b-button type="submit" href="/signup" variant="info">Não tem conta?</b-button>
+                        </b-button-group>
+                    </b-form-group>
                 </b-form>
-            </b-card-body>
-            <b-card-footer>
-                <div style="display: flex; flex-direction: row; justify-content: space-between">
-                    <b-button variant="primary">Entrar</b-button>
-                    <b-button href="/signup" variant="primary">Não tem conta?</b-button>
-                </div>
-            </b-card-footer>
-        </b-card>
-
-    </div>
+            </div>
+        </div>
+<!--    </b-img>-->
 </template>
 
 <script>
@@ -74,9 +71,27 @@
 
 <style lang="scss" scoped>
     @import "src/assets/scss/style";
-    @media only screen and (min-device-width: 900px) {
+    @media only screen and (max-width: 900px) {
          .container-a {
-             width:45%;
+             width:100%;
+             .sub-container-a {
+                 width:100%!important;
+
+                 .form-container {
+                     width: 100%!important;
+                     padding: 10px!important;
+                 }
+                 .form-title {
+                     color: $white;
+                     padding: 5px;
+                     border-radius: 10px;
+                     width: 60% !important;
+                     font-size: 25px!important;
+                 }
+                 .button-group {
+                     border-radius: 5px;
+                 }
+             }
          }
     }
 
@@ -86,11 +101,24 @@
         align-items: center;
         justify-content: center;
         min-height: 100%;
-        width:80%;
-
+        width:100%;
         margin: auto;
-        .form-container {
-            padding: 20px;
+        background-image: url("../assets/images/login.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        .sub-container-a {
+            width:30%;
+            .form-title {
+                background-color: $primary;
+                color: $white;
+                padding: 5px;
+                border-radius: 10px;
+                width: 40%;
+            }
+            .button-group {
+                border-radius: 10px;
+            }
         }
     }
 

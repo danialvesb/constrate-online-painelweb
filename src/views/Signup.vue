@@ -117,8 +117,6 @@
                 Vue.prototype.$http.post('/signup', userJson).then(async res => {
                     if( res.status == 201 ) {
                         this.$router.push('/entrar')
-
-
                     }else {
                         console.log(res.status)
                     }
