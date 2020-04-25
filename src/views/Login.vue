@@ -5,27 +5,41 @@
                 <b-form v-if="show" class="form-container">
                     <h5 class="form-title">Contrate online</h5>
                     <b-form-group>
-                        <b-form-input
-                                id="input-1"
-                                v-model="form.email"
-                                type="email"
-                                required
-                                placeholder="Insira o e-mail"
-                                class="mb-1"
-                        ></b-form-input>
+                        <b-input-group class="input-group-sty">
+                            <template v-slot:prepend>
+                                <b-icon class="form-input-icon" icon="envelope"></b-icon>
+                            </template>
+                            <b-form-input
+                                    id="input-1"
+                                    v-model="form.email"
+                                    type="email"
+                                    required
+                                    placeholder="E-mail"
+                                    class="mb-1 form-input"
+                            ></b-form-input>
+
+                        </b-input-group>
                     </b-form-group>
                     <b-form-group>
-                        <b-form-input
-                                id="input-2"
-                                v-model="form.password"
-                                type="password"
-                                required
-                                placeholder="Insira a senha"
-                        ></b-form-input>
+                        <b-input-group class="input-group-sty">
+                            <template v-slot:prepend>
+                                <b-icon class="form-input-icon" icon="lock-fill"></b-icon>
+                            </template>
+                            <b-form-input
+                                    id="input-2"
+                                    v-model="form.password"
+                                    type="password"
+                                    required
+                                    class="form-input"
+                                    placeholder="Senha"
+                            >
+                            </b-form-input>
+                        </b-input-group>
+
                     </b-form-group>
                     <b-form-group>
                         <b-button-group class="container-fluid button-group">
-                            <b-button type="submit" variant="primary">Entrar</b-button>
+                            <b-button type="submit" variant="primary" @click="onSubmit()">Entrar</b-button>
                             <b-button type="submit" href="/signup" variant="info">Não tem conta?</b-button>
                         </b-button-group>
                     </b-form-group>
@@ -48,22 +62,12 @@
             }
         },
         methods: {
-            onSubmit(evt) {
-                evt.preventDefault()
-                alert(JSON.stringify(this.form))
+            onSubmit() {
+                console.log(this.form)
             },
-            onReset(evt) {
-                evt.preventDefault()
-                // Reset our form values
+            onReset() {
                 this.form.email = ''
                 this.form.name = ''
-                this.form.food = null
-                this.form.checked = []
-                // Trick to reset/clear native browser form validation state
-                this.show = false
-                this.$nextTick(() => {
-                    this.show = true
-                })
             }
         }
     }
@@ -109,8 +113,30 @@
         background-position: center center;
         .sub-container-a {
             width:30%;
+            .form-container {
+                .input-group-sty {
+                    /*height: 50px;*/
+                    .form-input {
+                        background-color: rgba(51, 153, 255, 0.4) !important;
+                        color: white;
+                        border:none !important;
+                        border-bottom-right-radius: 10px;
+                        border-top-right-radius: 10px;
+                        height: 50px;
+                    }
+                    .form-input-icon {
+                        background-color: rgba(51, 153, 255, 0.4) !important;
+                        border-bottom-left-radius: 10px;
+                        border-top-left-radius: 10px;
+                        border:none !important;
+                        width: 50px;
+                        height: 50px;
+                        color: white;
+                        padding: 10px;
+                    }
+                }
+            }
             .form-title {
-                background-color: $primary;
                 color: $white;
                 padding: 5px;
                 border-radius: 10px;
