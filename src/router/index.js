@@ -14,58 +14,53 @@ const App = () => import('../App')
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
-  linkActiveClass: 'active',
-  scrollBehavior: () => ({ y: 0 }),
-  routes: configRoutes()
+    mode: 'history',
+    linkActiveClass: 'active',
+    scrollBehavior: () => ({y: 0}),
+    routes: configRoutes()
 })
 
-function configRoutes () {
-  return [
-    {
-      path: '/',
-      redirect: '/dashboard',
-      name: 'App',
-      component: App,
-      children: [
+function configRoutes() {
+    return [
         {
-          path: '/dashboard',
-          name: 'Home',
-          component: Dashboard
+            path: '/',
+            redirect: '/dashboard',
+            name: 'App',
+            component: App,
+            children: [
+                {
+                    path: '/dashboard',
+                    name: 'Home',
+                    component: Dashboard
+                },
+                {
+                    path: '/servicos',
+                    name: 'Works',
+                    component: Works
+                },
+                {
+                    path: '/servicos/cadastrar',
+                    name: 'CreateWork',
+                    component: NewWork
+                },
+                {
+                    path: '/servicos/categorias',
+                    name: 'CategoriesWorks',
+                    component: StoreCategory
+                },
+                {
+                    path: '/entrar',
+                    name: 'Login',
+                    component: Login
+                },
+                {
+                    path: '/signup',
+                    name: 'Signup',
+                    component: Signup
+                },
+            ]
         },
-        {
-          path: '/servicos',
-          name: 'Works',
-          component: Works
-        },
-        {
-          path: '/servicos/cadastrar',
-          name: 'CreateWork',
-          component: NewWork
-        },
-        {
-          path: '/servicos/categorias',
-          name: 'CategoriesWorks',
-          component: StoreCategory
-        },
-        {
-          path: '/entrar',
-          name: 'Login',
-          component: Login
-        },
-        {
-          path: '/signup',
-          name: 'Signup',
-          component: Signup
-        },
-
-
-
-      ]
-    },
-
-
-  ]
+    ]
 }
 
 // { path: '/servicos/listar', component: Works},

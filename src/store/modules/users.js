@@ -34,21 +34,6 @@ export default {
         }
     },
     actions: {
-        addUser({ commit }, user) {
-            const userJson  = JSON.stringify(user)
-
-            Vue.prototype.$http.post('/signup', userJson).then( res => {
-                const data = res.data
-
-                if( data ) {
-                    commit('addUser', user)
-                }else {
-                    console.log('Não foi possível gravar usuário')
-                }
-            }).catch(err => {
-                console.log(err)
-            })
-        },
         loadUsersData({ commit }) {
             Vue.prototype.$http.get('/users').then( resp => {
                 const data =  resp.data;

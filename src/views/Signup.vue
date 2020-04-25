@@ -22,7 +22,6 @@
                                             id="input-2"
                                             v-model="form.email"
                                             type="email"
-                                            required
                                             placeholder="Insira seu e-mail"
                                             class="mb-1"
                                     ></b-form-input>
@@ -68,11 +67,23 @@
                 </b-card-footer>
             </b-card>
         </div>
+        <div class="container-alert">
+            <b-alert
+                    :show="dismissCountDown"
+                    dismissible
+                    fade
+                    variant="danger"
+                    @dismiss-count-down="countDownChanged"
+            >
+                Não foi possível criar conta, revise as informações!
+            </b-alert>
+        </div>
     </div>
 </template>
 
 <script>
     import { mapActions, mapGetters } from 'vuex'
+    import Vue from "vue";
 
     export default {
         name: "Signup",
@@ -84,10 +95,13 @@
                     groups_id: null
                 },
                 options: [{ text: 'Selecione um grupo', value: null }],
+                dismissSecs: 5,
+                dismissCountDown: 0,
+                showDismissibleAlert: false
             }
         },
         methods: {
-            ...mapActions(['loadGroupsUsers', 'addUser']),
+            ...mapActions(['loadGroupsUsers']),
             mapOptionsGroups() {
                 let optionsLocal = this.groupsList.map( item => {
                     return {
@@ -96,6 +110,28 @@
                     }
                 })
                 this.options = this.options.concat(optionsLocal)
+            },
+            addUser(user) {
+                const userJson  = JSON.stringify(user)
+
+                Vue.prototype.$http.post('/signup', userJson).then(async res => {
+                    if( res.status == 201 ) {
+                        this.$router.push('/entrar')
+
+
+                    }else {
+                        console.log(res.status)
+                    }
+                }).catch(err => {
+                    console.log(err)
+                    this.showAlert()
+                })
+            },
+            countDownChanged(dismissCountDown) {
+                this.dismissCountDown = dismissCountDown
+            },
+            showAlert() {
+                this.dismissCountDown = this.dismissSecs
             }
         },
         computed: {
@@ -129,6 +165,12 @@
             .card-container-a {
                 min-width: 90%;
             }
+        }
+        .container-alert {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            margin: 20px;
         }
     }
 

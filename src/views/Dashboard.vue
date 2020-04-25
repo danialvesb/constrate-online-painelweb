@@ -2,18 +2,21 @@
     <div>
         <h-nav></h-nav>
         <div class="container-a">
-            <div class="sub-container-infors">
-            <div class="cards">
-                <b-card-group deck class="container-fluid">
+            <div class="sub-container-infors-cards">
+            <div class="box-1">
+                <b-card-group  class="container-fluid">
                     <card-traffic :data="cards.cardUsers"></card-traffic>
                     <card-traffic :data="cards.cardServices"></card-traffic>
                     <card-traffic :data="cards.cardOffers"></card-traffic>
                     <card-traffic :data="cards.cardClients"></card-traffic>
-
                 </b-card-group>
             </div>
+            <div class="box-2">
+
             </div>
-            <div class="sub-container-infors">
+
+            </div>
+            <div class="sub-container-infors-users">
                 <div class="table-users">
                     <div>
                         <h3>Usuários</h3>
@@ -106,12 +109,12 @@ export default {
                 },
                 cardOffers: {
                     qtd: 20,
-                    text: 'Quantidade de ofertas de serviços:',
+                    text: 'Ofertas de serviços:',
                     id: 3
                 },
                 cardClients: {
                     qtd: 20,
-                    text: 'Quantidae de clientes:',
+                    text: 'Clientes:',
                     id: 4
                 },
 
@@ -164,7 +167,7 @@ export default {
         width: 100%;
         min-height: 1000px;
         margin: auto;
-        .sub-container-infors {
+        .sub-container-infors-users {
             background-color: $white;
             display: flex;
             flex-direction: column;
@@ -175,15 +178,6 @@ export default {
             -moz-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.34);
             box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.24);
             margin-bottom: 20px;
-            .cards {
-                width: 80%;
-                margin: 5px;
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                align-items: center;
-            }
             .table-users {
                 width: 98%;
                 min-height: 450px;
@@ -201,7 +195,37 @@ export default {
                 }
             }
         }
+        .sub-container-infors-cards {
+            display: flex;
+            flex-direction: row;
+            width: 95%;
+            min-height: 400px;
+            -webkit-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.21);
+            -moz-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.34);
+            box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.24);
+            margin-bottom: 20px;
+            .box-1 {
+                min-width: 50%;
+                margin: 5px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+                background-color: $white;
+            }
+            .box-2 {
+                min-width: 50%;
+                margin: 5px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+                background-color: $white;
+            }
 
+        }
     }
 
 
