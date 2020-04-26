@@ -96,22 +96,22 @@
                     cardUsers: {
                         qtd: 20,
                         text: 'Usuários online:',
-                        id: 1
+                        id: "1"
                     },
                     cardServices: {
                         qtd: 20,
                         text: 'Total de serviços:',
-                        id: 2
+                        id: "2"
                     },
                     cardOffers: {
                         qtd: 20,
                         text: 'Ofertas de serviços:',
-                        id: 3
+                        id: "3"
                     },
                     cardClients: {
                         qtd: 20,
                         text: 'Clientes:',
-                        id: 4
+                        id: "4"
                     },
 
                 },
@@ -127,7 +127,7 @@
                 if (this.users.length > 0 && this.isBusy == true) {
                     this.isBusy = !this.isBusy
                 }
-            }
+            },
         },
         components: {
             'card-traffic': traffic,

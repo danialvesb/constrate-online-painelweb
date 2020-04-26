@@ -74,16 +74,18 @@
 
                 Vue.prototype.$http.post('/auth/login', userJson, axiosConfig).then(async res => {
                     if( res.status == 200 ) {
-                        this.setCookie('access_token', res.data.access_token, 1)
+                        this.setCookie('auth_token', res.data.access_token, 1)
 
                         console.log(res.data)
 
-                        const  accessToken  =  this.getCookie('access_token')
+                        const  authToken  =  this.getCookie('auth_token')
 
-                        if (accessToken) {
-                            Vue.prototype.$http.defaults.headers.common['Authorization'] =  `bearer ${this.getCookie('access_token')}`
+                        if (authToken) {
+                            console.log(`bearer ${authToken}`)
+                            Vue.prototype.$http.defaults.headers.common['Authorization'] =  `bearer ${authToken}`
+                            this.$router.push('/dashboard')
                         }
-                        this.$router.push('/dashboard')
+
                     }else {
                         console.log(res.status)
                     }
