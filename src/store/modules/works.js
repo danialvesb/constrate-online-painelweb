@@ -41,17 +41,6 @@ export default {
                 alert(err)
             })
         },
-        loadWorksData({ commit }) {
-            Vue.prototype.$http.get('services/').then( resp => {
-                const data =  resp.data;
-
-                if(data) {
-                    commit('setWorks', data)
-                }
-            } ).catch(err => {
-                alert(err);
-            });
-        },
         removeWork({ commit }, id) {
             Vue.prototype.$http.delete(`/services/${id}`).then(resp => {
                 const data = resp.data
