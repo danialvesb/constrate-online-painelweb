@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from "../views/Login";
 import Signup from "../views/Signup";
+import Profile from "../views/Profile";
 
 // Views
 const Dashboard = () => import('../views/Dashboard')
@@ -58,6 +59,12 @@ function configRoutes() {
                     name: 'Signup',
                     component: Signup
                 },
+                {
+                    path: '/usuario/perfil',
+                    name: 'Profile',
+                    component: Profile
+                },
+
             ]
         },
     ]

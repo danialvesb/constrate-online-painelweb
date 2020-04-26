@@ -90,7 +90,6 @@
                         key: 'district',
                         label: 'Bairro'
                     }
-
                 ],
                 cards: {
                     cardUsers: {
@@ -113,7 +112,6 @@
                         text: 'Clientes:',
                         id: "4"
                     },
-
                 },
                 isBusy: true,
             }
@@ -141,7 +139,6 @@
             rows() {
                 return this.users.length
             },
-
         },
         mounted() {
             this.loadUsersLocal()
