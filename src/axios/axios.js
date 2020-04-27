@@ -6,18 +6,19 @@ Vue.use({
         Vue.prototype.$http = axios.create({
             baseURL: 'http://192.168.3.103:8000/api',
         })
+        Vue.prototype.$http.interceptors.request.use( async (config) => {
+            if ( !config.url.endsWith('login') || !config.url.endsWith('refresh')) {
+                const userToken = await getCookie('auth_token')
+                config.headers.Authorization = `Bearer ${userToken}`
+            }
+            return config;
+        }, ( error ) => {
+            return Promise.reject(error);
+        })
     }
 })
 
-Vue.prototype.$http.interceptors.request.use( async (config) => {
-    if ( !config.url.endsWith('login') || !config.url.endsWith('refresh')) {
-        const userToken = await getCookie('auth_token')
-        config.headers.Authorization = `Bearer ${userToken}`
-    }
-    return config;
-}, ( error ) => {
-    return Promise.reject(error);
-})
+
 
 // axios.interceptors.request.use(async (config) => {
 //     if (

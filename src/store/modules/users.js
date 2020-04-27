@@ -1,9 +1,11 @@
 import Vue from 'vue'
+import { setCookie } from '../../helpers/cookie'
 
 export default {
     state: {
         users: [],
-        groups: []
+        groups: [],
+        token: ''
     },
     mutations: {
         setUsers(state, data) {
@@ -15,6 +17,9 @@ export default {
         addUser(state, data) {
             state.users.push(data);
         },
+        setToken(state, data){
+            state.token = data
+        }
         // removeWork(state, id) {
         //     const record = state.works.findIndex(element => element.id == id)
         //     state.works.splice(record, 1)
@@ -55,28 +60,23 @@ export default {
             } ).catch( err => {
                 console.log(err)
             })
+        },
+        async authUser({ commit }, user) {
+            console.log(JSON.stringify(user))
+            const responseReq =  await Vue.prototype.$http.post('/auth/login', JSON.stringify(user), {
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8',
+                }
+            })
+            const data = responseReq.data
+
+            if (data.access_token) {
+                commit('setToken', data.access_token)
+                setCookie('access_token', `bearer ${data.access_token}`, 1)
+                Vue.prototype.$http.defaults.headers.common['Authorization'] =  `bearer ${data.access_token}`
+                return true
+            }
+            return false
         }
-        // removeWork({ commit }, id) {
-        //     Vue.prototype.$http.delete(`api/services/${id}`).then(resp => {
-        //         const data = resp.data
-        //
-        //         if(data) {
-        //             commit('removeWork', id)
-        //         }
-        //     }).catch(err => {
-        //         alert(JSON.stringify(err))
-        //     } )
-        //
-        // },
-        // updateWork({ commit }, work) {
-        //     Vue.prototype.$http.put(`api/services/${work.id}`, work).then( resp => {
-        //         const data = resp.data;
-        //
-        //         if(data)
-        //             commit('updateWork', work)
-        //     }).catch( err => {
-        //         alert(err)
-        //     })
-        // },
     }
 }

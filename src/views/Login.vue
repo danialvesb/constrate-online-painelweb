@@ -39,7 +39,7 @@
                     </b-form-group>
                     <b-form-group>
                         <b-button-group class="container-fluid button-group">
-                            <b-button variant="primary" @click="onClickAuth(form)">Entrar</b-button>
+                            <b-button variant="primary" @click="authUserLocal()">Entrar</b-button>
                             <b-button href="/signup" variant="info">Não tem conta?</b-button>
                         </b-button-group>
                     </b-form-group>
@@ -50,8 +50,7 @@
 </template>
 
 <script>
-    import Vue from "vue";
-
+    import { mapActions } from 'vuex'
     export default {
         name: "Login",
         data() {
@@ -64,58 +63,15 @@
             }
         },
         methods: {
-            onClickAuth(user) {
-                const userJson  = JSON.stringify(user)
-                let axiosConfig = {
-                    headers: {
-                        'Content-Type': 'application/json;charset=UTF-8',
-                    }
-                };
-
-                Vue.prototype.$http.post('/auth/login', userJson, axiosConfig).then(async res => {
-                    if( res.status == 200 ) {
-                        this.setCookie('auth_token', res.data.access_token, 1)
-
-                        console.log(res.data)
-
-                        const  authToken  =  this.getCookie('auth_token')
-
-                        if (authToken) {
-                            console.log(`bearer ${authToken}`)
-                            Vue.prototype.$http.defaults.headers.common['Authorization'] =  `bearer ${authToken}`
-                            this.$router.push('/dashboard')
-                        }
-
-                    }else {
-                        console.log(res.status)
-                    }
-                }).catch(err => {
-                    console.log(err)
-                    this.showAlert()
-                })
-            },
-            setCookie(cookieName, cookieValue, expireDays) {
-                let d = new Date()
-                d.setTime(d.getTime() + (expireDays*24*60*60*1000))
-                let expires = `expires = ${d.toUTCString()}`
-
-                document.cookie = `${cookieName} = ${cookieValue}; ${expires} ;path=/`
-            },
-            getCookie(cookieName) {
-                let name = cookieName + "=";
-                let decodedCookie = decodeURIComponent(document.cookie);
-                let ca = decodedCookie.split(';');
-                for(let i = 0; i <ca.length; i++) {
-                    let c = ca[i];
-                    while (c.charAt(0) == ' ') {
-                        c = c.substring(1);
-                    }
-                    if (c.indexOf(name) == 0) {
-                        return c.substring(name.length, c.length);
-                    }
+            ...mapActions(['authUser']),
+            async authUserLocal(){
+                const result = await this.authUser(this.form)
+                console.log(result)
+                if (result) {
+                    this.$router.push('/dashboard')
                 }
-            return "";
             },
+
             onReset() {
                 this.form.email = ''
                 this.form.password = ''

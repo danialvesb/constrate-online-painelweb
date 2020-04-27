@@ -1,8 +1,9 @@
 import Vue from 'vue'
+import axios from 'axios'
 
 export default {
     state: {
-        works: [],
+        works: null,
     },
     mutations: {
         setWorks(state, data) {
@@ -22,7 +23,7 @@ export default {
     },
     getters: {
         worksList(state) {
-            return state.works;
+            return state.works
         },
     },
     actions: {
@@ -40,6 +41,16 @@ export default {
             }).catch(err => {
                 alert(err)
             })
+        },
+        async loadWorksData({ commit }) {
+            const data = await axios.get('api/services/', {
+                // headers: 'Authorization: '
+            })
+
+            if(data.data.id) {
+                commit('setWorks', data.data)
+                return true
+            }
         },
         removeWork({ commit }, id) {
             Vue.prototype.$http.delete(`/services/${id}`).then(resp => {

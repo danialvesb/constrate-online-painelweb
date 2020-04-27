@@ -14,7 +14,6 @@
     import header from "../components/headerNav";
     import work from "../components/work/work";
     import { mapActions, mapGetters } from 'vuex'
-    import Vue from "vue";
 
     export default {
         name: "Works",
@@ -30,24 +29,19 @@
         methods: {
             //Adicionar sppinners
             ...mapActions(['loadWorksData']),
-            loadWorksData({ commit }) {
-                Vue.prototype.$http.get('services/').then(async resp => {
-                    const data =  resp.data;
+            async loadWorksDataLocal()  {
+                await this.loadWorksData()
+                console.log(JSON.stringify(this.works))
+                this.show = !this.show
 
-                    if(data) {
-                        commit('setWorks', data)
-                        this.show = !this.show
-                    }
-                } ).catch(err => {
-                    alert(err);
-                });
-            },
+            }
+
         },
         computed: {
             ...mapGetters({works:'worksList'})
         },
         mounted() {
-            this.loadWorksData()
+            this.loadWorksDataLocal()
         }
     }
 </script>

@@ -4,7 +4,7 @@ import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import VueRouter from 'vue-router'
 import router from './router'
 import store from './store/store';
-import './axios/axios'
+import  './axios/axios'
 
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
