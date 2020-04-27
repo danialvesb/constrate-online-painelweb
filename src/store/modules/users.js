@@ -39,17 +39,17 @@ export default {
         }
     },
     actions: {
-        loadUsersData({ commit }) {
-            Vue.prototype.$http.get('/users').then( resp => {
-                const data =  resp.data;
+        async loadUsersData({ commit }) {
+            const responseReq =  await Vue.prototype.$http.get('/users')
 
-                if(data) {
-                    commit('setUsers', data)
-                }
-            } ).catch(err => {
-                console.log(err);
-            });
+            if (responseReq.status == 200) {
+                const data = responseReq.data
+                commit('setUsers', data)
+                return true
+            }
+            return false
         },
+
         loadGroupsUsers({ commit }) {
             Vue.prototype.$http.get('/users/groups').then( resp => {
                 const data = resp.data;

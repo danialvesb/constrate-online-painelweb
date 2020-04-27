@@ -8,8 +8,8 @@ Vue.use({
         })
         Vue.prototype.$http.interceptors.request.use( async (config) => {
             if ( !config.url.endsWith('login') || !config.url.endsWith('refresh')) {
-                const userToken = await getCookie('auth_token')
-                config.headers.Authorization = `Bearer ${userToken}`
+                const userToken = await getCookie('access_token')
+                config.headers.Authorization = `${userToken}`
             }
             return config;
         }, ( error ) => {

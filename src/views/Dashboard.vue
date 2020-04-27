@@ -4,14 +4,10 @@
         <div class="container-a">
             <div class="sub-container-infors-cards">
                 <div class="box-1">
-                    <b-card-group class="container-fluid">
-                        <card-traffic :data="cards.cardUsers"></card-traffic>
-                        <card-traffic :data="cards.cardServices"></card-traffic>
-                        <card-traffic :data="cards.cardOffers"></card-traffic>
-                        <card-traffic :data="cards.cardClients"></card-traffic>
-                    </b-card-group>
-                </div>
-                <div class="box-2">
+                    <card-traffic :data="cards.cardUsers"></card-traffic>
+                    <card-traffic :data="cards.cardServices"></card-traffic>
+                    <card-traffic :data="cards.cardOffers"></card-traffic>
+                    <card-traffic :data="cards.cardClients"></card-traffic>
                 </div>
             </div>
             <div class="sub-container-infors-users">
@@ -118,8 +114,12 @@
         },
         methods: {
             ...mapActions(['loadUsersData']),
-            loadUsersLocal() {
-                this.loadUsersData()
+            async loadUsersLocal() {
+                const result = await this.loadUsersData()
+                console.log(result)
+                if (result) {
+                    this.isBusy = false
+                }
             },
             toggleBusy() {
                 if (this.users.length > 0 && this.isBusy == true) {
@@ -144,7 +144,6 @@
             this.loadUsersLocal()
         },
         updated() {
-            this.toggleBusy()
         }
     }
 </script>
@@ -202,16 +201,17 @@
             -moz-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.34);
             box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.24);
             margin-bottom: 20px;
-
+            background-color: $white;
             .box-1 {
-                min-width: 50%;
-                margin: 5px;
+                min-width: 100%;
+                margin: 10px;
+                padding: 10px;
                 display: flex;
-                flex-direction: column;
-                justify-content: center;
+                flex-direction: row;
+                justify-content: space-between;
                 align-items: center;
                 flex-wrap: wrap;
-                background-color: $white;
+
             }
 
             .box-2 {

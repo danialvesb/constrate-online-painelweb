@@ -3,7 +3,6 @@
             class="mb-2 card-traffic"
             :header="data.id"
     >
-
         <b-card-body>
             <b-card-text>
                     {{ data.text }}
@@ -35,7 +34,7 @@
         cursor: pointer;
         border: solid 1px;
         word-wrap: break-word;
-        min-width: 100%;
+        min-width: 22%!important;
     }
 
 </style>
