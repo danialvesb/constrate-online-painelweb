@@ -31,9 +31,7 @@
             ...mapActions(['loadWorksData']),
             async loadWorksDataLocal()  {
                 await this.loadWorksData()
-                console.log(JSON.stringify(this.works))
                 this.show = !this.show
-
             }
 
         },

@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import axios from 'axios'
 
 export default {
     state: {
@@ -43,12 +42,11 @@ export default {
             })
         },
         async loadWorksData({ commit }) {
-            const data = await axios.get('api/services/', {
-                // headers: 'Authorization: '
-            })
+            const responseRec = await Vue.prototype.$http.get('/services/')
 
-            if(data.data.id) {
-                commit('setWorks', data.data)
+            if(responseRec.status == 200) {
+                console.log(JSON.stringify(responseRec.data))
+                commit('setWorks', responseRec.data)
                 return true
             }
         },

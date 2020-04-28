@@ -1,8 +1,9 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
 import Login from "../views/Login";
 import Signup from "../views/Signup";
 import Profile from "../views/Profile";
+import { isAuth } from '../helpers/isAuth'
 
 // Views
 const Dashboard = () => import('../views/Dashboard')
@@ -12,14 +13,24 @@ const StoreCategory = () => import('../views/StoreCategory')
 
 const App = () => import('../App')
 
-Vue.use(Router)
 
-export default new Router({
+
+Vue.use(VueRouter)
+
+const router =  new VueRouter({
     mode: 'history',
     linkActiveClass: 'active',
     scrollBehavior: () => ({y: 0}),
     routes: configRoutes()
 })
+
+router.beforeEach((to, from, next) => {
+    if (to.name !== 'Login' && !isAuth()) next({ name: 'Login' })
+    // if the user is not authenticated, `next` is called twice
+    next()
+})
+
+export default router
 
 function configRoutes() {
     return [

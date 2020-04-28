@@ -143,8 +143,6 @@
         mounted() {
             this.loadUsersLocal()
         },
-        updated() {
-        }
     }
 </script>
 
@@ -195,6 +193,7 @@
         .sub-container-infors-cards {
             display: flex;
             flex-direction: row;
+            justify-content: center;
             width: 95%;
             min-height: 400px;
             -webkit-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.21);
@@ -211,9 +210,7 @@
                 justify-content: space-between;
                 align-items: center;
                 flex-wrap: wrap;
-
             }
-
             .box-2 {
                 min-width: 50%;
                 margin: 5px;
@@ -224,7 +221,6 @@
                 flex-wrap: wrap;
                 background-color: $white;
             }
-
         }
     }
 
