@@ -20,12 +20,11 @@ Vue.use(VueRouter)
 const router =  new VueRouter({
     mode: 'history',
     linkActiveClass: 'active',
-    scrollBehavior: () => ({y: 0}),
     routes: configRoutes()
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.name !== 'Login' && !isAuth()) next({ name: 'Login' })
+    if (to.name !== 'Login' && to.name !== 'Signup' &&  !isAuth()) next({ name: 'Login' })
     // if the user is not authenticated, `next` is called twice
     next()
 })

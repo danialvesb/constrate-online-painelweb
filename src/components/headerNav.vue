@@ -24,7 +24,7 @@
                         <b-dropdown-item href="#" >Pagamentos</b-dropdown-item>
                         <b-dropdown-item href="#">Projetos</b-dropdown-item>
                         <b-dropdown-divider></b-dropdown-divider>
-                        <b-dropdown-item href="/entrar" >Sair</b-dropdown-item>
+                        <b-dropdown-item @click="onclickLogout()">Sair</b-dropdown-item>
                     </b-nav-item-dropdown>
                 </b-navbar-nav>
             </b-navbar>
@@ -35,17 +35,19 @@
                     <b-icon icon="house-fill" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon>
                     Início
                 </b-breadcrumb-item>
-                <b-breadcrumb-item href="/servicos" >Serviços</b-breadcrumb-item>
-                <b-breadcrumb-item href="/servicos/cadastrar" >Cadastrar Serviço</b-breadcrumb-item>
-                <b-breadcrumb-item href="/servicos/categorias" >Categorias</b-breadcrumb-item>
-                <b-breadcrumb-item href="/entrar" >Login</b-breadcrumb-item>
-                <b-breadcrumb-item href="/signup" >Criar conta</b-breadcrumb-item>
+<!--                <b-breadcrumb-item href="/servicos" >Serviços</b-breadcrumb-item>-->
+<!--                <b-breadcrumb-item href="/servicos/cadastrar" >Cadastrar Serviço</b-breadcrumb-item>-->
+<!--                <b-breadcrumb-item href="/servicos/categorias" >Categorias</b-breadcrumb-item>-->
+<!--                <b-breadcrumb-item href="/entrar" >Login</b-breadcrumb-item>-->
+<!--                <b-breadcrumb-item href="/signup" >Criar conta</b-breadcrumb-item>-->
             </b-breadcrumb>
         </div>
     </div>
 </template>
 
 <script>
+    import { setCookie } from "../helpers/cookie";
+
     export default {
         name: "h-nav",
         data() {
@@ -71,6 +73,12 @@
                         text: 'Início',
                     },
                 ]
+            }
+        },
+        methods: {
+            onclickLogout() {
+                setCookie('access_token', 'deleted')
+                this.$router.push('/entrar')
             }
         }
     }
