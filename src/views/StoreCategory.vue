@@ -11,7 +11,7 @@
                         <h3>Categorias</h3>
                     </div>
                     <b-form>
-                        <b-form-input size="sm" class="mr-sm-2 mb-1" placeholder="Pesquisar"></b-form-input>
+                        <b-form-input size="sm" class="mr-sm-2 mb-1" style="width: 50%" placeholder="Pesquisar"></b-form-input>
                     </b-form>
                     <b-table
                             hover
@@ -50,7 +50,7 @@
                     <b-modal id="modal-new" ref="modal-category" hide-footer>
                         <div class="d-block text-center">
                             <h3>Nova Categoria</h3>
-                            <b-form-input v-model="category.title"></b-form-input>
+                            <b-form-input v-model="category.title" placeholder="Insira o nome"></b-form-input>
                         </div>
                         <b-button class="mt-3" variant="success" block @click="onClickSaveCategory()">Salvar</b-button>
                         <b-button class="mt-2" variant="warning" block @click="hideModal">Cancelar</b-button>
@@ -215,7 +215,6 @@
                 display: flex;
                 flex-direction: column;
                 border-radius: 10px;
-                border: solid 1px rgba(48, 60, 84, 0.38);
                 div {
                     margin: 4px;
                     h3 {

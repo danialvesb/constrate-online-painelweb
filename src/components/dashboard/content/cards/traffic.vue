@@ -1,6 +1,6 @@
 <template>
     <b-card
-            class="mb-2 card-traffic"
+            class="mb-0 card-traffic"
             :header="data.id"
     >
         <b-card-body>
@@ -33,7 +33,6 @@
         outline: none;
         cursor: pointer;
         border: solid 1px;
-        word-wrap: break-word;
         min-width: 25%!important;
         min-height: 100%;
     }

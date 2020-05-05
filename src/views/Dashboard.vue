@@ -3,12 +3,10 @@
         <h-nav></h-nav>
         <div class="container-a">
             <div class="sub-container-infors-cards">
-                <div class="box-1">
-                    <card-traffic :data="cards.cardUsers"></card-traffic>
-                    <card-traffic :data="cards.cardServices"></card-traffic>
-                    <card-traffic :data="cards.cardOffers"></card-traffic>
-                    <card-traffic :data="cards.cardClients"></card-traffic>
-                </div>
+                <card-traffic :data="cards.cardUsers"></card-traffic>
+                <card-traffic :data="cards.cardServices"></card-traffic>
+                <card-traffic :data="cards.cardOffers"></card-traffic>
+                <card-traffic :data="cards.cardClients"></card-traffic>
             </div>
             <div class="sub-container-infors-users">
                 <div class="table-users">
@@ -180,11 +178,9 @@
                 border-radius: 10px;
                 div {
                     margin: 4px;
-
                 }
             }
         }
-
         .sub-container-infors-cards {
             display: flex;
             flex-direction: row;
@@ -196,26 +192,6 @@
             box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.24);
             margin-bottom: 20px;
             background-color: $white;
-            .box-1 {
-                min-width: 100%;
-                margin: 10px;
-                padding: 10px;
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                flex-wrap: wrap;
-            }
-            .box-2 {
-                min-width: 50%;
-                margin: 5px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                flex-wrap: wrap;
-                background-color: $white;
-            }
         }
     }
 
