@@ -165,9 +165,9 @@
             align-items: center;
             width: 95%;
             min-height: 400px;
-            -webkit-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.21);
-            -moz-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.34);
-            box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.24);
+            -webkit-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.16);
+            -moz-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.18);
+            box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.2);
             margin-bottom: 20px;
 
             .table-users {
@@ -178,14 +178,9 @@
                 flex-direction: column;
                 flex-wrap: wrap;
                 border-radius: 10px;
-                border: solid 1px rgba(48, 60, 84, 0.38);
-
                 div {
                     margin: 4px;
 
-                    h3 {
-                        color: $black
-                    }
                 }
             }
         }

@@ -1,14 +1,16 @@
 <template>
-    <div>
-
+    <div class="container-work">
         <b-card class="m-1 p-1 card-container">
-            <b-img src="https://placekitten.com/1000/300" class="img-fluid" width="500"></b-img>
+
             <strong>{{ work.title }}</strong>
             <b-card-text>
                 {{ work.description }}
             </b-card-text>
-            <b-card-body class="p-2 m-2 details-card">
-                <div>
+            <b-card-body >
+                <div class="p-2 m-2 details-card">
+                    <b-img src="https://placekitten.com/1000/300" class="img-fluid" width="500"></b-img>
+                </div>
+                <div class="p-2 m-2 details-card">
                     <div>
                         <small>Categorias: ww</small>
                     </div>
@@ -17,10 +19,11 @@
                     </div>
                 </div>
             </b-card-body>
-            <b-button-group class="container-fluid">
-                <b-button variant="primary">Editar</b-button>
-                <b-button variant="danger" @click="toggleModalDelete()">Excluir</b-button>
-            </b-button-group>
+            <div class="button-group">
+                    <b-button variant="primary" class="button-style">Editar</b-button>
+                    <b-button variant="danger" class="button-style" @click="toggleModalDelete()">Excluir</b-button>
+            </div>
+
         </b-card>
         <b-modal id="modal-delete" ref="modal-work-delete" hide-footer>
             <div class="d-block text-center">
@@ -62,19 +65,32 @@
 
 <style lang="scss" scoped>
     @import "src/assets/scss/variables";
-    div {
+    .container-work {
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
+        display: flex;
+        flex-direction: column;
+        min-width: 700px;
+        width: 50%;
         .card-container {
-            outline: none;
+            display: flex;
+            width: 98%;
             cursor: pointer;
         }
     }
     .details-card {
         border-radius: 5px;
-        -webkit-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.29);
-        -moz-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.16);
-        box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.18);
+        box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.11);
+    }
+    .button-group {
+        display: flex;
+        flex-direction:row;
+        justify-content: left;
+        width: 50%;
+    }
+    .button-style {
+        width: 40%;
+        margin-left: 5px;
     }
 </style>

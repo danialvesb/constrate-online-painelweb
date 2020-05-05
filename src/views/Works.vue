@@ -48,8 +48,10 @@
     @import "src/assets/scss/variables";
     .container-a {
         display: flex;
-        flex-direction: column;
-        width: 95%;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        width: 98%;
         min-height: 800px;
         margin: auto;
     }

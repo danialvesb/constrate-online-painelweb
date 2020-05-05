@@ -34,7 +34,8 @@
         cursor: pointer;
         border: solid 1px;
         word-wrap: break-word;
-        min-width: 22%!important;
+        min-width: 25%!important;
+        min-height: 100%;
     }
 
 </style>
