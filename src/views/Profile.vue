@@ -1,35 +1,37 @@
 <template>
-    <div class="container-1">
+    <div class="main">
         <header-nav></header-nav>
-        <div class="sub-container-1">
+        <div class="container-dynamic">
             <div v-if="show" class="container-profile">
-                <div class="sub-container-profile">
+                <div class="header-profile">
                     <div class="profile-container-avatar">
-                        <div class="profile-avatar-icon">
-                        </div>
+                        <b-avatar src="https://placekitten.com/300/300" size="10rem"></b-avatar>
                     </div>
                     <div class="infos-user">
                         <h5>{{ data.name }}</h5>
                     </div>
-                    <div class="infos-user-details">
-                        <span style="color: white">
-                            E-mail: <strong>{{ data.email }}</strong>
-                        </span>
-                        <span style="color: white">
-                            Celular: <strong>{{ data.mobile }}</strong>
-                        </span>
-                        <span style="color: white">
-                            Cidade: <strong>{{ data.city }}</strong>
-                        </span>
-                        <span style="color: white">
-                            UF: <strong>{{ data.uf }}</strong>
-                        </span>
-                        <span style="color: white">
-                            Bairro: <strong>{{ data.district }}</strong>
-                        </span>
-
-
-                    </div>
+                </div>
+                <div class="body-profile">
+                    <span style="color: white">
+                        E-mail: <strong>{{ data.email }}</strong>
+                    </span>
+                    <span style="color: white">
+                        Celular: <strong>{{ data.mobile }}</strong>
+                    </span>
+                    <span style="color: white">
+                        Cidade: <strong>{{ data.city }}</strong>
+                    </span>
+                    <span style="color: white">
+                        UF: <strong>{{ data.uf }}</strong>
+                    </span>
+                    <span style="color: white">
+                        Bairro: <strong>{{ data.district }}</strong>
+                    </span>
+                </div>
+                <div class="footer-profile">
+                    <b-button-group>
+                        <b-button variant="primary">Editar perfil</b-button>
+                    </b-button-group>
                 </div>
             </div>
             <div v-if="!show" class="spinner-container">
@@ -83,81 +85,80 @@
 
 <style lang="scss" scoped>
 
-    .container-1 {
+    .main {
         height: 100%;
+    }
 
-        .sub-container-1 {
-            width: 100%;
-            height: 100%;
+    .container-dynamic {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        .container-profile {
             display: flex;
-            flex-direction: row;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            max-width: 1300px;
+            height: 80%;
+            margin-top: 20px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.21);
+            -moz-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.34);
+            box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.24);
 
-            .container-profile {
+            .header-profile {
                 display: flex;
-                flex-direction: row;
+                flex-direction: column;
                 justify-content: center;
-                width: 90%;
-                height: 100%;
-                margin-top: 50px;
-
-                .sub-container-profile {
+                align-items: center;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+                width: 100%;
+                height: 250px;
+                background-color: white;
+                .infos-user {
+                    margin-top: 30px;
                     display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    width: 90%;
-                    height: 40%;
-                    background-color: white;
-                    border-radius: 10px;
-                    -webkit-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.21);
-                    -moz-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.34);
-                    box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.24);
-
-                    .infos-user {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        width: 50%;
-                        height: 20%;
-                    }
-
-                    .infos-user-details {
-                        display: flex;
-                        padding: 10px;
-                        background-color: #303C54;
-                        flex-direction: column;
-                        align-items: flex-start;
-                        width: 100%;
-                        height: 60%;
-                    }
-
-                    .profile-container-avatar {
-                        display: flex;
-                        flex-direction: row;
-                        justify-content: center;
-                        align-items: center;
-                        background-color: white;
-                        -webkit-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.21);
-                        -moz-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.34);
-                        box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.24);
-                        width: 150px;
-                        height: 40%;
-                        margin-top: -5%;
-                        border-radius: 150px;
-
-                        .profile-avatar-icon {
-                            width: 50px;
-                            height: 20px;
-                            background-image: url("../assets/images/avatars/1.jpg");
-                            background-repeat: no-repeat;
-                            background-size: cover;
-                            background-position: center center;
-
-                        }
-                    }
+                    flex-direction: row;
+                    justify-content: center;
+                    width: 100%;
+                    height: 20%;
                 }
+                .profile-container-avatar {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    height: 40%;
+                    margin-top: -5%;
+                    cursor: pointer;
+                }
+            }
+            .body-profile {
+                display: flex;
+                flex-direction: column;
+                padding: 10px;
+                background-color: #303C54;
+                align-items: flex-start;
+                width: 100%;
+                height: 40%;
+            }
+            .footer-profile {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-end;
+                padding: 10px;
+                border-bottom-left-radius: 10px;
+                border-bottom-right-radius: 10px;
+                width: 100%;
+                height: 250px;
+                background-color: white;
             }
         }
     }
-
 </style>

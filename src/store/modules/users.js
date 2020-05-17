@@ -50,16 +50,16 @@ export default {
             return false
         },
 
-        loadGroupsUsers({ commit }) {
-            Vue.prototype.$http.get('/users/groups').then( resp => {
-                const data = resp.data;
+        async loadGroupsUsers({ commit }) {
+            const responseReq = await Vue.prototype.$http.get('/users/groups')
 
-                if (data) {
-                    commit('setGroupsUsers', data)
-                }
-            } ).catch( err => {
-                console.log(err)
-            })
+            if (responseReq.status == 200) {
+                const data = responseReq.data
+                commit('setGroupsUsers', data)
+                return true
+            }else {
+                return false
+            }
         },
         async authUser({ commit }, user) {
             console.log(JSON.stringify(user))

@@ -57,7 +57,7 @@
                 </b-card-body>
                 <b-card-footer>
                     <b-button-group style="width: 100%">
-                        <b-button type="submit" variant="success" @click="addUser(form)">Criar conta</b-button>
+                        <b-button type="submit" variant="success" @click="addUser()">Criar conta</b-button>
                     </b-button-group>
                 </b-card-footer>
                 <b-card-footer>
@@ -92,6 +92,7 @@
                 form: {
                     name: '',
                     email: '',
+                    password: '',
                     groups_id: null
                 },
                 options: [{ text: 'Selecione um grupo', value: null }],
@@ -111,35 +112,40 @@
                 })
                 this.options = this.options.concat(optionsLocal)
             },
-            addUser(user) {
-                const userJson  = JSON.stringify(user)
+            async addUser() {
+                let formData = new FormData();
+                formData.append('name', this.form.name)
+                formData.append('email', this.form.email)
+                formData.append('groups_id', this.form.groups_id)
+                formData.append('password', this.form.password)
 
-                Vue.prototype.$http.post('/signup', userJson).then(async res => {
-                    if( res.status == 201 ) {
-                        this.$router.push('/entrar')
-                    }else {
-                        console.log(res.status)
-                    }
-                }).catch(err => {
-                    console.log(err)
-                    this.showAlert()
+                const responseRec = await  Vue.prototype.$http.post('/auth/signup', formData, {
+                    headers: {'Content-Type': 'multipart/form-data'}
                 })
+
+                if( responseRec.status == 201 ) {
+                    this.$router.push('/entrar')
+                }else {
+                    console.log(responseRec.status)
+                    this.showAlert()
+                }
             },
             countDownChanged(dismissCountDown) {
                 this.dismissCountDown = dismissCountDown
             },
             showAlert() {
                 this.dismissCountDown = this.dismissSecs
+            },
+            async loadGroupsUsersLocal() {
+                await  this.loadGroupsUsers()
+                await this.mapOptionsGroups()
             }
         },
         computed: {
             ...mapGetters({ groupsList : 'groupsList'})
         },
         mounted() {
-            this.loadGroupsUsers()
-            setTimeout(() => {
-                this.mapOptionsGroups()
-            }, 500)
+            this.loadGroupsUsersLocal()
         }
     }
 </script>
