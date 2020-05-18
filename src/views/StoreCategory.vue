@@ -145,7 +145,6 @@
                 this.category = { id: 0, title: '' }
                 this.loadCategoriesDataLocal()
                 this.hideModal();
-
             },
             onClickUpdateCategory() {
                 this.updateCategory(this.category)

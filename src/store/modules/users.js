@@ -5,7 +5,8 @@ export default {
     state: {
         users: [],
         groups: [],
-        token: ''
+        token: '',
+        me: []
     },
     mutations: {
         setUsers(state, data) {
@@ -19,16 +20,10 @@ export default {
         },
         setToken(state, data){
             state.token = data
+        },
+        setMe(state, data) {
+            state.me = data
         }
-        // removeWork(state, id) {
-        //     const record = state.works.findIndex(element => element.id == id)
-        //     state.works.splice(record, 1)
-        // },
-        //
-        // updateWork(state, work) {
-        //     const record = state.works.findIndex(element => element.id == work.id)
-        //     state.works[record] = work
-        // }
     },
     getters: {
         usersList(state) {
@@ -36,6 +31,9 @@ export default {
         },
         groupsList(state) {
             return state.groups
+        },
+        getMe(state) {
+            return state.me
         }
     },
     actions: {
@@ -77,6 +75,17 @@ export default {
                 return true
             }
             return false
-        }
+        },
+        async loadMe({ commit }) {
+            const responseRec = await Vue.prototype.$http.post('auth/me')
+            if (responseRec.status == 200) {
+                commit('setMe', responseRec.data)
+                return responseRec.status
+            }
+            return responseRec.status
+        },
+        // async updateMe({ commit }){
+        //
+        // }
     }
 }
