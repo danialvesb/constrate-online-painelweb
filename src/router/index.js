@@ -1,7 +1,9 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
 import Login from "../views/Login";
 import Signup from "../views/Signup";
+import Profile from "../views/Profile";
+import { isAuth } from '../helpers/isAuth'
 
 // Views
 const Dashboard = () => import('../views/Dashboard')
@@ -11,61 +13,71 @@ const StoreCategory = () => import('../views/StoreCategory')
 
 const App = () => import('../App')
 
-Vue.use(Router)
 
-export default new Router({
-  mode: 'history',
-  linkActiveClass: 'active',
-  scrollBehavior: () => ({ y: 0 }),
-  routes: configRoutes()
+
+Vue.use(VueRouter)
+
+const router =  new VueRouter({
+    mode: 'history',
+    linkActiveClass: 'active',
+    routes: configRoutes()
 })
 
-function configRoutes () {
-  return [
-    {
-      path: '/',
-      redirect: '/dashboard',
-      name: 'App',
-      component: App,
-      children: [
-        {
-          path: '/dashboard',
-          name: 'Home',
-          component: Dashboard
-        },
-        {
-          path: '/servicos',
-          name: 'Works',
-          component: Works
-        },
-        {
-          path: '/servicos/cadastrar',
-          name: 'CreateWork',
-          component: NewWork
-        },
-        {
-          path: '/servicos/categorias',
-          name: 'CategoriesWorks',
-          component: StoreCategory
-        },
-        {
-          path: '/entrar',
-          name: 'Login',
-          component: Login
-        },
-        {
-          path: '/signup',
-          name: 'Signup',
-          component: Signup
-        },
+router.beforeEach((to, from, next) => {
+    if (to.name !== 'Login' && to.name !== 'Signup' &&  !isAuth()) next({ name: 'Login' })
+    // if the user is not authenticated, `next` is called twice
+    next()
+})
 
+export default router
 
+function configRoutes() {
+    return [
+        {
+            path: '/',
+            redirect: '/dashboard',
+            name: 'App',
+            component: App,
+            children: [
+                {
+                    path: '/dashboard',
+                    name: 'Home',
+                    component: Dashboard
+                },
+                {
+                    path: '/servicos',
+                    name: 'Works',
+                    component: Works
+                },
+                {
+                    path: '/servicos/cadastrar',
+                    name: 'CreateWork',
+                    component: NewWork
+                },
+                {
+                    path: '/servicos/categorias',
+                    name: 'CategoriesWorks',
+                    component: StoreCategory
+                },
+                {
+                    path: '/entrar',
+                    name: 'Login',
+                    component: Login
+                },
+                {
+                    path: '/signup',
+                    name: 'Signup',
+                    component: Signup
+                },
+                {
+                    path: '/usuario/perfil',
+                    name: 'Profile',
+                    component: Profile
+                },
 
-      ]
-    },
-
-
-  ]
+            ]
+        },
+    ]
 }
 
 // { path: '/servicos/listar', component: Works},

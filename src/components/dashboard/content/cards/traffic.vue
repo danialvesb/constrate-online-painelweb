@@ -1,17 +1,16 @@
 <template>
-    <div>
-        <b-card
-                class="mb-2 card-traffic bg-primary"
-        >
-            <b-card-text class="text-white">
-                <strong>
+    <b-card
+            class="mb-0 card-traffic"
+            :header="data.id"
+    >
+        <b-card-body>
+            <b-card-text>
                     {{ data.text }}
-                </strong>
                 <br>
                 {{ data.qtd }}
             </b-card-text>
-        </b-card>
-    </div>
+        </b-card-body>
+    </b-card>
 </template>
 
 <script>
@@ -34,7 +33,8 @@
         outline: none;
         cursor: pointer;
         border: solid 1px;
-        word-wrap: break-word;
+        min-width: 25%!important;
+        min-height: 100%;
     }
 
 </style>

@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
 import actions from './actions'
 import category from "./modules/categories";
 import work from "./modules/works";

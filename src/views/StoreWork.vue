@@ -8,7 +8,7 @@
                     <h4><strong>Cadastro de serviço</strong></h4>
                 </div>
                 <div class="form-container">
-                    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+                    <b-form>
                         <b-form-group
                                 id="input-group-1"
                                 label="Serviço:"
@@ -18,26 +18,25 @@
                         >
                             <b-form-input
                                     id="input-2"
-                                    v-model="form.name"
+                                    v-model="data.title"
                                     required
                                     placeholder="Título do serviço"
                                     class="mb-1"
                             ></b-form-input>
                             <b-form-textarea
                                     id="textarea"
-                                    v-model="form.description"
+                                    v-model="data.description"
                                     placeholder="Descrição do serviço..."
                                     rows="3"
                                     max-rows="6"
                             ></b-form-textarea>
                         </b-form-group>
 
-
                         <b-form-group id="input-group-3" label="Categoria e imagem:" label-for="input-3">
                             <b-form-select
                                     id="input-3"
-                                    v-model="form.food"
-                                    :options="foods"
+                                    v-model="data.categorySelected"
+                                    :options="dataSelect"
                                     required
                             ></b-form-select>
                         <div class="form-container-photo">
@@ -49,66 +48,114 @@
                                     tag="article"
                                     style="max-width: 20rem;"
                                     class="mb-2">
-                                <b-button href="#" variant="primary">Carregar imagem</b-button>
+                                <b-button @click="onShow()" variant="primary">Carregar imagem</b-button>
                             </b-card>
                         </div>
                         </b-form-group>
                         <b-button-group>
-                            <b-button type="submit" variant="primary">Salvar</b-button>
-                            <b-button type="reset" variant="danger">Redefinir</b-button>
+                            <b-button variant="primary" @click="addWorkLocal(data)">Salvar</b-button>
+                            <b-button variant="danger" @click="onReset">Redefinir</b-button>
                         </b-button-group>
+                        <b-modal id="modal-new" ref="modal-input-image" size="lg" hide-footer title="Inserir imagem">
+                            <div>
+                                <picture-input
+                                        v-if="loaded"
+
+                                        width="300"
+                                        height="200"
+                                        margin="5"
+                                        accept="image/jpeg,image/png"
+                                        size="5"
+                                        hideChangeButton
+                                        button-class="btn"
+                                        :custom-strings="{
+                                            upload: '<h1>Bummer!</h1>',
+                                            drag: 'Arraste a imagem, ou clique para inserir!'
+                                        }"  >
+                                </picture-input>
+                            </div>
+                        </b-modal>
                     </b-form>
-
-
                 </div>
             </div>
-
-
         </div>
     </div>
-
-
 </template>
 
 <script>
     import header from "../components/headerNav";
+    import { mapActions, mapGetters } from 'vuex'
+    import PictureInput from 'vue-picture-input'
+
     export default {
         name: "StoreWork",
         data() {
             return {
-                form: {
-                    email: '',
-                    name: '',
-                    food: null,
-                    checked: []
+                data: {
+                    title: '',
+                    categorySelected: null,
+                    description: '',
+                    image_path: "/",
                 },
-                foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
-                show: true
+                dataSelect: [{ text: 'Selecione uma categoria', value: null }],
+                loaded: false
             }
         },
         components: {
             'header-nav': header,
+            'picture-input': PictureInput
+        },
+        computed: {
+            ...mapGetters({ categoriesSelect: 'categoriesSelected'})
         },
         methods: {
-            onSubmit(evt) {
-                evt.preventDefault()
-                alert(JSON.stringify(this.form))
+            ...mapActions(['addWork', 'loadCategories']),
+            onReset() {
+                this.data.title = ''
+                this.data.description = ''
+                this.data.categorySelected = null
             },
-            onReset(evt) {
-                evt.preventDefault()
-                // Reset our form values
-                this.form.email = ''
-                this.form.name = ''
-                this.form.food = null
-                this.form.checked = []
-                // Trick to reset/clear native browser form validation state
-                this.show = false
-                this.$nextTick(() => {
-                    this.show = true
+            loadCategoruesListLocal() {
+                this.loadCategories()
+            },
+            addWorkLocal(data){
+                this.addWork(data)
+                this.onReset()
+            },
+            onChange(image) {
+                console.log('New picture selected!')
+                if (image) {
+                    console.log('Picture loaded.')
+                    this.image = image
+                } else {
+                    console.log('FileReader API not supported: use the <form>, Luke!')
+                }
+            },
+            toggleModalImage() {
+                this.$refs['modal-input-image'].toggle('#toggle-btn')
+                this.onShow()
+            },
+            onShow() {
+                this.$refs['modal-input-image'].toggle('#toggle-btn')
+                setTimeout( () => {
+                    this.loaded = true;
+                    window.dispatchEvent(new Event('resize'));
                 })
-            }
-        }
+            },
+            // openNewPortfolio() {
+            //     this.$refs['modal-input-image'].toggle('#toggle-btn')
+            //     window.setTimeout(() => {
+            //         this.$refs.pictureInput.onResize();
+            //     }, 1000); //runs onResize() after a second
+            // },
+        },
+        mounted() {
+            this.loadCategoruesListLocal()
+            setTimeout(() =>{
+                    this.dataSelect = this.dataSelect.concat(this.categoriesSelect)
+            }, 1000)
 
+        },
     }
 </script>
 
@@ -142,6 +189,5 @@
                 }
             }
         }
-
     }
 </style>

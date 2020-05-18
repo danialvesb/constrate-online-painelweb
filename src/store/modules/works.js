@@ -1,22 +1,20 @@
 import Vue from 'vue'
 
-
 export default {
     state: {
-        works: [],
+        works: null,
     },
     mutations: {
         setWorks(state, data) {
             state.works = data
         },
-        // addWork(state, data) {
-        //     state.works.push(data);
-        // },
-        //
-        // removeWork(state, id) {
-        //     const record = state.works.findIndex(element => element.id == id)
-        //     state.works.splice(record, 1)
-        // },
+        addWork(state, data) {
+            state.works.push(data);
+        },
+        removeWork(state, id) {
+            const record = state.works.findIndex(element => element.id == id)
+            state.works.splice(record, 1)
+        },
         // updateWork(state, work) {
         //     const record = state.works.findIndex(element => element.id == work.id)
         //     state.works[record] = work
@@ -24,51 +22,45 @@ export default {
     },
     getters: {
         worksList(state) {
-            return state.works;
+            return state.works
         },
     },
     actions: {
-        // addWork({ commit }, work) {
-        //
-        //     const workJson  = JSON.stringify(work)
-        //
-        //     Vue.prototype.$http.post('api/services', workJson).then( res => {
-        //         const data = res.data
-        //
-        //         if( data ) {
-        //             commit('addWork', work)
-        //         }else {
-        //             alert('Não foi possível gravar serviço')
-        //         }
-        //     }).catch(err => {
-        //         alert(err)
-        //     })
-        //
-        // },
-        loadWorksData({ commit }) {
-            Vue.prototype.$http.get('services/').then( resp => {
-                const data =  resp.data;
+        addWork({ commit }, work) {
+            const workJson  = JSON.stringify(work)
+
+            Vue.prototype.$http.post('/services', workJson).then( res => {
+                const data = res.data
+
+                if( data ) {
+                    commit('addWork', work)
+                }else {
+                    alert('Não foi possível gravar serviço')
+                }
+            }).catch(err => {
+                alert(err)
+            })
+        },
+        async loadWorksData({ commit }) {
+            const responseRec = await Vue.prototype.$http.get('/services/')
+
+            if(responseRec.status == 200) {
+                console.log(JSON.stringify(responseRec.data))
+                commit('setWorks', responseRec.data)
+                return true
+            }
+        },
+        removeWork({ commit }, id) {
+            Vue.prototype.$http.delete(`/services/${id}`).then(resp => {
+                const data = resp.data
 
                 if(data) {
-                    commit('setWorks', data)
-
+                    commit('removeWork', id)
                 }
-            } ).catch(err => {
-                alert(err);
-            });
+            }).catch(err => {
+                alert(JSON.stringify(err))
+            } )
         },
-        // removeWork({ commit }, id) {
-        //     Vue.prototype.$http.delete(`api/services/${id}`).then(resp => {
-        //         const data = resp.data
-        //
-        //         if(data) {
-        //             commit('removeWork', id)
-        //         }
-        //     }).catch(err => {
-        //         alert(JSON.stringify(err))
-        //     } )
-        //
-        // },
         // updateWork({ commit }, work) {
         //     Vue.prototype.$http.put(`api/services/${work.id}`, work).then( resp => {
         //         const data = resp.data;
@@ -80,5 +72,4 @@ export default {
         //     })
         // },
     }
-
 }

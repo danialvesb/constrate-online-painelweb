@@ -2,104 +2,162 @@
     <div class="container-a">
         <div class="sub-container-a">
             <b-card
-                    title="Criar conta"
-                    class="card-container-a">
+                title="Criar conta"
+                class="card-container-a">
                 <b-card-body>
                     <div>
-                        <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+                        <b-form>
                             <b-form-group>
-                                <b-form-input
-
-                                        id="input-2"
-                                        v-model="form.name"
-                                        required
-                                        placeholder="Nome de usuário"
-                                        class="mb-1"
-                                ></b-form-input>
-                                <b-form-input
-                                        id="input-1"
-                                        v-model="form.email"
-                                        type="email"
-                                        required
-                                        placeholder="Insira seu e-mail"
-                                        class="mb-1"
-                                ></b-form-input>
-                                <b-form-input
-                                        id="input-1"
-                                        v-model="form.email"
-                                        type="password"
-                                        required
-                                        placeholder="Insira sua senha"
-                                        class="mb-1"
-                                ></b-form-input>
-                                <b-form-input
-                                        id="input-1"
-                                        v-model="form.email"
-                                        type="password"
-                                        required
-                                        placeholder="Confirme sua senha"
-                                ></b-form-input>
-
+                                <b-form-group label="Nome de usuário">
+                                    <b-form-input
+                                            id="input-1"
+                                            v-model="form.name"
+                                            required
+                                            placeholder="Nome de usuário"
+                                            class="mb-1"
+                                    ></b-form-input>
+                                </b-form-group>
+                                <b-form-group label="E-mail">
+                                    <b-form-input
+                                            id="input-2"
+                                            v-model="form.email"
+                                            type="email"
+                                            placeholder="Insira seu e-mail"
+                                            class="mb-1"
+                                    ></b-form-input>
+                                </b-form-group>
+                                <b-form-group label="Senha">
+                                    <b-form-input
+                                            id="input-3"
+                                            v-model="form.password"
+                                            type="password"
+                                            required
+                                            placeholder="Insira sua senha"
+                                            class="mb-1"
+                                    ></b-form-input>
+                                    <b-form-input
+                                            id="input-4"
+                                            v-model="form.password"
+                                            type="password"
+                                            required
+                                            placeholder="Confirme sua senha"
+                                    ></b-form-input>
+                                </b-form-group>
+                                <b-form-group label="Selecione o grupo de usuário">
+                                    <b-form-select
+                                            id="input-5"
+                                        v-model="form.groups_id"
+                                        :options="options"
+                                        required>
+                                    </b-form-select>
+                                </b-form-group>
                             </b-form-group>
-
                         </b-form>
                     </div>
                 </b-card-body>
                 <b-card-footer>
                     <b-button-group style="width: 100%">
-                        <b-button type="submit" variant="success">Criar conta</b-button>
+                        <b-button type="submit" variant="success" @click="addUser()">Criar conta</b-button>
                     </b-button-group>
                 </b-card-footer>
                 <b-card-footer>
                     <b-button-group>
                         <b-button type="submit" variant="blue" class="btn-sm">Facebook</b-button>
                     </b-button-group>
-
                 </b-card-footer>
             </b-card>
-
+        </div>
+        <div class="container-alert">
+            <b-alert
+                    :show="dismissCountDown"
+                    dismissible
+                    fade
+                    variant="danger"
+                    @dismiss-count-down="countDownChanged"
+            >
+                Não foi possível criar conta, revise as informações!
+            </b-alert>
         </div>
     </div>
 </template>
 
 <script>
+    import { mapActions, mapGetters } from 'vuex'
+    import Vue from "vue";
+
     export default {
         name: "Signup",
         data() {
             return {
                 form: {
-                    email: '',
                     name: '',
-                    food: null,
-                    checked: []
+                    email: '',
+                    password: '',
+                    groups_id: null
                 },
-                foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
-                show: true
+                options: [{ text: 'Selecione um grupo', value: null }],
+                dismissSecs: 5,
+                dismissCountDown: 0,
+                showDismissibleAlert: false
             }
         },
         methods: {
-            onSubmit(evt) {
-                evt.preventDefault()
-                alert(JSON.stringify(this.form))
-            },
-            onReset(evt) {
-                evt.preventDefault()
-                // Reset our form values
-                this.form.email = ''
-                this.form.name = ''
-                this.form.food = null
-                this.form.checked = []
-                // Trick to reset/clear native browser form validation state
-                this.show = false
-                this.$nextTick(() => {
-                    this.show = true
+            ...mapActions(['loadGroupsUsers']),
+            mapOptionsGroups() {
+                let optionsLocal = this.groupsList.map( item => {
+                    return {
+                        value: item.id,
+                        text: item.name,
+                    }
                 })
+                this.options = this.options.concat(optionsLocal)
+            },
+            async addUser() {
+                let formData = new FormData();
+                formData.append('name', this.form.name)
+                formData.append('email', this.form.email)
+                formData.append('groups_id', this.form.groups_id)
+                formData.append('password', this.form.password)
+
+                const responseRec = await  Vue.prototype.$http.post('/auth/signup', formData, {
+                    headers: {'Content-Type': 'multipart/form-data'}
+                })
+
+                if( responseRec.status == 201 ) {
+                    this.$router.push('/entrar')
+                }else {
+                    console.log(responseRec.status)
+                    this.showAlert()
+                }
+            },
+            countDownChanged(dismissCountDown) {
+                this.dismissCountDown = dismissCountDown
+            },
+            showAlert() {
+                this.dismissCountDown = this.dismissSecs
+            },
+            async loadGroupsUsersLocal() {
+                await  this.loadGroupsUsers()
+                await this.mapOptionsGroups()
             }
+        },
+        computed: {
+            ...mapGetters({ groupsList : 'groupsList'})
+        },
+        mounted() {
+            this.loadGroupsUsersLocal()
         }
     }
 </script>
 
 <style lang="scss" scoped>
+    @media only screen and (min-device-width: 900px) {
+        .container-a {
+            width:45%;
+            margin: auto;
+        }
+    }
+
     .container-a {
         height: 100%;
         display: flex;
@@ -111,6 +169,12 @@
             .card-container-a {
                 min-width: 90%;
             }
+        }
+        .container-alert {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            margin: 20px;
         }
     }
 

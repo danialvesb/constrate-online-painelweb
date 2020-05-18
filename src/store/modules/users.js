@@ -1,85 +1,91 @@
 import Vue from 'vue'
-
+import { setCookie } from '../../helpers/cookie'
 
 export default {
     state: {
         users: [],
+        groups: [],
+        token: '',
+        me: []
     },
     mutations: {
         setUsers(state, data) {
             state.users = data
         },
+        setGroupsUsers(state, data) {
+            state.groups = data;
+        },
         addUser(state, data) {
             state.users.push(data);
         },
-        // removeWork(state, id) {
-        //     const record = state.works.findIndex(element => element.id == id)
-        //     state.works.splice(record, 1)
-        // },
-        //
-        // updateWork(state, work) {
-        //     const record = state.works.findIndex(element => element.id == work.id)
-        //     state.works[record] = work
-        // }
+        setToken(state, data){
+            state.token = data
+        },
+        setMe(state, data) {
+            state.me = data
+        }
     },
     getters: {
         usersList(state) {
-            return state.users;
+            return state.users
         },
+        groupsList(state) {
+            return state.groups
+        },
+        getMe(state) {
+            return state.me
+        }
     },
     actions: {
-        addUser({ commit }, user) {
+        async loadUsersData({ commit }) {
+            const responseReq =  await Vue.prototype.$http.get('/users')
 
-            const userJson  = JSON.stringify(user)
+            if (responseReq.status == 200) {
+                const data = responseReq.data
+                commit('setUsers', data)
+                return true
+            }
+            return false
+        },
 
-            Vue.prototype.$http.post('api/services', userJson).then( res => {
-                const data = res.data
+        async loadGroupsUsers({ commit }) {
+            const responseReq = await Vue.prototype.$http.get('/users/groups')
 
-                if( data ) {
-                    commit('addUser', user)
-                }else {
-                    alert('Não foi possível gravar usuário')
+            if (responseReq.status == 200) {
+                const data = responseReq.data
+                commit('setGroupsUsers', data)
+                return true
+            }else {
+                return false
+            }
+        },
+        async authUser({ commit }, user) {
+            console.log(JSON.stringify(user))
+            const responseReq =  await Vue.prototype.$http.post('/auth/login', JSON.stringify(user), {
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8',
                 }
-            }).catch(err => {
-                alert(err)
             })
+            const data = responseReq.data
 
+            if (data.access_token) {
+                commit('setToken', data.access_token)
+                setCookie('access_token', `bearer ${data.access_token}`, 1)
+                Vue.prototype.$http.defaults.headers.common['Authorization'] =  `bearer ${data.access_token}`
+                return true
+            }
+            return false
         },
-        loadUsersData({ commit }) {
-            Vue.prototype.$http.get('/users').then( resp => {
-                const data =  resp.data;
-
-                if(data) {
-                    commit('setUsers', data)
-
-                }
-            } ).catch(err => {
-                alert(err);
-
-            });
+        async loadMe({ commit }) {
+            const responseRec = await Vue.prototype.$http.post('auth/me')
+            if (responseRec.status == 200) {
+                commit('setMe', responseRec.data)
+                return responseRec.status
+            }
+            return responseRec.status
         },
-        // removeWork({ commit }, id) {
-        //     Vue.prototype.$http.delete(`api/services/${id}`).then(resp => {
-        //         const data = resp.data
+        // async updateMe({ commit }){
         //
-        //         if(data) {
-        //             commit('removeWork', id)
-        //         }
-        //     }).catch(err => {
-        //         alert(JSON.stringify(err))
-        //     } )
-        //
-        // },
-        // updateWork({ commit }, work) {
-        //     Vue.prototype.$http.put(`api/services/${work.id}`, work).then( resp => {
-        //         const data = resp.data;
-        //
-        //         if(data)
-        //             commit('updateWork', work)
-        //     }).catch( err => {
-        //         alert(err)
-        //     })
-        // },
+        // }
     }
-
 }

@@ -1,69 +1,80 @@
 <template>
-    <div class="container-a">
-        <div class="sub-container-a">
-            <div class="form-container">
-                <h4>Login</h4>
-                <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+<!--    <b-img :img-src="require('../assets/images/login.jpg')" fluid >-->
+        <div class="container-a">
+            <div class="sub-container-a">
+                <b-form v-if="show" class="form-container">
+                    <h5 class="form-title">Contrate online</h5>
                     <b-form-group>
-                        <b-form-input
-                                id="input-1"
-                                v-model="form.email"
-                                type="email"
-                                required
-                                placeholder="Enter email"
-                                class="mb-1"
-                        ></b-form-input>
-                    <b-form-input
-                            id="input-2"
-                            v-model="form.name"
-                            required
-                            placeholder="Enter name"
-                    ></b-form-input>
+                        <b-input-group class="input-group-sty">
+                            <template v-slot:prepend>
+                                <b-icon class="form-input-icon" icon="envelope"></b-icon>
+                            </template>
+                            <b-form-input
+                                    id="input-1"
+                                    v-model="form.email"
+                                    type="email"
+                                    required
+                                    placeholder="E-mail"
+                                    class="mb-1 form-input"
+                            ></b-form-input>
+
+                        </b-input-group>
+                    </b-form-group>
+                    <b-form-group>
+                        <b-input-group class="input-group-sty">
+                            <template v-slot:prepend>
+                                <b-icon class="form-input-icon" icon="lock-fill"></b-icon>
+                            </template>
+                            <b-form-input
+                                    id="input-2"
+                                    v-model="form.password"
+                                    type="password"
+                                    required
+                                    class="form-input"
+                                    placeholder="Senha"
+                            >
+                            </b-form-input>
+                        </b-input-group>
 
                     </b-form-group>
-                    <div class="footer">
-                        <b-button type="submit" variant="primary">Entrar</b-button>
-                        <b-button type="submit" href="/signup" variant="primary">Não tem conta?</b-button>
-                    </div>
+                    <b-form-group>
+                        <b-button-group class="container-fluid button-group">
+                            <b-button variant="primary" @click="authUserLocal()">Entrar</b-button>
+                            <b-button href="/signup" variant="info">Não tem conta?</b-button>
+                        </b-button-group>
+                    </b-form-group>
                 </b-form>
             </div>
-
         </div>
-    </div>
+<!--    </b-img>-->
 </template>
 
 <script>
+    import { mapActions } from 'vuex'
     export default {
         name: "Login",
         data() {
             return {
                 form: {
-                    email: '',
-                    name: '',
-                    food: null,
-                    checked: []
+                    email: 'daniel@gmail.com',
+                    password: '12345678',
                 },
-                foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
                 show: true
             }
         },
         methods: {
-            onSubmit(evt) {
-                evt.preventDefault()
-                alert(JSON.stringify(this.form))
+            ...mapActions(['authUser']),
+            async authUserLocal(){
+                const result = await this.authUser(this.form)
+                console.log(result)
+                if (result) {
+                    this.$router.push('/dashboard')
+                }
             },
-            onReset(evt) {
-                evt.preventDefault()
-                // Reset our form values
+
+            onReset() {
                 this.form.email = ''
-                this.form.name = ''
-                this.form.food = null
-                this.form.checked = []
-                // Trick to reset/clear native browser form validation state
-                this.show = false
-                this.$nextTick(() => {
-                    this.show = true
-                })
+                this.form.password = ''
             }
         }
     }
@@ -71,31 +82,75 @@
 
 <style lang="scss" scoped>
     @import "src/assets/scss/style";
+    @media only screen and (max-width: 900px) {
+         .container-a {
+             width:100%;
+             .sub-container-a {
+                 width:100%!important;
+
+                 .form-container {
+                     width: 100%!important;
+                     padding: 10px!important;
+                 }
+                 .form-title {
+                     color: $white;
+                     padding: 5px;
+                     border-radius: 10px;
+                     width: 60% !important;
+                     font-size: 25px!important;
+                 }
+                 .button-group {
+                     border-radius: 5px;
+                 }
+             }
+         }
+    }
+
     .container-a {
-        background-color: $gray-300;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         min-height: 100%;
+        width:100%;
+        margin: auto;
+        background-image: url("../assets/images/login.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
         .sub-container-a {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            width: 90%;
-            min-height: 150px;
-            background-color: $white;
-            border: solid 1px $gray-900;
+            width:30%;
             .form-container {
-                width: 100%;
-                padding: 20px;
-                .footer {
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: space-between;
+                .input-group-sty {
+                    .form-input {
+                        background-color: rgba(51, 153, 255, 0.4) !important;
+                        color: white;
+                        border:none !important;
+                        border-bottom-right-radius: 10px;
+                        border-top-right-radius: 10px;
+                        height: 50px;
+                    }
+                    .form-input-icon {
+                        background-color: rgba(51, 153, 255, 0.4) !important;
+                        border-bottom-left-radius: 10px;
+                        border-top-left-radius: 10px;
+                        border:none !important;
+                        width: 50px;
+                        height: 50px;
+                        color: white;
+                        padding: 10px;
+                    }
                 }
             }
-
+            .form-title {
+                color: $white;
+                padding: 5px;
+                border-radius: 10px;
+                width: 40%;
+            }
+            .button-group {
+                border-radius: 10px;
+            }
         }
     }
 
