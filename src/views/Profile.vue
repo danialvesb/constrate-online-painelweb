@@ -113,11 +113,18 @@
                                         :custom-strings="{
                                             upload: '<h1>Bummer!</h1>',
                                             drag: 'Arraste a imagem, ou clique para inserir!'
-                                        }"  >
+                                        }"
+                                        ref="picture-input"
+                                        @change="onChangeFile">
                                 </picture-input>
+                                <b-form-file
+                                        v-model="dataForm.photo"
+                                        placeholder="Choose a file or drop it here..."
+                                        drop-placeholder="Drop file here..."
+                                ></b-form-file>
                             </div>
                         </b-form-group>
-                        <b-button variant="primary">Salvar edições</b-button>
+                        <b-button variant="primary" @click="updateMeLocal">Salvar edições</b-button>
                     </b-form>
                 </div>
             </b-modal>
@@ -142,7 +149,8 @@
                     mobile: '',
                     city: '',
                     uf: '',
-                    district: ''
+                    district: '',
+                    photo: null,
                 }
             }
         },
@@ -151,7 +159,7 @@
             'picture-input': PictureInput
         },
         methods: {
-            ...mapActions(['loadMe']),
+            ...mapActions(['loadMe', 'updateMe']),
             async loadMeLocal() {
                 const loadMe = await this.loadMe()
                 if (loadMe == 200) {
@@ -177,6 +185,16 @@
                     window.dispatchEvent(new Event('resize'));
                 })
             },
+            onChangeFile(image) {
+                if (image) {
+                    this.dataForm.photo = image
+                } else {
+                    console.log('FileReader API not supported: use the <form>, Luke!')
+                }
+            },
+            async updateMeLocal() {
+                await this.updateMe(this.dataForm)
+            }
         },
         computed: {
             ...mapGetters({ getMeLocal : 'getMe'})

@@ -114,7 +114,6 @@
             ...mapActions(['loadUsersData']),
             async loadUsersLocal() {
                 const result = await this.loadUsersData()
-                console.log(result)
                 if (result) {
                     this.isBusy = false
                 }
