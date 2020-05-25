@@ -45,7 +45,6 @@ export default {
             const responseRec = await Vue.prototype.$http.get('/services/')
 
             if(responseRec.status == 200) {
-                console.log(JSON.stringify(responseRec.data))
                 commit('setWorks', responseRec.data)
                 return true
             }

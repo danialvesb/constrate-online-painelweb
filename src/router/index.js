@@ -5,15 +5,12 @@ import Signup from "../views/Signup";
 import Profile from "../views/Profile";
 import { isAuth } from '../helpers/isAuth'
 
-// Views
 const Dashboard = () => import('../views/Dashboard')
 const Works = () => import('../views/Works')
 const NewWork = () => import('../views/StoreWork')
 const StoreCategory = () => import('../views/StoreCategory')
 
 const App = () => import('../App')
-
-
 
 Vue.use(VueRouter)
 
@@ -25,7 +22,6 @@ const router =  new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.name !== 'Login' && to.name !== 'Signup' &&  !isAuth()) next({ name: 'Login' })
-    // if the user is not authenticated, `next` is called twice
     next()
 })
 
@@ -74,15 +70,7 @@ function configRoutes() {
                     name: 'Profile',
                     component: Profile
                 },
-
             ]
         },
     ]
 }
-
-// { path: '/servicos/listar', component: Works},
-// { path: '/servicos/cadastrar', component: WorkCreate},
-// { path: '/servicos/editar/:id', component: WorkCreate},
-// { path: '/servicos/visualizar/:id', component: ViewWorks},
-//
-// { path: '/servicos/categorias', component: Category }

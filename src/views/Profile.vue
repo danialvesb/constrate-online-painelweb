@@ -44,55 +44,91 @@
                 body-text-variant="secondary">
                 <div>
                     <b-form>
-                        <b-form-group id="input-group-1" label="E-mail:">
+                        <b-form-group id="input-group-1" label="Nome:">
                             <b-form-input
                                     id="input-1"
+                                    type="email"
+                                    v-model="dataForm.name"
+                                    required
+                                    placeholder="Novo nome"
+                                    disabled
+                            ></b-form-input>
+                        </b-form-group>
+                        <b-form-group id="input-group-2" label="E-mail:">
+                            <b-form-input
+                                    id="input-2"
                                     type="email"
                                     v-model="dataForm.email"
                                     required
                                     placeholder="Novo e-mail"
+                                    disabled
                             ></b-form-input>
                         </b-form-group>
-                        <b-form-group id="input-group-2" label="Celular:">
+                        <b-form-group id="input-group-3" label="Celular:">
                             <b-form-input
-                                    id="input-2"
+                                    id="input-3"
                                     type="text"
                                     v-model="dataForm.mobile"
                                     required
                                     placeholder="Novo número de celular"
                             ></b-form-input>
                         </b-form-group>
-                        <b-form-group id="input-group-3" label="Cidade:">
+                        <b-form-group id="input-group-4" label="Cidade:">
                             <b-form-input
-                                    id="input-3"
+                                    id="input-4"
                                     type="text"
                                     v-model="dataForm.city"
                                     required
                                     placeholder="Cidade"
                             ></b-form-input>
                         </b-form-group>
-                        <b-form-group id="input-group-4" label="Estado:">
+                        <b-form-group id="input-group-5" label="Estado:">
                             <b-form-input
-                                    id="input-4"
+                                    id="input-5"
                                     type="text"
                                     v-model="dataForm.uf"
                                     required
                                     placeholder="Estado"
                             ></b-form-input>
                         </b-form-group>
-                        <b-form-group id="input-group-5" label="Bairro:">
+                        <b-form-group id="input-group-6" label="Bairro:">
                             <b-form-input
-                                    id="input-5"
+                                    id="input-6"
                                     type="text"
                                     v-model="dataForm.district"
                                     required
                                     placeholder="Bairro"
                             ></b-form-input>
                         </b-form-group>
-                        <b-button variant="primary">Atualizar</b-button>
+                        <b-form-group label="Carregar nova foto de perfil:">
+                            <div style="width: 100%; background-color: white; color: #303C54">
+                                <picture-input
+                                        v-if="show"
+                                        width="300"
+                                        height="200"
+                                        accept="image/jpeg,image/png"
+                                        size="5"
+                                        hideChangeButton
+                                        button-class="btn"
+                                        :custom-strings="{
+                                            upload: '<h1>Bummer!</h1>',
+                                            drag: 'Arraste a imagem, ou clique para inserir!'
+                                        }"
+                                        ref="picture-input"
+                                        @change="onChangeFile">
+                                </picture-input>
+                                <b-form-file
+                                        v-model="dataForm.photo"
+                                        placeholder="Choose a file or drop it here..."
+                                        drop-placeholder="Drop file here..."
+                                ></b-form-file>
+                            </div>
+                        </b-form-group>
+                        <b-button variant="primary" @click="updateMeLocal">Salvar edições</b-button>
                     </b-form>
                 </div>
             </b-modal>
+
         </div>
     </div>
 </template>
@@ -100,6 +136,7 @@
 <script>
     import headerNav from "../components/headerNav";
     import {mapActions, mapGetters} from 'vuex'
+    import PictureInput from 'vue-picture-input'
 
     export default {
         name: "Profile",
@@ -107,19 +144,22 @@
             return {
                 show: false,
                 dataForm: {
+                    name: '',
                     email: '',
                     mobile: '',
                     city: '',
                     uf: '',
-                    district: ''
+                    district: '',
+                    photo: null,
                 }
             }
         },
         components: {
-            'header-nav': headerNav
+            'header-nav': headerNav,
+            'picture-input': PictureInput
         },
         methods: {
-            ...mapActions(['loadMe']),
+            ...mapActions(['loadMe', 'updateMe']),
             async loadMeLocal() {
                 const loadMe = await this.loadMe()
                 if (loadMe == 200) {
@@ -128,6 +168,7 @@
                     //Foi efetuada uma copia para os dados da tela principal não sejam alterados, e foi copiado apenas o que interessa
                     const data = JSON.parse(JSON.stringify(this.getMeLocal))
 
+                    this.dataForm.name = data.name
                     this.dataForm.mobile = data.mobile
                     this.dataForm.email = data.email
                     this.dataForm.city = data.city
@@ -139,7 +180,21 @@
             },
             showModal() {
                 this.$refs['modal-me-update'].show()
+                setTimeout( () => {
+                    this.show = true;
+                    window.dispatchEvent(new Event('resize'));
+                })
             },
+            onChangeFile(image) {
+                if (image) {
+                    this.dataForm.photo = image
+                } else {
+                    console.log('FileReader API not supported: use the <form>, Luke!')
+                }
+            },
+            async updateMeLocal() {
+                await this.updateMe(this.dataForm)
+            }
         },
         computed: {
             ...mapGetters({ getMeLocal : 'getMe'})

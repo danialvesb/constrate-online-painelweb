@@ -120,7 +120,9 @@
                 formData.append('password', this.form.password)
 
                 const responseRec = await  Vue.prototype.$http.post('/auth/signup', formData, {
-                    headers: {'Content-Type': 'multipart/form-data'}
+                    headers:{
+                        'Content-Type': 'multipart/form-data'
+                    }
                 })
 
                 if( responseRec.status == 201 ) {

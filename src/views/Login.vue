@@ -66,7 +66,7 @@
             ...mapActions(['authUser']),
             async authUserLocal(){
                 const result = await this.authUser(this.form)
-                console.log(result)
+
                 if (result) {
                     this.$router.push('/dashboard')
                 }

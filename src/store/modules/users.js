@@ -60,7 +60,6 @@ export default {
             }
         },
         async authUser({ commit }, user) {
-            console.log(JSON.stringify(user))
             const responseReq =  await Vue.prototype.$http.post('/auth/login', JSON.stringify(user), {
                 headers: {
                     'Content-Type': 'application/json;charset=UTF-8',
@@ -84,8 +83,24 @@ export default {
             }
             return responseRec.status
         },
-        // async updateMe({ commit }){
-        //
-        // }
+        async updateMe({ commit }, payload){
+            let formData = new FormData();
+            formData.append('name', payload.name)
+            formData.append('email', payload.email)
+            formData.append('mobile', payload.mobile)
+            formData.append('city', payload.city)
+            formData.append('uf', payload.uf)
+            formData.append('district', payload.district)
+            formData.append('photo', payload.photo)
+            // formData.append('group_id', payload.groups_id)
+            formData.append('_method', 'PUT')
+            const responseRec = await Vue.prototype.$http.post(`me/update`, formData)
+
+            if (responseRec.status == 200) {
+                commit('setMe', responseRec.data)
+                return responseRec.status
+            }
+            return responseRec.status
+        }
     }
 }
