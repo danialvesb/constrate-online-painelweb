@@ -151,7 +151,7 @@
         flex-direction: column;
         align-items: center;
         flex-wrap: wrap;
-        width: 100%;
+        width: 80%;
         min-height: 1000px;
         margin: auto;
 

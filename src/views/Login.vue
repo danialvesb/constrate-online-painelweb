@@ -119,7 +119,7 @@
         background-size: cover;
         background-position: center center;
         .sub-container-a {
-            width:30%;
+            width:400px;
             .form-container {
                 .input-group-sty {
                     .form-input {

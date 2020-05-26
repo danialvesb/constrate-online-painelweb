@@ -103,25 +103,20 @@
                         <b-form-group label="Carregar nova foto de perfil:">
                             <div style="width: 100%; background-color: white; color: #303C54">
                                 <picture-input
-                                        v-if="show"
-                                        width="300"
-                                        height="200"
-                                        accept="image/jpeg,image/png"
-                                        size="5"
-                                        hideChangeButton
-                                        button-class="btn"
-                                        :custom-strings="{
-                                            upload: '<h1>Bummer!</h1>',
-                                            drag: 'Arraste a imagem, ou clique para inserir!'
-                                        }"
-                                        ref="picture-input"
-                                        @change="onChangeFile">
-                                </picture-input>
-                                <b-form-file
-                                        v-model="dataForm.photo"
-                                        placeholder="Choose a file or drop it here..."
-                                        drop-placeholder="Drop file here..."
-                                ></b-form-file>
+                                    v-if="show"
+                                    width="300"
+                                    height="200"
+                                    accept="image/jpeg,image/png"
+                                    size="5"
+                                    hideChangeButton
+                                    button-class="btn"
+                                    :custom-strings="{
+                                        upload: '<h1>Bummer!</h1>',
+                                        drag: 'Arraste a imagem, ou clique para inserir!'
+                                    }"
+                                    ref="pictureInput"
+                                    @change="onChangeFile"
+                                    radius="10%"/>
                             </div>
                         </b-form-group>
                         <b-button variant="primary" @click="updateMeLocal">Salvar edições</b-button>
@@ -174,6 +169,7 @@
                     this.dataForm.city = data.city
                     this.dataForm.uf = data.uf
                     this.dataForm.district = data.district
+                    this.dataForm.photo = data.photo
                 } else {
                     console.log(loadMe.status)
                 }
@@ -185,9 +181,10 @@
                     window.dispatchEvent(new Event('resize'));
                 })
             },
-            onChangeFile(image) {
-                if (image) {
-                    this.dataForm.photo = image
+            onChangeFile() {
+                if (this.$refs.pictureInput.file) {
+                    console.log(this.$refs.pictureInput.file)
+                    this.dataForm.photo = this.$refs.pictureInput.file
                 } else {
                     console.log('FileReader API not supported: use the <form>, Luke!')
                 }
