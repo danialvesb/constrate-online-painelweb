@@ -35,8 +35,8 @@ export default {
         }
     },
     actions: {
-        loadCategories({ commit }) {
-            Vue.prototype.$http.get('services/categories').then( resp => {
+        async loadCategories({ commit }) {
+            await Vue.prototype.$http.get('services/categories').then( resp => {
                 const data = resp.data
                 commit('setCategories', data);
             } ).catch(err => {

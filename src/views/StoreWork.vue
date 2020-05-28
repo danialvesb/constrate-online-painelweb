@@ -13,9 +13,7 @@
                                 id="input-group-1"
                                 label="Serviço:"
                                 label-for="input-1"
-                                description="Insira informações genéricas, pois quando o usuário ofertar ele vai completar"
-
-                        >
+                                description="Insira informações genéricas, pois quando o usuário ofertar ele vai completar">
                             <b-form-input
                                     id="input-2"
                                     v-model="data.title"
@@ -28,8 +26,7 @@
                                     v-model="data.description"
                                     placeholder="Descrição do serviço..."
                                     rows="3"
-                                    max-rows="6"
-                            ></b-form-textarea>
+                                    max-rows="6"/>
                         </b-form-group>
 
                         <b-form-group id="input-group-3" label="Categoria e imagem:" label-for="input-3">
@@ -37,8 +34,7 @@
                                     id="input-3"
                                     v-model="data.categorySelected"
                                     :options="dataSelect"
-                                    required
-                            ></b-form-select>
+                                    required></b-form-select>
                         <div class="form-container-photo">
                             <b-card
                                     title="Imagem"
@@ -53,7 +49,7 @@
                         </div>
                         </b-form-group>
                         <b-button-group>
-                            <b-button variant="primary" @click="addWorkLocal(data)">Salvar</b-button>
+                            <b-button variant="primary" @click="addWork(data)">Salvar</b-button>
                             <b-button variant="danger" @click="onReset">Redefinir</b-button>
                         </b-button-group>
                         <b-modal id="modal-new" ref="modal-input-image" size="lg" hide-footer title="Inserir imagem">
@@ -86,6 +82,7 @@
     import header from "../components/headerNav";
     import { mapActions, mapGetters } from 'vuex'
     import PictureInput from 'vue-picture-input'
+    import Vue from "vue";
 
     export default {
         name: "StoreWork",
@@ -115,11 +112,14 @@
                 this.data.description = ''
                 this.data.categorySelected = null
             },
-            loadCategoruesListLocal() {
-                this.loadCategories()
+            async loadCategoruesListLocal() {
+                await this.loadCategories()
+                this.dataSelect = this.dataSelect.concat(this.categoriesSelect)
             },
-            addWorkLocal(data){
-                this.addWork(data)
+            async addWork(data) {
+                const workJson  = JSON.stringify(data)
+
+                await Vue.prototype.$http.post('/services', workJson)
                 this.onReset()
             },
             onChange(image) {
@@ -151,10 +151,6 @@
         },
         mounted() {
             this.loadCategoruesListLocal()
-            setTimeout(() =>{
-                    this.dataSelect = this.dataSelect.concat(this.categoriesSelect)
-            }, 1000)
-
         },
     }
 </script>
@@ -170,7 +166,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 95%;
+            width: 60%;
+            min-width: 300px;
             min-height: 600px;
             -webkit-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);
             -moz-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);
@@ -180,9 +177,6 @@
                 width: 95%;
                 padding: 5px;
                 margin: 5px;
-                -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.62);
-                -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.62);
-                box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.62);
                 .form-container-photo {
                     padding: 5px;
                     margin: 5px;
