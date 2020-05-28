@@ -10,9 +10,9 @@
                     <div>
                         <h3>Categorias</h3>
                     </div>
-                    <b-form>
-                        <b-form-input size="sm" class="mr-sm-2 mb-1" style="width: 50%" placeholder="Pesquisar"></b-form-input>
-                    </b-form>
+<!--                    <b-form>-->
+<!--                        <b-form-input size="sm" class="mr-sm-2 mb-1" style="width: 50%" placeholder="Pesquisar"></b-form-input>-->
+<!--                    </b-form>-->
                     <b-table
                             hover
                             id="table-users"
@@ -153,6 +153,8 @@
                 this.hideModal();
             },
             toggleModal() {
+                this.category.title = ''
+                this.category.id = 0
                 this.$refs['modal-category'].toggle('#toggle-btn')
             },
             toggleModalDelete(item) {
@@ -196,7 +198,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 90%;
+            width: 70%;
             min-height: 600px;
             -webkit-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);
             -moz-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);

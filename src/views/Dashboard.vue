@@ -4,18 +4,15 @@
         <div class="container-a">
             <div class="sub-container-infors-cards">
                 <card-traffic :data="cards.cardUsers"></card-traffic>
+                <card-traffic :data="cards.cardClients"></card-traffic>
                 <card-traffic :data="cards.cardServices"></card-traffic>
                 <card-traffic :data="cards.cardOffers"></card-traffic>
-                <card-traffic :data="cards.cardClients"></card-traffic>
             </div>
             <div class="sub-container-infors-users">
                 <div class="table-users">
                     <div>
                         <h3>Usuários</h3>
                     </div>
-                    <b-form class="mr-4">
-                        <b-form-input size="sm" class="mr-sm-1 mb-1" placeholder="Pesquisar"></b-form-input>
-                    </b-form>
                     <b-table
                             hover
                             id="table-users"
@@ -88,12 +85,12 @@
                 cards: {
                     cardUsers: {
                         qtd: 20,
-                        text: 'Usuários online:',
+                        text: 'Prestadores:',
                         id: "1"
                     },
                     cardServices: {
                         qtd: 20,
-                        text: 'Total de serviços:',
+                        text: 'Serviços:',
                         id: "2"
                     },
                     cardOffers: {
