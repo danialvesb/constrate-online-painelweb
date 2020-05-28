@@ -104,7 +104,6 @@ export default {
             formData.append('uf', payload.uf)
             formData.append('district', payload.district)
             formData.append('photo', payload.photo)
-            // formData.append('group_id', payload.groups_id)
             formData.append('_method', 'PUT')
             const responseRec = await Vue.prototype.$http.post(`me/update`, formData)
 

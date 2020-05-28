@@ -67,7 +67,7 @@
                         <b-form-group id="input-group-3" label="Celular:">
                             <b-form-input
                                     id="input-3"
-                                    type="text"
+                                    type="number"
                                     v-model="dataForm.mobile"
                                     required
                                     placeholder="Novo número de celular"
@@ -147,7 +147,7 @@
                     uf: '',
                     district: '',
                     photo: null,
-                    url: ''
+                    url: `http://192.168.3.103:8000/api/me/_image/profile/${getCookie('photo_profile_path')}`
                 }
             }
         },
@@ -159,7 +159,6 @@
             ...mapActions(['loadMe', 'updateMe', 'loadImageProfile']),
             async loadMeLocal() {
                 const loadMe = await this.loadMe()
-                const photoPath = getCookie('photo_profile_path')
 
                 if (loadMe == 200) {
                     this.show = true
@@ -174,8 +173,6 @@
                     this.dataForm.uf = data.uf
                     this.dataForm.district = data.district
                     this.dataForm.photo = data.photo
-                    this.dataForm.url = `http://192.168.3.103:8000/api/me/_image/profile/${photoPath}`
-                    console.log(this.dataForm.photo)
                 }
             },
             showModal() {
