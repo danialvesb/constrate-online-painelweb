@@ -127,7 +127,6 @@
         components: {
             'card-traffic': traffic,
             'h-nav': headerNav,
-            // 'chart': chart
         },
         computed: {
             ...mapGetters({
@@ -193,6 +192,5 @@
             background-color: $white;
         }
     }
-
 
 </style>

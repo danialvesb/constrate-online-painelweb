@@ -6,7 +6,8 @@ export default {
         users: [],
         groups: [],
         token: '',
-        me: []
+        me: [],
+        imageProfile: null
     },
     mutations: {
         setUsers(state, data) {
@@ -23,6 +24,9 @@ export default {
         },
         setMe(state, data) {
             state.me = data
+        },
+        setImageProfile(state, data) {
+            state.imageProfile = data
         }
     },
     getters: {
@@ -34,6 +38,9 @@ export default {
         },
         getMe(state) {
             return state.me
+        },
+        getImageProfile(state) {
+            return state.imageProfile
         }
     },
     actions: {
@@ -71,16 +78,21 @@ export default {
                 commit('setToken', data.access_token)
                 setCookie('access_token', `bearer ${data.access_token}`, 1)
                 Vue.prototype.$http.defaults.headers.common['Authorization'] =  `bearer ${data.access_token}`
+
+                const responseRec = await Vue.prototype.$http.post('auth/me')
+                setCookie('photo_profile_path', responseRec.data.photo)
+
                 return true
             }
             return false
         },
         async loadMe({ commit }) {
             const responseRec = await Vue.prototype.$http.post('auth/me')
+
             if (responseRec.status == 200) {
                 commit('setMe', responseRec.data)
-                return responseRec.status
             }
+
             return responseRec.status
         },
         async updateMe({ commit }, payload){
@@ -100,6 +112,16 @@ export default {
                 commit('setMe', responseRec.data)
                 return responseRec.status
             }
+            return responseRec.status
+        },
+        async loadImageProfile({ commit }) {
+            const responseRec = await Vue.prototype.$http.get('me/_image/profile', {
+                'Content-Type': 'image/jpeg'
+            })
+
+            if (responseRec.status == 200)
+                commit('setImageProfile', responseRec.data)
+
             return responseRec.status
         }
     }

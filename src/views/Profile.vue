@@ -5,7 +5,7 @@
             <div v-if="show" class="container-profile">
                 <div class="header-profile">
                     <div class="profile-container-avatar">
-                        <b-avatar src="https://placekitten.com/300/300" size="10rem"></b-avatar>
+                        <b-avatar v-if="this.dataForm.url" :src=this.dataForm.url size="10rem"></b-avatar>
                     </div>
                     <div class="infos-user">
                         <h5>{{ getMeLocal.name }}</h5>
@@ -132,6 +132,7 @@
     import headerNav from "../components/headerNav";
     import {mapActions, mapGetters} from 'vuex'
     import PictureInput from 'vue-picture-input'
+    import {getCookie} from "../helpers/cookie";
 
     export default {
         name: "Profile",
@@ -146,6 +147,7 @@
                     uf: '',
                     district: '',
                     photo: null,
+                    url: ''
                 }
             }
         },
@@ -154,9 +156,11 @@
             'picture-input': PictureInput
         },
         methods: {
-            ...mapActions(['loadMe', 'updateMe']),
+            ...mapActions(['loadMe', 'updateMe', 'loadImageProfile']),
             async loadMeLocal() {
                 const loadMe = await this.loadMe()
+                const photoPath = getCookie('photo_profile_path')
+
                 if (loadMe == 200) {
                     this.show = true
 
@@ -170,8 +174,8 @@
                     this.dataForm.uf = data.uf
                     this.dataForm.district = data.district
                     this.dataForm.photo = data.photo
-                } else {
-                    console.log(loadMe.status)
+                    this.dataForm.url = `http://192.168.3.103:8000/api/me/_image/profile/${photoPath}`
+                    console.log(this.dataForm.photo)
                 }
             },
             showModal() {
@@ -183,7 +187,6 @@
             },
             onChangeFile() {
                 if (this.$refs.pictureInput.file) {
-                    console.log(this.$refs.pictureInput.file)
                     this.dataForm.photo = this.$refs.pictureInput.file
                 } else {
                     console.log('FileReader API not supported: use the <form>, Luke!')
@@ -191,10 +194,10 @@
             },
             async updateMeLocal() {
                 await this.updateMe(this.dataForm)
-            }
+            },
         },
         computed: {
-            ...mapGetters({ getMeLocal : 'getMe'})
+            ...mapGetters({ getMeLocal : 'getMe', getImageProfileLocal: 'getImageProfile'})
         },
         mounted() {
             this.loadMeLocal()
