@@ -26,21 +26,6 @@ export default {
         },
     },
     actions: {
-        addWork({ commit }, work) {
-            const workJson  = JSON.stringify(work)
-
-            Vue.prototype.$http.post('/services', workJson).then( res => {
-                const data = res.data
-
-                if( data ) {
-                    commit('addWork', work)
-                }else {
-                    alert('Não foi possível gravar serviço')
-                }
-            }).catch(err => {
-                alert(err)
-            })
-        },
         async loadWorksData({ commit }) {
             const responseRec = await Vue.prototype.$http.get('/services/')
 

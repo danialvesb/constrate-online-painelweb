@@ -5,7 +5,7 @@
             <div v-if="show" class="container-profile">
                 <div class="header-profile">
                     <div class="profile-container-avatar">
-                        <b-avatar src="https://placekitten.com/300/300" size="10rem"></b-avatar>
+                        <b-avatar v-if="this.dataForm.url" :src=this.dataForm.url size="10rem"></b-avatar>
                     </div>
                     <div class="infos-user">
                         <h5>{{ getMeLocal.name }}</h5>
@@ -67,7 +67,7 @@
                         <b-form-group id="input-group-3" label="Celular:">
                             <b-form-input
                                     id="input-3"
-                                    type="text"
+                                    type="number"
                                     v-model="dataForm.mobile"
                                     required
                                     placeholder="Novo número de celular"
@@ -103,25 +103,20 @@
                         <b-form-group label="Carregar nova foto de perfil:">
                             <div style="width: 100%; background-color: white; color: #303C54">
                                 <picture-input
-                                        v-if="show"
-                                        width="300"
-                                        height="200"
-                                        accept="image/jpeg,image/png"
-                                        size="5"
-                                        hideChangeButton
-                                        button-class="btn"
-                                        :custom-strings="{
-                                            upload: '<h1>Bummer!</h1>',
-                                            drag: 'Arraste a imagem, ou clique para inserir!'
-                                        }"
-                                        ref="picture-input"
-                                        @change="onChangeFile">
-                                </picture-input>
-                                <b-form-file
-                                        v-model="dataForm.photo"
-                                        placeholder="Choose a file or drop it here..."
-                                        drop-placeholder="Drop file here..."
-                                ></b-form-file>
+                                    v-if="show"
+                                    width="300"
+                                    height="200"
+                                    accept="image/jpeg,image/png"
+                                    size="5"
+                                    hideChangeButton
+                                    button-class="btn"
+                                    :custom-strings="{
+                                        upload: '<h1>Bummer!</h1>',
+                                        drag: 'Arraste a imagem, ou clique para inserir!'
+                                    }"
+                                    ref="pictureInput"
+                                    @change="onChangeFile"
+                                    radius="10%"/>
                             </div>
                         </b-form-group>
                         <b-button variant="primary" @click="updateMeLocal">Salvar edições</b-button>
@@ -137,6 +132,7 @@
     import headerNav from "../components/headerNav";
     import {mapActions, mapGetters} from 'vuex'
     import PictureInput from 'vue-picture-input'
+    import {getCookie} from "../helpers/cookie";
 
     export default {
         name: "Profile",
@@ -151,6 +147,7 @@
                     uf: '',
                     district: '',
                     photo: null,
+                    url: `http://192.168.3.103:8000/api/me/_image/profile/${getCookie('photo_profile_path')}`
                 }
             }
         },
@@ -159,9 +156,10 @@
             'picture-input': PictureInput
         },
         methods: {
-            ...mapActions(['loadMe', 'updateMe']),
+            ...mapActions(['loadMe', 'updateMe', 'loadImageProfile']),
             async loadMeLocal() {
                 const loadMe = await this.loadMe()
+
                 if (loadMe == 200) {
                     this.show = true
 
@@ -174,8 +172,7 @@
                     this.dataForm.city = data.city
                     this.dataForm.uf = data.uf
                     this.dataForm.district = data.district
-                } else {
-                    console.log(loadMe.status)
+                    this.dataForm.photo = data.photo
                 }
             },
             showModal() {
@@ -185,19 +182,19 @@
                     window.dispatchEvent(new Event('resize'));
                 })
             },
-            onChangeFile(image) {
-                if (image) {
-                    this.dataForm.photo = image
+            onChangeFile() {
+                if (this.$refs.pictureInput.file) {
+                    this.dataForm.photo = this.$refs.pictureInput.file
                 } else {
                     console.log('FileReader API not supported: use the <form>, Luke!')
                 }
             },
             async updateMeLocal() {
                 await this.updateMe(this.dataForm)
-            }
+            },
         },
         computed: {
-            ...mapGetters({ getMeLocal : 'getMe'})
+            ...mapGetters({ getMeLocal : 'getMe', getImageProfileLocal: 'getImageProfile'})
         },
         mounted() {
             this.loadMeLocal()

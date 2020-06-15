@@ -16,7 +16,7 @@
                 <b-navbar-nav class="ml-auto">
                     <b-nav-item-dropdown right>
                         <template v-slot:button-content>
-                            <b-avatar variant="info" class="m-0 p-0" src="https://placekitten.com/300/300"></b-avatar>
+                            <b-avatar variant="info" class="m-0 p-0" :src="urlImageProfile"></b-avatar>
                         </template>
                         <b-dropdown-item href="/usuario/perfil" >Perfil</b-dropdown-item>
                         <b-dropdown-divider></b-dropdown-divider>
@@ -42,6 +42,7 @@
 
 <script>
     import { setCookie } from "../helpers/cookie";
+    import {getCookie} from "../helpers/cookie";
 
     export default {
         name: "h-nav",
@@ -67,7 +68,8 @@
                     {
                         text: 'Início',
                     },
-                ]
+                ],
+                urlImageProfile: `http://192.168.3.103:8000/api/me/_image/profile/${getCookie('photo_profile_path')}`
             }
         },
         methods: {
