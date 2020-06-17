@@ -7,7 +7,7 @@
                     <b-form-group>
                         <b-input-group class="input-group-sty">
                             <template v-slot:prepend>
-                                <b-icon class="form-input-icon" icon="envelope"></b-icon>
+                                <b-icon class="form-input-icon" icon="envelope"/>
                             </template>
                             <b-form-input
                                     id="input-1"
@@ -16,14 +16,13 @@
                                     required
                                     placeholder="E-mail"
                                     class="mb-1 form-input"
-                            ></b-form-input>
-
+                            />
                         </b-input-group>
                     </b-form-group>
                     <b-form-group>
                         <b-input-group class="input-group-sty">
                             <template v-slot:prepend>
-                                <b-icon class="form-input-icon" icon="lock-fill"></b-icon>
+                                <b-icon class="form-input-icon" icon="lock-fill"/>
                             </template>
                             <b-form-input
                                     id="input-2"
@@ -32,15 +31,34 @@
                                     required
                                     class="form-input"
                                     placeholder="Senha"
-                            >
-                            </b-form-input>
+                            />
                         </b-input-group>
 
                     </b-form-group>
                     <b-form-group>
                         <b-button-group class="container-fluid button-group">
-                            <b-button variant="primary" @click="authUserLocal()">Entrar</b-button>
-                            <b-button href="/signup" variant="info">Não tem conta?</b-button>
+                            <b-overlay
+                                    :show="busyAuth"
+                                    spinner-small
+                                    spinner-variant="secondary"
+                                    class="d-inline-block"
+                            >
+                                <b-button
+                                        ref="button"
+                                        variant="primary"
+                                        @click="authUserLocal()"
+                                >
+                                    Entrar
+                                </b-button>
+                            </b-overlay>
+                            <b-overlay
+                                    :show="busySignup"
+                                    spinner-small
+                                    spinner-variant="secondary"
+                                    class="d-inline-block"
+                            >
+                            <b-button @click="pushToSignup()" variant="info">Não tem conta?</b-button>
+                            </b-overlay>
                         </b-button-group>
                     </b-form-group>
                 </b-form>
@@ -59,22 +77,28 @@
                     email: 'daniel@gmail.com',
                     password: '12345678',
                 },
-                show: true
+                show: true,
+                busyAuth: false,
+                busySignup: false
             }
         },
         methods: {
             ...mapActions(['authUser']),
             async authUserLocal(){
+                this.busyAuth = true
                 const result = await this.authUser(this.form)
 
                 if (result) {
                     this.$router.push('/dashboard')
                 }
             },
-
             onReset() {
                 this.form.email = ''
                 this.form.password = ''
+            },
+            pushToSignup() {
+                this.busySignup = true
+                this.$router.push('/signup')
             }
         }
     }

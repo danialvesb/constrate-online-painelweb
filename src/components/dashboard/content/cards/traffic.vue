@@ -1,15 +1,12 @@
 <template>
     <b-card
-            class="mb-0 card-traffic"
-            :header="data.id"
+      :header="data.id"
+      header-tag="header"
+      footer="Card Footer"
+      footer-tag=""
+      :title="data.text"
     >
-        <b-card-body>
-            <b-card-text>
-                    {{ data.text }}
-                <br>
-                {{ data.qtd }}
-            </b-card-text>
-        </b-card-body>
+      <b-button href="#" variant="primary">{{ data.qtd }}</b-button>
     </b-card>
 </template>
 
@@ -29,12 +26,18 @@
 </script>
 
 <style scoped lang="scss">
+    @media screen and (max-width: 1070px) {
+        .card-traffic {
+            width: 100%!important;
+        }
+    }
+
     .card-traffic {
         outline: none;
         cursor: pointer;
         border: solid 1px;
-        min-width: 25%!important;
-        min-height: 100%;
+        width: 25%;
+        min-width: 200px!important;
     }
 
 </style>

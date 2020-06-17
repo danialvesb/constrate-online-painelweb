@@ -57,13 +57,20 @@
                 </b-card-body>
                 <b-card-footer>
                     <b-button-group style="width: 100%">
-                        <b-button type="submit" variant="success" @click="addUser()">Criar conta</b-button>
+                        <b-overlay
+                                :show="busySignup"
+                                spinner-small
+                                spinner-variant="secondary"
+                                class="d-inline-block"
+                        >
+                            <b-button type="submit" variant="success" @click="addUser()">Criar conta</b-button>
+                        </b-overlay>
                     </b-button-group>
                 </b-card-footer>
                 <b-card-footer>
-                    <b-button-group>
-                        <b-button type="submit" variant="blue" class="btn-sm">Facebook</b-button>
-                    </b-button-group>
+<!--                    <b-button-group>-->
+<!--                        <b-button type="submit" variant="blue" class="btn-sm">Facebook</b-button>-->
+<!--                    </b-button-group>-->
                 </b-card-footer>
             </b-card>
         </div>
@@ -98,7 +105,8 @@
                 options: [{ text: 'Selecione um grupo', value: null }],
                 dismissSecs: 5,
                 dismissCountDown: 0,
-                showDismissibleAlert: false
+                showDismissibleAlert: false,
+                busySignup: false
             }
         },
         methods: {
@@ -113,24 +121,26 @@
                 this.options = this.options.concat(optionsLocal)
             },
             async addUser() {
+                this.busySignup = true
                 let formData = new FormData();
                 formData.append('name', this.form.name)
                 formData.append('email', this.form.email)
                 formData.append('groups_id', this.form.groups_id)
                 formData.append('password', this.form.password)
 
-                const responseRec = await  Vue.prototype.$http.post('/auth/signup', formData, {
+                await  Vue.prototype.$http.post('/auth/signup', formData, {
                     headers:{
                         'Content-Type': 'multipart/form-data'
                     }
-                })
-
-                if( responseRec.status == 201 ) {
-                    this.$router.push('/entrar')
-                }else {
-                    console.log(responseRec.status)
+                }).then( response => {
+                    if( response.status == 201 ) {
+                        this.$router.push('/entrar')
+                        console.log('ola')
+                    }
+                }).catch( () => {
+                    this.busySignup = false
                     this.showAlert()
-                }
+                } )
             },
             countDownChanged(dismissCountDown) {
                 this.dismissCountDown = dismissCountDown
@@ -162,14 +172,20 @@
 
     .container-a {
         height: 100%;
+        min-height: 100%;
+        width:100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        background-image: url("../assets/images/login.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
         .sub-container-a {
-            min-width: 90%;
+            min-width: 30%;
             .card-container-a {
-                min-width: 90%;
+                min-width: 300px;
             }
         }
         .container-alert {

@@ -169,9 +169,9 @@
             width: 60%;
             min-width: 300px;
             min-height: 600px;
-            -webkit-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);
-            -moz-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);
-            box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);
+            -webkit-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.30);
+            -moz-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.30);
+            box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.30);
             margin-bottom: 20px;
             .form-container {
                 width: 95%;

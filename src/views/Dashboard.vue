@@ -1,12 +1,11 @@
 <template>
     <div>
-        <h-nav></h-nav>
+        <h-nav/>
         <div class="container-a">
             <div class="sub-container-infors-cards">
-                <card-traffic :data="cards.cardUsers"></card-traffic>
-                <card-traffic :data="cards.cardClients"></card-traffic>
-                <card-traffic :data="cards.cardServices"></card-traffic>
-                <card-traffic :data="cards.cardOffers"></card-traffic>
+                <b-card-group>
+                    <card-traffic v-for="(item) in reports" v-bind:key="item.id" :data="item"/>
+                </b-card-group>                
             </div>
             <div class="sub-container-infors-users">
                 <div class="table-users">
@@ -25,7 +24,7 @@
                             :busy="isBusy">
                         <template v-slot:table-busy>
                             <div class="text-center text-danger my-2">
-                                <b-spinner class="align-middle"></b-spinner>
+                                <b-spinner class="align-middle"/>
                             </div>
                         </template>
                     </b-table>
@@ -82,33 +81,12 @@
                         label: 'Bairro'
                     }
                 ],
-                cards: {
-                    cardUsers: {
-                        qtd: 20,
-                        text: 'Prestadores:',
-                        id: "1"
-                    },
-                    cardServices: {
-                        qtd: 20,
-                        text: 'Serviços:',
-                        id: "2"
-                    },
-                    cardOffers: {
-                        qtd: 20,
-                        text: 'Ofertas de serviços:',
-                        id: "3"
-                    },
-                    cardClients: {
-                        qtd: 20,
-                        text: 'Clientes:',
-                        id: "4"
-                    },
-                },
                 isBusy: true,
+                isBusyReport: true
             }
         },
         methods: {
-            ...mapActions(['loadUsersData']),
+            ...mapActions(['loadUsersData', 'loadReport']),
             async loadUsersLocal() {
                 const result = await this.loadUsersData()
                 if (result) {
@@ -120,6 +98,12 @@
                     this.isBusy = !this.isBusy
                 }
             },
+            async loadReportLocal() {
+                const result = await this.loadReport()
+                if (result) {
+                    this.isBusyReport = false
+                }
+            }
         },
         components: {
             'card-traffic': traffic,
@@ -127,7 +111,8 @@
         },
         computed: {
             ...mapGetters({
-                users: 'usersList'
+                users: 'usersList',
+                reports: 'getReport'
             }),
             rows() {
                 return this.users.length
@@ -135,12 +120,19 @@
         },
         mounted() {
             this.loadUsersLocal()
+            this.loadReportLocal()
         },
     }
 </script>
 
 <style lang="scss" scoped>
     @import "src/assets/scss/style";
+
+    @media only screen and (max-width: 1070px){
+        .sub-container-infors-cards {
+            flex-direction: column!important;
+        }
+    }
 
     .container-a {
         display: flex;
@@ -150,7 +142,6 @@
         width: 80%;
         min-height: 1000px;
         margin: auto;
-
         .sub-container-infors-users {
             background-color: $white;
             display: flex;
@@ -165,7 +156,7 @@
 
             .table-users {
                 width: 98%;
-                min-height: 450px;
+                min-height: 400px;
                 margin: 5px;
                 display: flex;
                 flex-direction: column;
@@ -176,12 +167,14 @@
                 }
             }
         }
+
         .sub-container-infors-cards {
             display: flex;
-            flex-direction: row;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: space-between;
             width: 95%;
-            min-height: 400px;
+            
+            flex-wrap: wrap;
             -webkit-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.21);
             -moz-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.34);
             box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.24);
