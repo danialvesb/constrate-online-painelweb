@@ -38,7 +38,7 @@
                         <div class="form-container-photo">
                             <b-card
                                     title="Imagem"
-                                    img-src="https://picsum.photos/600/300/?image=25"
+                                    :img-src="data.image"
                                     img-alt="Image"
                                     img-top
                                     tag="article"
@@ -56,7 +56,6 @@
                             <div>
                                 <picture-input
                                         v-if="loaded"
-
                                         width="300"
                                         height="200"
                                         margin="5"
@@ -67,7 +66,10 @@
                                         :custom-strings="{
                                             upload: '<h1>Bummer!</h1>',
                                             drag: 'Arraste a imagem, ou clique para inserir!'
-                                        }"  >
+                                        }"
+                                        ref="pictureInput"
+                                        @change="onChangeFile"
+                                >
                                 </picture-input>
                             </div>
                         </b-modal>
@@ -92,10 +94,10 @@
                     title: '',
                     categorySelected: null,
                     description: '',
-                    image_path: "/",
+                    image: require('../assets/images/default.jpg')
                 },
                 dataSelect: [{ text: 'Selecione uma categoria', value: null }],
-                loaded: false
+                loaded: false,
             }
         },
         components: {
@@ -122,11 +124,10 @@
                 await Vue.prototype.$http.post('/services', workJson)
                 this.onReset()
             },
-            onChange(image) {
-                console.log('New picture selected!')
-                if (image) {
-                    console.log('Picture loaded.')
-                    this.image = image
+            onChangeFile() {
+                if (this.$refs.pictureInput.file) {
+                    const imageLocal = this.$refs.pictureInput.image
+                    this.data.image =imageLocal
                 } else {
                     console.log('FileReader API not supported: use the <form>, Luke!')
                 }
