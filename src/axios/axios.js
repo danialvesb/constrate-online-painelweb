@@ -18,8 +18,6 @@ Vue.use({
     }
 })
 
-
-
 // axios.interceptors.request.use(async (config) => {
 //     if (
 //         //endsWith verifica se a url termina com os parâmetros passados
