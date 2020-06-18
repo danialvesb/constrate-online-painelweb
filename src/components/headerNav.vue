@@ -19,10 +19,10 @@
                             <b-avatar variant="info" class="m-0 p-0" :src="urlImageProfile"></b-avatar>
                         </template>
                         <b-dropdown-item href="/usuario/perfil" >Perfil</b-dropdown-item>
-                        <b-dropdown-divider></b-dropdown-divider>
+                        <!-- <b-dropdown-divider></b-dropdown-divider>
                         <b-dropdown-item href="#">Configurações</b-dropdown-item>
                         <b-dropdown-item href="#" >Pagamentos</b-dropdown-item>
-                        <b-dropdown-item href="#">Projetos</b-dropdown-item>
+                        <b-dropdown-item href="#">Projetos</b-dropdown-item> -->
                         <b-dropdown-divider></b-dropdown-divider>
                         <b-dropdown-item @click="onclickLogout()">Sair</b-dropdown-item>
                     </b-nav-item-dropdown>

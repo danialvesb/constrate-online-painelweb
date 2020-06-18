@@ -38,7 +38,7 @@
                         <div class="form-container-photo">
                             <b-card
                                     title="Imagem"
-                                    img-src="https://picsum.photos/600/300/?image=25"
+                                    :img-src="data.image"
                                     img-alt="Image"
                                     img-top
                                     tag="article"
@@ -49,14 +49,13 @@
                         </div>
                         </b-form-group>
                         <b-button-group>
-                            <b-button variant="primary" @click="addWork(data)">Salvar</b-button>
+                            <b-button variant="primary" @click="addWork()">Salvar</b-button>
                             <b-button variant="danger" @click="onReset">Redefinir</b-button>
                         </b-button-group>
                         <b-modal id="modal-new" ref="modal-input-image" size="lg" hide-footer title="Inserir imagem">
                             <div>
                                 <picture-input
                                         v-if="loaded"
-
                                         width="300"
                                         height="200"
                                         margin="5"
@@ -67,7 +66,10 @@
                                         :custom-strings="{
                                             upload: '<h1>Bummer!</h1>',
                                             drag: 'Arraste a imagem, ou clique para inserir!'
-                                        }"  >
+                                        }"
+                                        ref="pictureInput"
+                                        @change="onChangeFile"
+                                >
                                 </picture-input>
                             </div>
                         </b-modal>
@@ -92,10 +94,11 @@
                     title: '',
                     categorySelected: null,
                     description: '',
-                    image_path: "/",
+                    image: require('../assets/images/default.jpg'),
+                    file: require('../assets/images/default.jpg')
                 },
                 dataSelect: [{ text: 'Selecione uma categoria', value: null }],
-                loaded: false
+                loaded: false,
             }
         },
         components: {
@@ -111,22 +114,31 @@
                 this.data.title = ''
                 this.data.description = ''
                 this.data.categorySelected = null
+                this.data.image = require('../assets/images/default.jpg')
             },
             async loadCategoruesListLocal() {
                 await this.loadCategories()
                 this.dataSelect = this.dataSelect.concat(this.categoriesSelect)
             },
-            async addWork(data) {
-                const workJson  = JSON.stringify(data)
+            async addWork() {
+                let formData = new FormData();
+                formData.append('title', this.data.title)
+                formData.append('category_selected', this.data.categorySelected)
+                formData.append('description', this.data.description)
+                formData.append('image', this.data.file)
 
-                await Vue.prototype.$http.post('/services', workJson)
+                await Vue.prototype.$http.post('/services', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
                 this.onReset()
             },
-            onChange(image) {
-                console.log('New picture selected!')
-                if (image) {
-                    console.log('Picture loaded.')
-                    this.image = image
+            onChangeFile() {
+                if (this.$refs.pictureInput.file) {
+                    const imageLocal = this.$refs.pictureInput.image
+                    this.data.image =imageLocal
+                    this.data.file = this.$refs.pictureInput.file
                 } else {
                     console.log('FileReader API not supported: use the <form>, Luke!')
                 }
@@ -169,9 +181,9 @@
             width: 60%;
             min-width: 300px;
             min-height: 600px;
-            -webkit-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);
-            -moz-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);
-            box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.93);
+            -webkit-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.30);
+            -moz-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.30);
+            box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.30);
             margin-bottom: 20px;
             .form-container {
                 width: 95%;
