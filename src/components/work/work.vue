@@ -8,7 +8,7 @@
             </b-card-text>
             <b-card-body >
                 <div class="p-2 m-2 details-card">
-                    <b-img src="https://placekitten.com/1000/300" class="img-fluid" width="500"></b-img>
+                    <b-img :src=imageUrl class="img-fluid" width="500"></b-img>
                 </div>
                 <div class="p-2 m-2 details-card">
                     <div>
@@ -46,6 +46,11 @@
             work: {
                 type: Object,
                 required: true
+            }
+        },
+        data() {
+            return {
+                imageUrl: `http://192.168.3.103:8000/api/services/_image/services/${this.work.image_path}`
             }
         },
         methods: {
