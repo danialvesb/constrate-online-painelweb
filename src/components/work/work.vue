@@ -1,7 +1,6 @@
 <template>
     <div class="container-work">
         <b-card class="m-1 p-1 card-container">
-
             <strong>{{ work.title }}</strong>
             <b-card-text>
                 {{ work.description }}
@@ -10,17 +9,17 @@
                 <div class="p-2 m-2 details-card">
                     <b-img :src=imageUrl class="img-fluid" width="500"></b-img>
                 </div>
-                <div class="p-2 m-2 details-card">
+                <!-- <div class="p-2 m-2 details-card">
                     <div>
                         <small>Categorias: ww</small>
                     </div>
                     <div>
                         <small>Ofertas ativas nesse serviço: 20</small>
                     </div>
-                </div>
+                </div> -->
             </b-card-body>
             <div class="button-group">
-                    <b-button variant="primary" class="button-style">Editar</b-button>
+                    <!-- <b-button variant="primary" class="button-style">Editar</b-button> -->
                     <b-button variant="danger" class="button-style" @click="toggleModalDelete()">Excluir</b-button>
             </div>
 
@@ -76,8 +75,10 @@
         flex-wrap: wrap;
         display: flex;
         flex-direction: column;
-        min-width: 700px;
-        width: 50%;
+        max-height: 300px!important;
+        min-width: 500px;
+        width: 20%;
+
         .card-container {
             display: flex;
             width: 98%;
