@@ -1,6 +1,17 @@
 <template>
     <div class="main">
-        <header-nav></header-nav>
+        <header-nav>
+            <template v-slot:breadcrumb-item>
+                <b-breadcrumb-item href="/dashboard">
+                    <b-icon icon="house-fill" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon>
+                    Início
+                </b-breadcrumb-item>
+                <b-breadcrumb-item href="/usuario/perfil">
+                    <b-icon icon="people-fill" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon>
+                    Perfil
+                </b-breadcrumb-item>
+            </template>
+        </header-nav>
         <div class="container-dynamic">
             <div v-if="show" class="container-profile">
                 <div class="header-profile">

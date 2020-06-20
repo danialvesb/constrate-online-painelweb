@@ -1,41 +1,18 @@
 <template>
     <div>
-        <h-nav/>
+        <h-nav>
+            <template v-slot:breadcrumb-item>
+                <b-breadcrumb-item href="/dashboard">
+                    <b-icon icon="house-fill" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon>
+                    Início
+                </b-breadcrumb-item>
+            </template>
+        </h-nav>
         <div class="container-a">
             <div class="sub-container-infors-cards">
                 <b-card-group>
                     <card-traffic v-for="(item) in reports" v-bind:key="item.id" :data="item"/>
-                </b-card-group>                
-            </div>
-            <div class="sub-container-infors-users">
-                <div class="table-users">
-                    <div>
-                        <h3>Usuários</h3>
-                    </div>
-                    <b-table
-                            hover
-                            id="table-users"
-                            :items="users"
-                            :per-page="perPage"
-                            :current-page="currentPage"
-                            :fields="fields"
-                            responsive
-                            small
-                            :busy="isBusy">
-                        <template v-slot:table-busy>
-                            <div class="text-center text-danger my-2">
-                                <b-spinner class="align-middle"/>
-                            </div>
-                        </template>
-                    </b-table>
-
-                </div>
-                <b-pagination
-                        v-model="currentPage"
-                        :total-rows="rows"
-                        :per-page="perPage"
-                        aria-controls="table-users"
-                ></b-pagination>
+                </b-card-group>
             </div>
         </div>
     </div>
@@ -52,52 +29,11 @@
         name: "Dashboard",
         data() {
             return {
-                perPage: 9,
-                currentPage: 1,
-                fields: [
-                    {
-                        key: 'id',
-                        label: 'Id'
-                    },
-                    {
-                        key: 'name',
-                        label: 'Nome'
-                    },
-                    {
-                        key: 'email',
-                        label: 'E-mail'
-                    },
 
-                    {
-                        key: 'city',
-                        label: 'Cidade'
-                    },
-                    {
-                        key: 'uf',
-                        label: 'UF'
-                    },
-                    {
-                        key: 'district',
-                        label: 'Bairro'
-                    }
-                ],
-                isBusy: true,
-                isBusyReport: true
             }
         },
         methods: {
-            ...mapActions(['loadUsersData', 'loadReport']),
-            async loadUsersLocal() {
-                const result = await this.loadUsersData()
-                if (result) {
-                    this.isBusy = false
-                }
-            },
-            toggleBusy() {
-                if (this.users.length > 0 && this.isBusy == true) {
-                    this.isBusy = !this.isBusy
-                }
-            },
+            ...mapActions(['loadReport']),
             async loadReportLocal() {
                 const result = await this.loadReport()
                 if (result) {
@@ -111,15 +47,10 @@
         },
         computed: {
             ...mapGetters({
-                users: 'usersList',
                 reports: 'getReport'
             }),
-            rows() {
-                return this.users.length
-            },
         },
         mounted() {
-            this.loadUsersLocal()
             this.loadReportLocal()
         },
     }
@@ -173,7 +104,7 @@
             flex-direction: column;
             justify-content: space-between;
             width: 95%;
-            
+
             flex-wrap: wrap;
             -webkit-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.21);
             -moz-box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.34);

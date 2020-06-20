@@ -1,6 +1,17 @@
 <template>
     <div>
-        <header-nav></header-nav>
+        <header-nav>
+            <template v-slot:breadcrumb-item>
+                <b-breadcrumb-item href="/dashboard">
+                    <b-icon icon="house-fill" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon>
+                    Início
+                </b-breadcrumb-item>
+                <b-breadcrumb-item href="/servicos">
+                    <b-icon icon="list-check" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon>
+                    Listagem de serviços
+                </b-breadcrumb-item>
+            </template>
+        </header-nav>
         <div v-if="show" class="container-a">
             <work v-for="work in works" :key="work.id" :work="work"></work>
         </div>
