@@ -1,27 +1,29 @@
 <template>
     <div class="container-work">
-        <b-card class="m-1 p-1 card-container">
+        <b-card :img-src="imageUrl" img-alt="true" class="m-1 p-1 card-container">
             <strong>{{ work.title }}</strong>
             <b-card-text>
                 {{ work.description }}
             </b-card-text>
-            <b-card-body >
+            <b-card-body style="max-height: 100px;">
                 <div class="p-2 m-2 details-card">
-                    <b-img :src=imageUrl class="img-fluid" width="500"></b-img>
+                    <div>
+                        <small>Categorias: {{work.category_title}}</small>
+                    </div>
+                    <div>
+                        <small>Ofertas ativas nesse serviço: {{work.qtd_offers}}</small>
+                    </div>
                 </div>
-                <!-- <div class="p-2 m-2 details-card">
-                    <div>
-                        <small>Categorias: ww</small>
-                    </div>
-                    <div>
-                        <small>Ofertas ativas nesse serviço: 20</small>
-                    </div>
-                </div> -->
             </b-card-body>
-            <div class="button-group">
-                    <!-- <b-button variant="primary" class="button-style">Editar</b-button> -->
-                    <b-button variant="danger" class="button-style" @click="toggleModalDelete()">Excluir</b-button>
-            </div>
+            <b-card-footer>
+                <div class="button-group">
+                    <b-button-group class="container-fluid">
+                        <b-button variant="primary" class="button-style">Editar</b-button>
+                        <b-button variant="danger" class="button-style" @click="toggleModalDelete()">Excluir</b-button>
+                    </b-button-group>
+
+                </div>
+            </b-card-footer>
 
         </b-card>
         <b-modal id="modal-delete" ref="modal-work-delete" hide-footer>
@@ -73,12 +75,11 @@
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
-        display: flex;
-        flex-direction: column;
-        max-height: 300px!important;
+        min-height: 300px!important;
+
         min-width: 500px;
         width: 20%;
-
+        margin-bottom: 20px;
         .card-container {
             display: flex;
             width: 98%;
@@ -86,14 +87,13 @@
         }
     }
     .details-card {
+        border: rgba(48, 60, 84, 0.23) 0.1px solid;
         border-radius: 5px;
-        box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.11);
     }
     .button-group {
         display: flex;
         flex-direction:row;
-        justify-content: left;
-        width: 50%;
+        width: 100%;
     }
     .button-style {
         width: 40%;

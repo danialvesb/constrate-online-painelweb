@@ -23,6 +23,10 @@ const fields = [
     {
         key: 'district',
         label: 'Bairro'
+    },
+    {
+        key: 'type',
+        label: 'Tipo de perfil'
     }
 ]
 

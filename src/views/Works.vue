@@ -13,7 +13,9 @@
             </template>
         </header-nav>
         <div v-if="show" class="container-a">
+            <b-card-group >
             <work v-for="work in works" :key="work.id" :work="work"></work>
+            </b-card-group>
         </div>
         <div v-if="!show" class="container-b">
             <b-spinner class="m-5" label="Busy"></b-spinner>
@@ -38,7 +40,6 @@
             }
         },
         methods: {
-            //Adicionar sppinners
             ...mapActions(['loadWorksData']),
             async loadWorksDataLocal()  {
                 await this.loadWorksData()
@@ -60,10 +61,9 @@
     .container-a {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: flex-start;
         flex-wrap: wrap;
         width: 98%;
-        min-height: 800px;
         margin: auto;
     }
     .container-b {
