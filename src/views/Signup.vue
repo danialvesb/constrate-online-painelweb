@@ -4,6 +4,14 @@
             <b-card
                 title="Criar conta"
                 class="card-container-a">
+                <b-card-header>
+                    <b-button-group>
+                        <b-button variant="primary" @click="onClickReturn()">
+                            <b-icon icon="arrow-left-short"/>
+                            Voltar
+                        </b-button>
+                    </b-button-group>
+                </b-card-header>
                 <b-card-body>
                     <div>
                         <b-form>
@@ -151,6 +159,9 @@
             async loadGroupsUsersLocal() {
                 await  this.loadGroupsUsers()
                 await this.mapOptionsGroups()
+            },
+            onClickReturn() {
+                this.$router.go(-1)
             }
         },
         computed: {
@@ -163,10 +174,29 @@
 </script>
 
 <style lang="scss" scoped>
-    @media only screen and (min-device-width: 900px) {
+    @import "src/assets/scss/style";
+
+    @media only screen and (max-width: 900px) {
         .container-a {
-            width:45%;
-            margin: auto;
+            width:100%;
+            .sub-container-a {
+                width:100%!important;
+
+                .form-container {
+                    width: 100%!important;
+                    padding: 10px!important;
+                }
+                .form-title {
+                    color: $white;
+                    padding: 5px;
+                    border-radius: 10px;
+                    width: 60% !important;
+                    font-size: 25px!important;
+                }
+                .button-group {
+                    border-radius: 5px;
+                }
+            }
         }
     }
 
@@ -185,7 +215,7 @@
         .sub-container-a {
             min-width: 30%;
             .card-container-a {
-                min-width: 300px;
+                min-width: 500px;
             }
         }
         .container-alert {

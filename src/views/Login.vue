@@ -1,5 +1,4 @@
 <template>
-<!--    <b-img :img-src="require('../assets/images/login.jpg')" fluid >-->
         <div class="container-a">
             <div class="sub-container-a">
                 <b-form v-if="show" class="form-container">
@@ -64,7 +63,6 @@
                 </b-form>
             </div>
         </div>
-<!--    </b-img>-->
 </template>
 
 <script>

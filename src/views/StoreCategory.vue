@@ -1,6 +1,17 @@
 <template>
     <div>
-        <header-nav></header-nav>
+        <header-nav>
+            <template v-slot:breadcrumb-item>
+                <b-breadcrumb-item href="/dashboard">
+                    <b-icon icon="house-fill" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon>
+                    Início
+                </b-breadcrumb-item>
+                <b-breadcrumb-item href="/servicos/categorias">
+                    <b-icon icon="list-check" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon>
+                    Categorias
+                </b-breadcrumb-item>
+            </template>
+        </header-nav>
         <div class="buttons m-1">
             <b-button variant="success" @click="toggleModal()">Cadastrar categoria</b-button>
         </div>

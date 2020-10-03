@@ -1,6 +1,17 @@
 <template>
     <div>
-        <header-nav></header-nav>
+        <header-nav>
+            <template v-slot:breadcrumb-item>
+                <b-breadcrumb-item href="/dashboard">
+                    <b-icon icon="house-fill" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon>
+                    Início
+                </b-breadcrumb-item>
+                <b-breadcrumb-item href="/servicos/cadastrar">
+                    <b-icon icon="plus-circle-fill" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon>
+                    Cadastro de serviço
+                </b-breadcrumb-item>
+            </template>
+        </header-nav>
         <div class="container-a">
 
             <div class="sub-container-a">

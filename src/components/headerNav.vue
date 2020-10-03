@@ -12,7 +12,11 @@
                         <b-dropdown-item href="/servicos/categorias">Categorias de Serviços</b-dropdown-item>
                     </b-nav-item-dropdown>
                 </b-navbar-nav>
-
+                <b-navbar-nav>
+                    <b-nav-item-dropdown text="Usuários" left variant="info" class="dropdown-style">
+                        <b-dropdown-item href="/usuarios/gerenciar">Gerenciar usuários</b-dropdown-item>
+                    </b-nav-item-dropdown>
+                </b-navbar-nav>
                 <b-navbar-nav class="ml-auto">
                     <b-nav-item-dropdown right>
                         <template v-slot:button-content>
@@ -31,10 +35,7 @@
         </div>
         <div>
             <b-breadcrumb>
-                <b-breadcrumb-item href="/dashboard">
-                    <b-icon icon="house-fill" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon>
-                    Início
-                </b-breadcrumb-item>
+                <slot name="breadcrumb-item"></slot>
             </b-breadcrumb>
         </div>
     </div>

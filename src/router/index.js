@@ -4,6 +4,7 @@ import Login from "../views/Login";
 import Signup from "../views/Signup";
 import Profile from "../views/Profile";
 import { isAuth } from '../helpers/isAuth'
+import ManagementUsers from "../views/ManagementUsers";
 
 const Dashboard = () => import('../views/Dashboard')
 const Works = () => import('../views/Works')
@@ -70,6 +71,13 @@ function configRoutes() {
                     name: 'Profile',
                     component: Profile
                 },
+                {
+                    path: '/usuarios/gerenciar',
+                    name: 'Management',
+                    component: ManagementUsers
+                },
+
+
             ]
         },
     ]
